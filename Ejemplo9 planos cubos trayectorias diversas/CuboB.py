@@ -164,11 +164,11 @@ class Plataforma:
         cx, cy, cz = self.carrito.Position
 
         # Si cx >= 0, plataforma sube
-        if cx >= 0:
-            self.posY = 20.0
-        else:
-            # Si cx < 0, vuelve a 0 (o -2, como gustes)
-            self.posY = 0.0
+        if cx >= 0 and self.posY < 20:
+            self.posY += 0.1   # Sube lentamente, 0.1 cada frame
+        elif cx < 0 and self.posY > 0:
+            self.posY -= 0.1   # Baja lentamente, 0.1 cada frame
+
 
     def draw(self):
         cx, cy, cz = self.carrito.Position
