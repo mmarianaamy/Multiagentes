@@ -2038,5 +2038,1005 @@
   <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
 </owl:NamedIndividual>
 
+<owl:NamedIndividual rdf:about="#tiendaagente201">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda201">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente202">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda202">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente203">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda203">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente204">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda204">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente205">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda205">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente206">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">6</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda206">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente207">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">7</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda207">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente208">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">8</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda208">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente209">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">9</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda209">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente210">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">10</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda210">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente211">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">11</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda211">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente212">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">12</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda212">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente213">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">13</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda213">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente214">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">14</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda214">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente215">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">15</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda215">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente216">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">16</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda216">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente217">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">17</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda217">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente218">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">18</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda218">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente219">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">19</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda219">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente220">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">20</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda220">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente221">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">21</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda221">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente222">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">22</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda222">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente223">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">23</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda223">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente224">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">24</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda224">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente225">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">25</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda225">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente226">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">26</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda226">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente227">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">27</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda227">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente228">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">28</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda228">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente229">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">29</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda229">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente230">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">30</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda230">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente231">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">31</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda231">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente232">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">32</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda232">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente233">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">33</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda233">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente234">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">34</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda234">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente235">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">35</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda235">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente236">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">36</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda236">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente237">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">37</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda237">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente238">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">38</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda238">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente239">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">39</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda239">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente240">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">40</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda240">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente241">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">41</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda241">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente242">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">42</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda242">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente243">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">43</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda243">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente244">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">44</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda244">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente245">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">45</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda245">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente246">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">46</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda246">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente247">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">47</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda247">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente248">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">48</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda248">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente249">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">49</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda249">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente250">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">50</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda250">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente251">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">51</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda251">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente252">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">52</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda252">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente253">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">53</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda253">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente254">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">54</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda254">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente255">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">55</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda255">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente256">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">56</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda256">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente257">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">57</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda257">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente258">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">58</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda258">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente259">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">59</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda259">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente260">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">60</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda260">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente261">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">61</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda261">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente262">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">62</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda262">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente263">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">63</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda263">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente264">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">64</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda264">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente265">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">65</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda265">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente266">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">66</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda266">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente267">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">67</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda267">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente268">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">68</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda268">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente269">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">69</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda269">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente270">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">70</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda270">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente271">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">71</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda271">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente272">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">72</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda272">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente273">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">73</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda273">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente274">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">74</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda274">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente275">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">75</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda275">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente276">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">76</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda276">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente277">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">77</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda277">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente278">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">78</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda278">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente279">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">79</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda279">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente280">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">80</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda280">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente281">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">81</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda281">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente282">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">82</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda282">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente283">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">83</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda283">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente284">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">84</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda284">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente285">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">85</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda285">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente286">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">86</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda286">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente287">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">87</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda287">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente288">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">88</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda288">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente289">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">89</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda289">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente290">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">90</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda290">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente291">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">91</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda291">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente292">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">92</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda292">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente293">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">93</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda293">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente294">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">94</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda294">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente295">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">95</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda295">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente296">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">96</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda296">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente297">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">97</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda297">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente298">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">98</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda298">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente299">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">99</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda299">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiendaagente300">
+  <rdf:type rdf:resource="#TiendaAgente"/>
+  <has_id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">100</has_id>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dineroentienda300">
+  <rdf:type rdf:resource="#DineroEnTienda"/>
+  <dinero_value rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</dinero_value>
+</owl:NamedIndividual>
+
 
 </rdf:RDF>
