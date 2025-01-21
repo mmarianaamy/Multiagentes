@@ -17,8 +17,9 @@ class CuboB:
     
     def __init__(self, dim, vel):
         #vertices del cubo
-        self.points = [[0,0,0], [3,0,0], [3,0,2], [0,0,2], [0,2,0], [0,2,2], [1,0,0], [1,0,2], [1,2,0], [1,2,2], [3,1,2], [3,1,0],[1,1,0],[1,1,2]]
-
+        #self.points = [[0,0,0], [3,0,0], [3,0,2], [0,0,2], [0,2,0], [0,2,2], [1,0,0], [1,0,2], [1,2,0], [1,2,2], [3,1,2], [3,1,0],[1,1,0],[1,1,2]]
+        self.points = np.array([[0,0,0], [3,0,0], [3,0,2], [0,0,2], [0,1,0], [0,1,2], [3,1,0], [3,1,2], [1.8,2.5,2.0],[1.8,2.5,0.0],[0.2,2.5,2.0],[0.2,2.5,0.0], [2.0,1.0,2.0], [2.0,1.0,0.0],[2.0,1.5,0.0],[2.0,1.5,2.0],[3.0,1.5,0.0],[3.0,1.5,2.0],[0.0,0.0,0.5],[0.0,0.0,1.5],[0.0,3.0,1.5],[0.0,3.0,0.5],[0.8,1.0,0.0],[0.8,1.0,2.0],[0.8,1.3,2.0],[0.8,1.3,0.0],[0.0,1.3,0.0],[0.0,1.3,2.0],[0,0,-0.5], [0,0,2.5], [-1,0,2.5], [-1,0,-0.5]])
+        #                           0,       1,      2,        3,       4,      5,         6,       7,      8,              9,          10,             11,             12,         13,             14,         15,             16,         17,             18,          19,           20,             21,           22,          23,             24,           25,          26,          27,          28,          29,      30,      31,      32,      33
         self.DimBoard = dim
         ncol = 4
         dimcol = self.DimBoard / ncol
@@ -87,6 +88,7 @@ class CuboB:
                 self.Position[2] += self.Direction[2] 
 
     def drawFaces(self):
+        #base
         glBegin(GL_QUADS)
         glColor3f(0.0, 0.0, 0.0)
         glVertex3fv(self.points[0])
@@ -94,64 +96,187 @@ class CuboB:
         glVertex3fv(self.points[2])
         glVertex3fv(self.points[3])
         glEnd()
+        #cara1
         glBegin(GL_QUADS)
-        glColor3f(1.0, 1.0, 0.0)
+        glColor3f(1.0, 0.5, 0.0)
         glVertex3fv(self.points[0])
-        glVertex3fv(self.points[4])
-        glVertex3fv(self.points[5])
-        glVertex3fv(self.points[3])
-        glEnd()
-        glBegin(GL_QUADS)
-        glVertex3fv(self.points[0])
-        glVertex3fv(self.points[6])
-        glVertex3fv(self.points[8])
-        glVertex3fv(self.points[4])
-        glEnd()
-        glBegin(GL_QUADS)
-        glVertex3fv(self.points[7])
-        glVertex3fv(self.points[3])
-        glVertex3fv(self.points[5])
-        glVertex3fv(self.points[9])
-        glEnd()
-        glBegin(GL_QUADS)
-        glVertex3fv(self.points[5])
-        glVertex3fv(self.points[4])
-        glVertex3fv(self.points[8])
-        glVertex3fv(self.points[9])
-        glEnd()
-        glBegin(GL_QUADS)
-        glVertex3fv(self.points[6])
-        glVertex3fv(self.points[7])
-        glVertex3fv(self.points[9])
-        glVertex3fv(self.points[8])
-        glEnd()
-        glBegin(GL_QUADS)
-        glColor3f(0.0, 0.0, 0.0)
-        glVertex3fv(self.points[6])
         glVertex3fv(self.points[1])
-        glVertex3fv(self.points[11])
-        glVertex3fv(self.points[12])
+        glVertex3fv(self.points[6])
+        glVertex3fv(self.points[4])
         glEnd()
+        #cara2
         glBegin(GL_QUADS)
         glVertex3fv(self.points[1])
         glVertex3fv(self.points[2])
-        glVertex3fv(self.points[10])
-        glVertex3fv(self.points[11])
+        glVertex3fv(self.points[7])
+        glVertex3fv(self.points[6])
         glEnd()
+        #cara3
         glBegin(GL_QUADS)
         glVertex3fv(self.points[2])
+        glVertex3fv(self.points[3])
+        glVertex3fv(self.points[5])
         glVertex3fv(self.points[7])
+        glEnd()
+        #cara4
+        glBegin(GL_QUADS)
+        glVertex3fv(self.points[3])
+        glVertex3fv(self.points[0])
+        glVertex3fv(self.points[4])
+        glVertex3fv(self.points[5])
+        glEnd()
+        
+        
+        #tapa
+        glBegin(GL_QUADS)
+        glColor3f(1.0, 0.4, 0.0)
+        glVertex3fv(self.points[4])
+        glVertex3fv(self.points[6])
+        glVertex3fv(self.points[7])
+        glVertex3fv(self.points[5])
+        glEnd()
+        
+        #cajuela
+        glBegin(GL_QUADS)
+        glColor3f(1.0, 0.5, 0.0)
         glVertex3fv(self.points[13])
-        glVertex3fv(self.points[10])
+        glVertex3fv(self.points[12])
+        glVertex3fv(self.points[15])
+        glVertex3fv(self.points[14])
         glEnd()
-    
+        
+        glBegin(GL_QUADS)
+        glColor3f(1.0, 0.5, 0.0)
+        glVertex3fv(self.points[13])
+        glVertex3fv(self.points[6])
+        glVertex3fv(self.points[16])
+        glVertex3fv(self.points[14])
+        glEnd()
+        
+        glBegin(GL_QUADS)
+        glColor3f(1.0, 0.5, 0.0)
+        glVertex3fv(self.points[6])
+        glVertex3fv(self.points[7])
+        glVertex3fv(self.points[17])
+        glVertex3fv(self.points[16])
+        glEnd()
+        
+        glBegin(GL_QUADS)
+        glColor3f(1.0, 0.5, 0.0)
+        glVertex3fv(self.points[12])
+        glVertex3fv(self.points[7])
+        glVertex3fv(self.points[17])
+        glVertex3fv(self.points[15])
+        glEnd()
+        
+        glBegin(GL_QUADS)
+        glColor3f(1.0, 0.5, 0.0)
+        glVertex3fv(self.points[14])
+        glVertex3fv(self.points[15])
+        glVertex3fv(self.points[17])
+        glVertex3fv(self.points[16])
+        glEnd()
+        
+        
+        
+        # Dibujar cabina
+        glShadeModel(GL_FLAT)
+        glLineWidth(3.0)
+        glBegin(GL_LINES)
+        glColor3f(0.0,0.0,0.0)
+        #glVertex3fv(self.points[7])
+        glVertex3fv(self.points[8])
+        glVertex3fv(self.points[12])
+        
+        #glVertex3fv(self.points[6])
+        glVertex3fv(self.points[9])
+        glVertex3fv(self.points[13])
+        
+        glVertex3fv(self.points[5])
+        glVertex3fv(self.points[10])
+        
+        glVertex3fv(self.points[4])
+        glVertex3fv(self.points[11])
+        glEnd()
+        #techo cabina
+        glBegin(GL_QUADS)
+        glColor3f(0.0, 0.0, 0.0)
+        glVertex3fv(self.points[8])
+        glVertex3fv(self.points[10])
+        glVertex3fv(self.points[11])
+        glVertex3fv(self.points[9])
+        glEnd()
+                
+        #dibujar mastil
+        glBegin(GL_QUADS)
+        glColor3f(0.0, 0.0, 0.0)
+        glVertex3fv(self.points[18])
+        glVertex3fv(self.points[19])
+        glVertex3fv(self.points[20])
+        glVertex3fv(self.points[21])
+        glEnd()
+        
+        #dibujar controles cabina
+        glBegin(GL_QUADS)
+        glColor3f(0.2, 0.2, 0.2)
+        glVertex3fv(self.points[5])
+        glVertex3fv(self.points[23])
+        glVertex3fv(self.points[24])
+        glVertex3fv(self.points[27])
+        glEnd()
+        
+        glBegin(GL_QUADS)
+        glColor3f(0.2, 0.2, 0.2)
+        glVertex3fv(self.points[22])
+        glVertex3fv(self.points[4])
+        glVertex3fv(self.points[26])
+        glVertex3fv(self.points[25])
+        glEnd()
+        
+        glBegin(GL_QUADS)
+        glColor3f(0.2, 0.2, 0.2)
+        glVertex3fv(self.points[4])
+        glVertex3fv(self.points[5])
+        glVertex3fv(self.points[27])
+        glVertex3fv(self.points[26])
+        glEnd()
+        
+        glBegin(GL_QUADS)
+        glColor3f(0.2, 0.2, 0.2)
+        glVertex3fv(self.points[27])
+        glVertex3fv(self.points[24])
+        glVertex3fv(self.points[25])
+        glVertex3fv(self.points[26])
+        glEnd()
+        
+        glBegin(GL_QUADS)
+        glColor3f(0.2, 0.2, 0.2)
+        glVertex3fv(self.points[23])
+        glVertex3fv(self.points[22])
+        glVertex3fv(self.points[25])
+        glVertex3fv(self.points[24])
+        glEnd()
+        
+        
+        
+        # Dibujar aristas con color negro
+        glBegin(GL_LINE_LOOP)
+        glColor3f(0.0, 0.0, 0.0)
+        glVertex3fv(self.points[8])
+        glVertex3fv(self.points[10])
+        glVertex3fv(self.points[11])
+        glVertex3fv(self.points[9])
+        glEnd()
+        
+        
     def draw(self):
         glPushMatrix()
         glTranslatef(self.Position[0], self.Position[1], self.Position[2])
-        glScaled(10,10,10)
+        glScaled(15,15,15)
         self.drawFaces()
         glPopMatrix()
         
+    
 class Plataforma:
     def __init__(self, carrito, offset_z=5.0):
         self.carrito = carrito
