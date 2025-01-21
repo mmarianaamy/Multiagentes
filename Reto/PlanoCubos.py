@@ -17,6 +17,7 @@ sys.path.append('..')
 from CuboA import CuboA
 from CuboB import CuboB
 from CuboB import Plataforma
+from Estante import Estante
 
 screen_width = 800
 screen_height = 800
@@ -52,6 +53,9 @@ cubos = []
 #ncubosA = 2
 ncubosB = 5
 plataforma_b = None
+
+rows = 5
+estantes = []
 
 def Axis():
     glShadeModel(GL_FLAT)
@@ -95,13 +99,14 @@ def Init():
     for i in range(ncubosB):
         new_cubo_b = CuboB(DimBoard, 1)
         cubos.append(new_cubo_b)
-        
-        # Crear una plataforma “pegada” a este CuboB
+
         plataforma_b = Plataforma(new_cubo_b, offset_z=10.0)
-        #cubos.append(plataforma_b)
     
     for agente in cubos:
         agente.setAgentes(cubos)
+
+    for i in range(rows):
+        estantes.append(Estante(10, DimBoard/rows * i, 8))
 
 
 def display():  
@@ -115,6 +120,12 @@ def display():
     glVertex3d(DimBoard, 0, DimBoard)
     glVertex3d(DimBoard, 0, -DimBoard)
     glEnd()
+
+    #se dibujan estantes
+
+    for estante in estantes:
+        estante.draw()
+
     #Se dibuja cubos
     for obj in cubos:
         obj.draw()

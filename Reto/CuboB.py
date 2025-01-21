@@ -158,10 +158,10 @@ class Plataforma:
         self.offset_z = offset_z
         
         self.points = [
-            [ 0, 0,  1],
-            [ 0, 0, -1],
-            [-1, 0, -1],
-            [-1, 0,  1]
+            [ 0, 1,  1],
+            [ 0, -1, -1],
+            [-1, -1, -1],
+            [-1, 1,  1]
         ]
 
         # Posición de la plataforma en Y
