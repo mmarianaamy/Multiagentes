@@ -15,7 +15,7 @@ import numpy as np
 
 class CuboA:
     
-    def __init__(self, dim, vel):
+    def __init__(self, dim, x, y):
         #vertices del cubo
         self.points = [[-1.0,-1.0, 1.0], [1.0,-1.0, 1.0], [1.0,-1.0,-1.0], [-1.0,-1.0,-1.0],
                                 [-1.0, 1.0, 1.0], [1.0, 1.0, 1.0], [1.0, 1.0,-1.0], [-1.0, 1.0,-1.0]]
@@ -24,37 +24,12 @@ class CuboA:
         #Se inicializa una posicion aleatoria en el tablero
         self.Position = []
         self.Position.append(random.randint(-1 * self.DimBoard, self.DimBoard))
-        self.Position.append(5.0)
+        self.Position.append(10.0)
         self.Position.append(random.randint(-1 * self.DimBoard, self.DimBoard))
-        #Se inicializa un vector de direccion aleatorio
-        self.Direction = []
-        self.Direction.append(random.random())
-        self.Direction.append(5.0)
-        self.Direction.append(random.random())
-        #Se normaliza el vector de direccion
-        m = math.sqrt(self.Direction[0]*self.Direction[0] + self.Direction[2]*self.Direction[2])
-        self.Direction[0] /= m
-        self.Direction[2] /= m
-        #Se cambia la maginitud del vector direccion
-        self.Direction[0] *= vel
-        self.Direction[2] *= vel 
 
     def update(self):
-        new_x = self.Position[0] + self.Direction[0]
-        new_z = self.Position[2] + self.Direction[2]
-        
-        #detecc de que el objeto no se salga del area de navegacion
-        if(abs(new_x) <= self.DimBoard):
-            self.Position[0] = new_x
-        else:
-            self.Direction[0] *= -1.0
-            self.Position[0] += self.Direction[0]
-        
-        if(abs(new_z) <= self.DimBoard):
-            self.Position[2] = new_z
-        else:
-            self.Direction[2] *= -1.0
-            self.Position[2] += self.Direction[2] 
+        #TODO: mover con objeto
+        return
 
     def drawFaces(self):
         glBegin(GL_QUADS)
@@ -98,6 +73,6 @@ class CuboA:
         glPushMatrix()
         glTranslatef(self.Position[0], self.Position[1], self.Position[2])
         glScaled(5,5,5)
-        glColor3f(1.0, 0.0, 0.0)
+        glColor3f(0.3, 0.15, 0.05)
         self.drawFaces()
         glPopMatrix()

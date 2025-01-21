@@ -56,6 +56,8 @@ plataforma_b = None
 
 rows = 5
 estantes = []
+ncajas = 10
+cajas = []
 
 def Axis():
     glShadeModel(GL_FLAT)
@@ -83,7 +85,7 @@ def Axis():
 def Init():
     screen = pygame.display.set_mode(
         (screen_width, screen_height), DOUBLEBUF | OPENGL)
-    pygame.display.set_caption("OpenGL: cubos")
+    pygame.display.set_caption("Reto")
 
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity()
@@ -108,6 +110,8 @@ def Init():
     for i in range(rows):
         estantes.append(Estante(10, DimBoard/rows * i, 8))
 
+    for i in range(ncajas):
+        cajas.append(CuboA(DimBoard, 10, 10))
 
 def display():  
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
@@ -135,6 +139,9 @@ def display():
         plataforma_b.draw()
         plataforma_b.update()
     
+    for caja in cajas:
+        caja.draw()
+
 done = False
 Init()
 while not done:
