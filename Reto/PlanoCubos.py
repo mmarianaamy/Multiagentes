@@ -101,20 +101,16 @@ class AgentModel(ap.Model):
         glEnable(GL_DEPTH_TEST)
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
 
-        for i in range(ncubosB):
-            new_cubo_b = CuboB(DimBoard, 1)
-            cubos.append(new_cubo_b)
-
-            plataforma_b = Plataforma(new_cubo_b, offset_z=10.0)
-        
-        for agente in cubos:
-            agente.setAgentes(cubos)
+        self.agents = ap.AgentDList(self, self.p.agents, CuboB)
 
         for i in range(rows):
             estantes.append(Estante(10, DimBoard/rows * i, 8))
 
         for i in range(ncajas):
             cajas.append(CuboA(DimBoard, 10, 10))
+
+    def step(self):
+        self.agents.step()
 
     def update(self):  
 
@@ -149,6 +145,8 @@ class AgentModel(ap.Model):
         
         for caja in cajas:
             caja.draw()
+
+        self.agents.draw()
 
         pygame.display.flip()
         pygame.time.wait(10)
