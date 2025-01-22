@@ -13,7 +13,12 @@ import random
 import math
 import numpy as np
 
-class CuboB:
+from owlready2 import *
+import agentpy as ap
+
+onto = get_ontology("./Reto/ontology.owl").load()
+
+class CuboB():
     
     def __init__(self, dim, vel):
         #vertices del cubo
@@ -46,6 +51,9 @@ class CuboB:
         self.radio = 20
         #Collision detection
         self.paused = False
+
+        #self.myself = onto.Agent(has_id = 1)
+        #self.myself.has_position = onto.Position(has_position_x = self.Position[0], has_position_z = self.Position[2])
 
     def setAgentes(self, agentes):
         self.otrosagentes = agentes
