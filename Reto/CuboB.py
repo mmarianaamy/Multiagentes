@@ -49,9 +49,8 @@ class CuboB(ap.Agent):
         #TODO: cambiar valor de radio
         self.radio = 40
         #Collision detection
-        self.collided = False
-        self.at_origin = False
-        self.paused = True
+        self.goingorigin = False
+        self.collided = True
         
 
     def setAgentes(self, agentes):
@@ -59,9 +58,8 @@ class CuboB(ap.Agent):
 
 
     def collision(self):
-        self.collided = False
         self.at_origin = False
-        self.paused = False
+        self.collided = False
         for agent in self.otrosagentes:
             if self != agent:
                 #Encontrar distancia entre agentes
@@ -69,10 +67,7 @@ class CuboB(ap.Agent):
                 dz = agent.Position[2] - self.Position[2]
                 dc = math.sqrt(dx ** 2 + dz**2)
                 if dc < self.radio + agent.radio:
-                    self.paused = True
-                    #self.collided = True
-                    #if agent.collided:
-                    #    self.at_origin = True
+                    self.collided = True
                     
     def drawFaces(self):
         #base
@@ -262,6 +257,7 @@ class CuboB(ap.Agent):
         self.drawFaces()
         glPopMatrix()
 
+    #Dirección aleatorio asignado
     def randomDirection(self):
         self.at_origin = False
         self.Direction[0] = random.random() * 2 - 1  # Dirección aleatoria entre -1 y 1
@@ -272,6 +268,7 @@ class CuboB(ap.Agent):
         self.Direction[0] /= magnitude
         self.Direction[2] /= magnitude
 
+    #movimiento
     def move(self):
         new_x = self.Position[0] + self.Direction[0]
         new_z = self.Position[2] + self.Direction[2]
@@ -289,6 +286,7 @@ class CuboB(ap.Agent):
             self.Direction[2] *= -1.0
             self.Position[2] += self.Direction[2] 
 
+    #Dirección hacia orígen
     def pointToOrigin(self):
         # Si el cubo toca un límite, rebota hacia el origen (0, 0, 0)
         direction_to_origin_x = -self.Position[0]
@@ -299,6 +297,7 @@ class CuboB(ap.Agent):
         self.Direction[0] = direction_to_origin_x / magnitude
         self.Direction[2] = direction_to_origin_z / magnitude
 
+    #Verdadero si está en el orígen
     def atOrigin(self):
         return abs(self.Position[0]) < 0.1 and abs(self.Position[2]) < 0.1
 
@@ -309,8 +308,10 @@ class CuboB(ap.Agent):
     def step(self):
         self.collision()
 
-        if self.paused:
+        if self.collided:
             self.randomDirection()
+        
+        #falta implementar go to origin, pero ya que tengamos cajas
         
         self.move()
         
