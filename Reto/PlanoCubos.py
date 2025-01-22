@@ -102,6 +102,7 @@ class AgentModel(ap.Model):
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
 
         self.agents = ap.AgentDList(self, self.p.agents, CuboB)
+        self.agents.setAgentes(list(self.agents))
 
         for i in range(rows):
             estantes.append(Estante(10, DimBoard/rows * i, 8))
