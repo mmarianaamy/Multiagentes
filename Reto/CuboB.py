@@ -55,7 +55,6 @@ class CuboB(ap.Agent):
     def setup(self):
         self.myself = onto.Agent(has_id = self.id)
         self.myself.has_position = onto.Position(has_position_x = self.Position[0], has_position_z = self.Position[2])
-        print("hi")
 
 
     def setAgentes(self, agentes):
