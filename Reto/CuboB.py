@@ -18,7 +18,7 @@ import agentpy as ap
 
 onto = get_ontology("./Reto/ontology.owl").load()
 
-class CuboB():
+class CuboB(ap.Agent):
     
     def __init__(self, dim, vel):
         #vertices del cubo
@@ -52,8 +52,11 @@ class CuboB():
         #Collision detection
         self.paused = False
 
-        #self.myself = onto.Agent(has_id = 1)
-        #self.myself.has_position = onto.Position(has_position_x = self.Position[0], has_position_z = self.Position[2])
+    def setup(self):
+        self.myself = onto.Agent(has_id = self.id)
+        self.myself.has_position = onto.Position(has_position_x = self.Position[0], has_position_z = self.Position[2])
+        print("hi")
+
 
     def setAgentes(self, agentes):
         self.otrosagentes = agentes

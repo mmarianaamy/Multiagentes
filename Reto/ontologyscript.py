@@ -29,6 +29,6 @@ with onto:
 
     class has_id(FunctionalProperty, DataProperty):
         domain = [Agent]
-        range=[int]
+        range = [int]
 
 onto.save("./Reto/ontology.owl")
