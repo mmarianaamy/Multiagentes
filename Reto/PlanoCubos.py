@@ -19,6 +19,8 @@ from CuboB import CuboB
 from CuboB import Plataforma
 from Estante import Estante
 
+import agentpy as ap
+
 screen_width = 800
 screen_height = 800
 #vc para el obser.
@@ -59,99 +61,102 @@ estantes = []
 ncajas = 10
 cajas = []
 
-def Axis():
-    glShadeModel(GL_FLAT)
-    glLineWidth(3.0)
-    #X axis in red
-    glColor3f(1.0,0.0,0.0)
-    glBegin(GL_LINES)
-    glVertex3f(X_MIN,0.0,0.0)
-    glVertex3f(X_MAX,0.0,0.0)
-    glEnd()
-    #Y axis in green
-    glColor3f(0.0,1.0,0.0)
-    glBegin(GL_LINES)
-    glVertex3f(0.0,Y_MIN,0.0)
-    glVertex3f(0.0,Y_MAX,0.0)
-    glEnd()
-    #Z axis in blue
-    glColor3f(0.0,0.0,1.0)
-    glBegin(GL_LINES)
-    glVertex3f(0.0,0.0,Z_MIN)
-    glVertex3f(0.0,0.0,Z_MAX)
-    glEnd()
-    glLineWidth(1.0)
+class AgentModel(ap.Model):
+    def Axis(self):
+        glShadeModel(GL_FLAT)
+        glLineWidth(3.0)
+        #X axis in red
+        glColor3f(1.0,0.0,0.0)
+        glBegin(GL_LINES)
+        glVertex3f(X_MIN,0.0,0.0)
+        glVertex3f(X_MAX,0.0,0.0)
+        glEnd()
+        #Y axis in green
+        glColor3f(0.0,1.0,0.0)
+        glBegin(GL_LINES)
+        glVertex3f(0.0,Y_MIN,0.0)
+        glVertex3f(0.0,Y_MAX,0.0)
+        glEnd()
+        #Z axis in blue
+        glColor3f(0.0,0.0,1.0)
+        glBegin(GL_LINES)
+        glVertex3f(0.0,0.0,Z_MIN)
+        glVertex3f(0.0,0.0,Z_MAX)
+        glEnd()
+        glLineWidth(1.0)
 
-def Init():
-    screen = pygame.display.set_mode(
-        (screen_width, screen_height), DOUBLEBUF | OPENGL)
-    pygame.display.set_caption("Reto")
+    def setup(self):
+        screen = pygame.display.set_mode(
+            (screen_width, screen_height), DOUBLEBUF | OPENGL)
+        pygame.display.set_caption("Reto")
 
-    glMatrixMode(GL_PROJECTION)
-    glLoadIdentity()
-    gluPerspective(FOVY, screen_width/screen_height, ZNEAR, ZFAR)
+        glMatrixMode(GL_PROJECTION)
+        glLoadIdentity()
+        gluPerspective(FOVY, screen_width/screen_height, ZNEAR, ZFAR)
 
-    glMatrixMode(GL_MODELVIEW)
-    glLoadIdentity()
-    gluLookAt(EYE_X,EYE_Y,EYE_Z,CENTER_X,CENTER_Y,CENTER_Z,UP_X,UP_Y,UP_Z)
-    glClearColor(0,0,0,0)
-    glEnable(GL_DEPTH_TEST)
-    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
+        glMatrixMode(GL_MODELVIEW)
+        glLoadIdentity()
+        gluLookAt(EYE_X,EYE_Y,EYE_Z,CENTER_X,CENTER_Y,CENTER_Z,UP_X,UP_Y,UP_Z)
+        glClearColor(0,0,0,0)
+        glEnable(GL_DEPTH_TEST)
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
 
-    for i in range(ncubosB):
-        new_cubo_b = CuboB(DimBoard, 1)
-        cubos.append(new_cubo_b)
+        self.agents = ap.AgentDList(self, self.p.agents, CuboB)
 
-        plataforma_b = Plataforma(new_cubo_b, offset_z=10.0)
-    
-    for agente in cubos:
-        agente.setAgentes(cubos)
+        for i in range(rows):
+            estantes.append(Estante(10, DimBoard/rows * i, 8))
 
-    for i in range(rows):
-        estantes.append(Estante(10, DimBoard/rows * i, 8))
+        for i in range(ncajas):
+            cajas.append(CuboA(DimBoard, 10, 10))
 
-    for i in range(ncajas):
-        cajas.append(CuboA(DimBoard, 10, 10))
+    def step(self):
+        self.agents.step()
 
-def display():  
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-    Axis()
-    #Se dibuja el plano gris
-    glColor3f(0.3, 0.3, 0.3)
-    glBegin(GL_QUADS)
-    glVertex3d(-DimBoard, 0, -DimBoard)
-    glVertex3d(-DimBoard, 0, DimBoard)
-    glVertex3d(DimBoard, 0, DimBoard)
-    glVertex3d(DimBoard, 0, -DimBoard)
-    glEnd()
+    def update(self):  
 
-    #se dibujan estantes
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
 
-    for estante in estantes:
-        estante.draw()
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+        self.Axis()
+        #Se dibuja el plano gris
+        glColor3f(0.3, 0.3, 0.3)
+        glBegin(GL_QUADS)
+        glVertex3d(-DimBoard, 0, -DimBoard)
+        glVertex3d(-DimBoard, 0, DimBoard)
+        glVertex3d(DimBoard, 0, DimBoard)
+        glVertex3d(DimBoard, 0, -DimBoard)
+        glEnd()
 
-    #Se dibuja cubos
-    for obj in cubos:
-        obj.draw()
-        obj.update()
-    
-    if plataforma_b is not None:
-        plataforma_b.draw()
-        plataforma_b.update()
-    
-    for caja in cajas:
-        caja.draw()
+        #se dibujan estantes
 
-done = False
-Init()
-while not done:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            done = True
+        for estante in estantes:
+            estante.draw()
 
-    display()
+        #Se dibuja cubos
+        for obj in cubos:
+            obj.draw()
+            obj.update()
+        
+        if plataforma_b is not None:
+            plataforma_b.draw()
+            plataforma_b.update()
+        
+        for caja in cajas:
+            caja.draw()
 
-    pygame.display.flip()
-    pygame.time.wait(10)
+        self.agents.draw()
+
+        pygame.display.flip()
+        pygame.time.wait(10)
+
+parameters = {
+'agents': ncubosB,
+'steps': 1000
+}
+
+model = AgentModel(parameters)
+results = model.run()
 
 pygame.quit()
