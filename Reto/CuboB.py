@@ -13,26 +13,22 @@ import random
 import math
 import numpy as np
 
-from owlready2 import *
-import agentpy as ap
-
-onto = get_ontology("./Reto/ontology.owl").load()
-
-class CuboB(ap.Agent):
+class CuboB:
     
     def __init__(self, dim, vel):
         #vertices del cubo
         #self.points = [[0,0,0], [3,0,0], [3,0,2], [0,0,2], [0,2,0], [0,2,2], [1,0,0], [1,0,2], [1,2,0], [1,2,2], [3,1,2], [3,1,0],[1,1,0],[1,1,2]]
-        self.points = [[0,0,0], [3,0,0], [3,0,2], [0,0,2], [0,1,0], [0,1,2], [3,1,0], [3,1,2], [1.8,2.5,2.0],[1.8,2.5,0.0],[0.2,2.5,2.0],[0.2,2.5,0.0], [2.0,1.0,2.0], [2.0,1.0,0.0],[2.0,1.5,0.0],[2.0,1.5,2.0],[3.0,1.5,0.0],[3.0,1.5,2.0],[0.0,0.0,0.5],[0.0,0.0,1.5],[0.0,3.0,1.5],[0.0,3.0,0.5],[0.8,1.0,0.0],[0.8,1.0,2.0],[0.8,1.3,2.0],[0.8,1.3,0.0],[0.0,1.3,0.0],[0.0,1.3,2.0],[0,0,-0.5], [0,0,2.5], [-1,0,2.5], [-1,0,-0.5]]
+        self.points = np.array([[0,0,0], [3,0,0], [3,0,2], [0,0,2], [0,1,0], [0,1,2], [3,1,0], [3,1,2], [1.8,2.5,2.0],[1.8,2.5,0.0],[0.2,2.5,2.0],[0.2,2.5,0.0], [2.0,1.0,2.0], [2.0,1.0,0.0],[2.0,1.5,0.0],[2.0,1.5,2.0],[3.0,1.5,0.0],[3.0,1.5,2.0],[0.0,0.0,0.5],[0.0,0.0,1.5],[0.0,3.0,1.5],[0.0,3.0,0.5],[0.8,1.0,0.0],[0.8,1.0,2.0],[0.8,1.3,2.0],[0.8,1.3,0.0],[0.0,1.3,0.0],[0.0,1.3,2.0],[0,0,-0.5], [0,0,2.5], [-1,0,2.5], [-1,0,-0.5]])
         #                           0,       1,      2,        3,       4,      5,         6,       7,      8,              9,          10,             11,             12,         13,             14,         15,             16,         17,             18,          19,           20,             21,           22,          23,             24,           25,          26,          27,          28,          29,      30,      31,      32,      33
         self.DimBoard = dim
+        self.velocidad = vel
         ncol = 4
         dimcol = self.DimBoard / ncol
         #Se inicializa una posicion aleatoria en el tablero
         self.Position = []
-        self.Position.append(random.randint(-1 * self.DimBoard / dimcol, self.DimBoard / dimcol) * dimcol)
+        self.Position.append(random.randint(-1 * self.DimBoard, self.DimBoard))
         self.Position.append(5.0)
-        self.Position.append(random.randint(-1 * self.DimBoard / dimcol, self.DimBoard / dimcol) * dimcol)
+        self.Position.append(random.randint(-1 * self.DimBoard, self.DimBoard))
         #Se inicializa un vector de direccion aleatorio
         self.Direction = []
         self.Direction.append(1)
@@ -51,12 +47,8 @@ class CuboB(ap.Agent):
         self.radio = 20
         #Collision detection
         self.paused = False
-
-    def setup(self):
-        self.myself = onto.Agent(has_id = self.id)
-        self.myself.has_position = onto.Position(has_position_x = self.Position[0], has_position_z = self.Position[2])
-        print("hi")
-
+        self.at_origin = False
+        
 
     def setAgentes(self, agentes):
         self.otrosagentes = agentes
@@ -80,23 +72,51 @@ class CuboB(ap.Agent):
 
 
     def update(self):
-        self.collision()
-        if not self.paused:
+        if not self.at_origin:
             new_x = self.Position[0] + self.Direction[0]
             new_z = self.Position[2] + self.Direction[2]
-            
-            #detecc de que el objeto no se salga del area de navegacion
-            if(abs(new_x) <= self.DimBoard):
+
+            # Detección de que el objeto no se salga del área de navegación
+            if(abs(new_x) <= self.DimBoard and abs(new_z) <= self.DimBoard):
                 self.Position[0] = new_x
-            else:
-                self.Direction[0] *= -1.0
-                self.Position[0] += self.Direction[0]
-            
-            if(abs(new_z) <= self.DimBoard):
                 self.Position[2] = new_z
             else:
-                self.Direction[2] *= -1.0
-                self.Position[2] += self.Direction[2] 
+                # Si el cubo toca un límite, rebota hacia el origen (0, 0, 0)
+                direction_to_origin_x = -self.Position[0]
+                direction_to_origin_z = -self.Position[2]
+
+                # Normalizamos la dirección hacia el origen
+                magnitude = math.sqrt(direction_to_origin_x ** 2 + direction_to_origin_z ** 2)
+                self.Direction[0] = direction_to_origin_x / magnitude
+                self.Direction[2] = direction_to_origin_z / magnitude
+
+                # Ajustamos la posición para "rebotar" al origen
+                self.Position[0] += self.Direction[0]
+                self.Position[2] += self.Direction[2]
+
+                # Si el objeto está cerca del origen, lo marcamos y asignamos nueva dirección aleatoria
+                if abs(self.Position[0]) < 0.1 and abs(self.Position[2]) < 0.1:  # Consideramos un pequeño margen de error
+                    self.at_origin = True
+                    # Nueva dirección aleatoria
+                    self.Direction[0] = random.random() * 2 - 1  # Dirección aleatoria entre -1 y 1
+                    self.Direction[2] = random.random() * 2 - 1  # Dirección aleatoria entre -1 y 1
+
+                    # Normalizamos la nueva dirección aleatoria
+                    magnitude = math.sqrt(self.Direction[0] ** 2 + self.Direction[2] ** 2)
+                    self.Direction[0] /= magnitude
+                    self.Direction[2] /= magnitude
+        else:
+            # Si ya hemos llegado al origen, reiniciamos la posición y esperamos para seguir moviéndonos
+            self.Position = [0.0, 5.0, 0.0]
+            self.at_origin = False
+
+
+
+
+
+
+
+
 
     def drawFaces(self):
         #base
@@ -283,7 +303,7 @@ class CuboB(ap.Agent):
     def draw(self):
         glPushMatrix()
         glTranslatef(self.Position[0], self.Position[1], self.Position[2])
-        glScaled(10,10,10)
+        glScaled(15,15,15)
         self.drawFaces()
         glPopMatrix()
         
