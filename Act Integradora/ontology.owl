@@ -3,10 +3,10 @@
          xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
          xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
          xmlns:owl="http://www.w3.org/2002/07/owl#"
-         xml:base="./Reto/ontology.owl"
-         xmlns="./Reto/ontology.owl#">
+         xml:base="./Act Integradora/ontology.owl"
+         xmlns="./Act Integradora/ontology.owl#">
 
-<owl:Ontology rdf:about="./Reto/ontology.owl"/>
+<owl:Ontology rdf:about="./Act Integradora/ontology.owl"/>
 
 <owl:ObjectProperty rdf:about="#has_position">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>

@@ -16,7 +16,7 @@ import numpy as np
 from owlready2 import *
 import agentpy as ap
 
-onto = get_ontology("./Reto/ontology.owl").load()
+onto = get_ontology("./Act Integradora/ontology.owl").load()
 
 class CuboB(ap.Agent):
 

@@ -1,6 +1,6 @@
 from owlready2 import *
 
-onto = get_ontology("./Reto/ontology.owl")
+onto = get_ontology("./Act Integradora/ontology.owl")
 
 #if onto is not None:
 #    onto.destroy()
@@ -31,4 +31,4 @@ with onto:
         domain = [Agent]
         range = [int]
 
-onto.save("./Reto/ontology.owl")
+onto.save("./Act Integradora/ontology.owl")
