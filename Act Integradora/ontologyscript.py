@@ -15,7 +15,7 @@ with onto:
     class Box(Agent):
         pass
 
-    class Position(Agent):
+    class Position(Thing):
         pass
 
     class has_position(FunctionalProperty, ObjectProperty):
@@ -33,5 +33,7 @@ with onto:
     class has_id(FunctionalProperty, DataProperty):
         domain = [AgentMover]
         range = [int]
+
+        
 
 onto.save("./Act Integradora/ontology.owl")

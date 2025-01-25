@@ -17,13 +17,42 @@ from owlready2 import *
 import agentpy as ap
 
 class CuboB(ap.Agent):
+
+    def defineOnto(self, onto):
+        with onto: 
+            class Agent(Thing):
+                pass
+
+            class AgentMover(Agent):
+                pass
+
+            class Box(Agent):
+                pass
+
+            class Position(Thing):
+                pass
+
+            class has_position(FunctionalProperty, ObjectProperty):
+                domain = [AgentMover]
+                range = [Position]
+
+            class has_position_x(FunctionalProperty, DataProperty):
+                domain = [Position]
+                range = [int]
+
+            class has_position_z(FunctionalProperty, DataProperty):
+                domain = [Position]
+                range = [int]
+
+            class has_id(FunctionalProperty, DataProperty):
+                domain = [AgentMover]
+                range = [int]
+
     def setup(self):
         onto = get_ontology("./Act Integradora/ontology.owl").load()
-        
-        #Si alguien puede mejorar esto estaría muy padre. en mi env no quiere jalar bien el import
-        self.myself = list(onto.ontology.classes())[0]()
-        self.myself.has_id = self.id
-        #self.myself.has_position = list(onto.ontology.classes())[1](has_position_x = self.Position[0], has_position_z = self.Position[2])
+
+        #Si no se carga desde aqui como que no funciona. Si alguien puediera arreglar esto estaría bien :D
+        self.defineOnto(onto)
 
         #vertices del cubo
         #self.points = [[0,0,0], [3,0,0], [3,0,2], [0,0,2], [0,2,0], [0,2,2], [1,0,0], [1,0,2], [1,2,0], [1,2,2], [3,1,2], [3,1,0],[1,1,0],[1,1,2]]
@@ -53,6 +82,12 @@ class CuboB(ap.Agent):
         #Collision detection
         self.goingorigin = False
         self.collided = True
+
+        #Si alguien puede mejorar esto estaría muy padre. en mi env no quiere jalar bien el import
+        self.myself = onto.AgentMover()
+        self.myself.has_id = self.id
+        self.myself.has_position = onto.Position(has_position_x = self.Position[0], has_position_z = self.Position[2])
+
         onto.save("./Act Integradora/ontology.owl")
         
 
