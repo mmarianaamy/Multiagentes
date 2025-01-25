@@ -101,7 +101,7 @@ class AgentModel(ap.Model):
         glEnable(GL_DEPTH_TEST)
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
 
-        self.agents = ap.AgentDList(self, self.p.agents, CuboB)
+        self.agents = ap.AgentList(self, self.p.agents, CuboB)
         self.agents.setAgentes(list(self.agents))
 
         for i in range(rows):

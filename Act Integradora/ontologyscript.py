@@ -1,22 +1,25 @@
 from owlready2 import *
 
-onto = get_ontology("./Act Integradora/ontology.owl")
+onto = get_ontology("./Act Integradora/ontology.owl").load()
 
 #if onto is not None:
 #    onto.destroy()
 
-with onto:
+with onto: 
     class Agent(Thing):
         pass
-    
-    class Box(Thing):
+
+    class AgentMover(Agent):
         pass
 
-    class Position(Thing):
+    class Box(Agent):
+        pass
+
+    class Position(Agent):
         pass
 
     class has_position(FunctionalProperty, ObjectProperty):
-        domain = [Agent]
+        domain = [AgentMover]
         range = [Position]
 
     class has_position_x(FunctionalProperty, DataProperty):
@@ -28,7 +31,7 @@ with onto:
         range = [int]
 
     class has_id(FunctionalProperty, DataProperty):
-        domain = [Agent]
+        domain = [AgentMover]
         range = [int]
 
 onto.save("./Act Integradora/ontology.owl")

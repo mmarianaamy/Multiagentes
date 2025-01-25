@@ -16,13 +16,15 @@ import numpy as np
 from owlready2 import *
 import agentpy as ap
 
-onto = get_ontology("./Act Integradora/ontology.owl").load()
-
 class CuboB(ap.Agent):
-
     def setup(self):
-        #self.myself = onto.Agent(has_id = self.id)
-        #self.myself.has_position = onto.Position(has_position_x = self.Position[0], has_position_z = self.Position[2])
+        onto = get_ontology("./Act Integradora/ontology.owl").load()
+        
+        #Si alguien puede mejorar esto estaría muy padre. en mi env no quiere jalar bien el import
+        self.myself = list(onto.ontology.classes())[0]()
+        self.myself.has_id = self.id
+        #self.myself.has_position = list(onto.ontology.classes())[1](has_position_x = self.Position[0], has_position_z = self.Position[2])
+
         #vertices del cubo
         #self.points = [[0,0,0], [3,0,0], [3,0,2], [0,0,2], [0,2,0], [0,2,2], [1,0,0], [1,0,2], [1,2,0], [1,2,2], [3,1,2], [3,1,0],[1,1,0],[1,1,2]]
         self.points = [[0,0,0], [3,0,0], [3,0,2], [0,0,2], [0,1,0], [0,1,2], [3,1,0], [3,1,2], [1.8,2.5,2.0],[1.8,2.5,0.0],[0.2,2.5,2.0],[0.2,2.5,0.0], [2.0,1.0,2.0], [2.0,1.0,0.0],[2.0,1.5,0.0],[2.0,1.5,2.0],[3.0,1.5,0.0],[3.0,1.5,2.0],[0.0,0.0,0.5],[0.0,0.0,1.5],[0.0,3.0,1.5],[0.0,3.0,0.5],[0.8,1.0,0.0],[0.8,1.0,2.0],[0.8,1.3,2.0],[0.8,1.3,0.0],[0.0,1.3,0.0],[0.0,1.3,2.0],[0,0,-0.5], [0,0,2.5], [-1,0,2.5], [-1,0,-0.5]]
@@ -51,6 +53,7 @@ class CuboB(ap.Agent):
         #Collision detection
         self.goingorigin = False
         self.collided = True
+        onto.save("./Act Integradora/ontology.owl")
         
 
     def setAgentes(self, agentes):
