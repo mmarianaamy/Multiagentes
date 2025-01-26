@@ -61,11 +61,7 @@ class CuboB(ap.Agent):
 
             class has_id(FunctionalProperty, DataProperty):
                 domain = [AgentMover]
-                range = [int]
-
-            class going_origin(FunctionalProperty, DataProperty):
-                domain = [AgentMover]
-                range = [bool]
+                range = [int] 
 
             class has_collided(FunctionalProperty, DataProperty):
                 domain = [AgentMover]
