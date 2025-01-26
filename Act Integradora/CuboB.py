@@ -17,68 +17,18 @@ from owlready2 import *
 import agentpy as ap
 
 class CuboB(ap.Agent):
-
-    def defineOnto(self):
-        with self.onto: 
-            class Agent(Thing):
-                pass
-
-            class AgentMover(Agent):
-                pass
-
-            class Box(Thing):
-                pass
-
-            class Position(Thing):
-                pass
-
-            class Direction(Thing):
-                pass
-
-            class has_position(FunctionalProperty, ObjectProperty):
-                domain = [AgentMover]
-                range = [Position]
-
-            class has_position_x(FunctionalProperty, DataProperty):
-                domain = [Position]
-                range = [int]
-
-            class has_position_z(FunctionalProperty, DataProperty):
-                domain = [Position]
-                range = [int]
-
-            class has_direction(FunctionalProperty, ObjectProperty):
-                domain = [AgentMover]
-                range = [Direction]
-
-            class has_direction_x(FunctionalProperty, DataProperty):
-                domain = [Direction]
-                range = [float]
-
-            class has_direction_z(FunctionalProperty, DataProperty):
-                domain = [Direction]
-                range = [float]
-
-            class has_id(FunctionalProperty, DataProperty):
-                domain = [AgentMover]
-                range = [int] 
-
-            class has_collided(FunctionalProperty, DataProperty):
-                domain = [AgentMover]
-                range = [bool]
-
-            
-
     def setup(self):
-        self.onto = get_ontology("./Act Integradora/ontology.owl").load()
-
-        #Si no se carga desde aqui como que no funciona. Si alguien puediera arreglar esto estaría bien :D
-        self.defineOnto()
+        onto = get_ontology("./Act Integradora/ontology.owl").load()
+        
+        #Si alguien puede mejorar esto estaría muy padre. en mi env no quiere jalar bien el import
+        self.myself = list(onto.ontology.classes())[0]()
+        self.myself.has_id = self.id
+        #self.myself.has_position = list(onto.ontology.classes())[1](has_position_x = self.Position[0], has_position_z = self.Position[2])
 
         #vertices del cubo
+        #self.points = [[0,0,0], [3,0,0], [3,0,2], [0,0,2], [0,2,0], [0,2,2], [1,0,0], [1,0,2], [1,2,0], [1,2,2], [3,1,2], [3,1,0],[1,1,0],[1,1,2]]
         self.points = [[0,0,0], [3,0,0], [3,0,2], [0,0,2], [0,1,0], [0,1,2], [3,1,0], [3,1,2], [1.8,2.5,2.0],[1.8,2.5,0.0],[0.2,2.5,2.0],[0.2,2.5,0.0], [2.0,1.0,2.0], [2.0,1.0,0.0],[2.0,1.5,0.0],[2.0,1.5,2.0],[3.0,1.5,0.0],[3.0,1.5,2.0],[0.0,0.0,0.5],[0.0,0.0,1.5],[0.0,3.0,1.5],[0.0,3.0,0.5],[0.8,1.0,0.0],[0.8,1.0,2.0],[0.8,1.3,2.0],[0.8,1.3,0.0],[0.0,1.3,0.0],[0.0,1.3,2.0],[0,0,-0.5], [0,0,2.5], [-1,0,2.5], [-1,0,-0.5]]
         #                0,       1,      2,        3,       4,      5,         6,       7,      8,              9,          10,             11,             12,         13,             14,         15,             16,         17,             18,          19,           20,             21,           22,          23,             24,           25,          26,          27,          28,          29,      30,      31,      32,      33
-        
         self.DimBoard = 200
         ncol = 4
         dimcol = self.DimBoard / ncol
@@ -100,41 +50,27 @@ class CuboB(ap.Agent):
         self.otrosagentes = []
         #TODO: cambiar valor de radio
         self.radio = 40
-
-        #Si alguien puede mejorar esto estaría muy padre. en mi env no quiere jalar bien el import si no es en el mismo archivo
-        self.myself = self.onto.AgentMover()
-        self.myself.has_id = self.id
-        self.myself.has_position = self.onto.Position(has_position_x = self.Position[0], has_position_z = self.Position[2])
-        self.myself.has_direction = self.onto.Direction(has_direction_x= self.Direction[0], has_direction_z = self.Direction[2])
-        self.myself.has_collided = False
-
-        self.B = {
-            "position": self.myself.has_position,
-            "direction": self.myself.has_direction,
-            "agents": self.otrosagentes,
-            "boxes": self.model.cajas,
-        }
-
-        self.I = None
-        self.D = None
-        self.plan = []
-
-        self.onto.save("./Act Integradora/ontology.owl")
+        #Collision detection
+        self.goingorigin = False
+        self.collided = True
+        onto.save("./Act Integradora/ontology.owl")
         
 
     def setAgentes(self, agentes):
         self.otrosagentes = agentes
 
+
     def collision(self):
-        self.myself.has_collided = False
+        self.at_origin = False
+        self.collided = False
         for agent in self.otrosagentes:
             if self != agent:
                 #Encontrar distancia entre agentes
-                dx = agent.myself.has_position.has_position_x - self.myself.has_position.has_position_x
-                dz =agent.myself.has_position.has_position_z - self.myself.has_position.has_position_z
+                dx = agent.Position[0] - self.Position[0]
+                dz = agent.Position[2] - self.Position[2]
                 dc = math.sqrt(dx ** 2 + dz**2)
                 if dc < self.radio + agent.radio:
-                    self.myself.has_collided = True
+                    self.collided = True
                     
     def drawFaces(self):
         #base
@@ -333,85 +269,56 @@ class CuboB(ap.Agent):
 
     #Dirección aleatorio asignado
     def randomDirection(self):
-        self.myself.has_direction.has_direction_x = random.random() * 2 - 1  # Dirección aleatoria entre -1 y 1
-        self.myself.has_direction.has_direction_z = random.random() * 2 - 1  # Dirección aleatoria entre -1 y 1
+        self.at_origin = False
+        self.Direction[0] = random.random() * 2 - 1  # Dirección aleatoria entre -1 y 1
+        self.Direction[2] = random.random() * 2 - 1  # Dirección aleatoria entre -1 y 1
 
         # Normalizamos la nueva dirección aleatoria
-        magnitude = math.sqrt(self.myself.has_direction.has_direction_x ** 2 + self.myself.has_direction.has_direction_z ** 2)
-        self.myself.has_direction.has_direction_x /= magnitude
-        self.myself.has_direction.has_direction_z /= magnitude
+        magnitude = math.sqrt(self.Direction[0] ** 2 + self.Direction[2] ** 2)
+        self.Direction[0] /= magnitude
+        self.Direction[2] /= magnitude
 
     #movimiento
     def move(self):
-        new_x = self.myself.has_position.has_position_x + self.myself.has_direction.has_direction_x
-        new_z = self.myself.has_position.has_position_z + self.myself.has_direction.has_direction_z
+        new_x = self.Position[0] + self.Direction[0]
+        new_z = self.Position[2] + self.Direction[2]
         
-        self.myself.has_position = self.onto.Position(has_position_x = new_x, has_position_z = new_z)
-
         #detecc de que el objeto no se salga del area de navegacion
-        if(abs(new_x) > self.DimBoard):
-            self.myself.has_direction = self.onto.Direction(has_direction_x = self.myself.has_direction.has_direction_x * -1, has_direction_z = self.myself.has_direction.has_direction_z)
-            self.myself.has_position = self.onto.Position(has_position_x=self.myself.has_position.has_position_x + self.myself.has_direction.has_direction_x, has_position_z=self.myself.has_position.has_position_z)
+        if(abs(new_x) <= self.DimBoard):
+            self.Position[0] = new_x
+        else:
+            self.Direction[0] *= -1.0
+            self.Position[0] += self.Direction[0]
         
-        if(abs(new_z) > self.DimBoard):
-            self.myself.has_direction = self.onto.Direction(has_direction_x = self.myself.has_direction.has_direction_x, has_direction_z = self.myself.has_direction.has_direction_z * -1)
-            self.myself.has_position = self.onto.Position(has_position_x=self.myself.has_position.has_position_x, has_position_z=self.myself.has_position.has_position_z + self.myself.has_direction.has_direction_z)
+        if(abs(new_z) <= self.DimBoard):
+            self.Position[2] = new_z
+        else:
+            self.Direction[2] *= -1.0
+            self.Position[2] += self.Direction[2] 
 
     #Dirección hacia orígen
     def pointToOrigin(self):
-        # Apunta hacia el origen
-        direction_to_origin_x = -self.myself.has_position.has_position_x
-        direction_to_origin_z = -self.myself.has_position.has_position_z
+        # Si el cubo toca un límite, rebota hacia el origen (0, 0, 0)
+        direction_to_origin_x = -self.Position[0]
+        direction_to_origin_z = -self.Position[2]
 
         # Normalizamos la dirección hacia el origen
         magnitude = math.sqrt(direction_to_origin_x ** 2 + direction_to_origin_z ** 2)
-        self.myself.has_direction.has_direction_x = direction_to_origin_x / magnitude
-        self.myself.has_direction.has_direction_z = direction_to_origin_z / magnitude
+        self.Direction[0] = direction_to_origin_x / magnitude
+        self.Direction[2] = direction_to_origin_z / magnitude
 
     #Verdadero si está en el orígen
     def atOrigin(self):
-        return abs(self.myself.has_position.has_position_x) < 0.1 and abs(self.myself.has_position.has_position_z) < 0.1
+        return abs(self.Position[0]) < 0.1 and abs(self.Position[2]) < 0.1
 
     def pause(self):
-        self.myself.has_direction.has_direction_x = 0
-        self.myself.has_direction.has_direction_z = 0
-
-    def execute(self):
-        if (len(self.plan) > 0):
-            action = self.plan.pop()
-            if action is not None:
-                action()
-
-    def BDI(self):
-        self.brf()
-        self.options()
-        self.filter()
-        #self.create_plan()
-
-    def brf(self):
-        self.B["position"] = self.myself.has_position
-        self.B["direction"] = self.myself.has_direction
-        self.B["boxes"] = self.model.cajas
-
-    def options(self):
-        self.D = []
-        for i in self.B["boxes"]:
-            self.D.append(i.Position)
-    
-    def filter(self):
-        self.I = None
-
+        self.Direction[0] = 0
+        self.Direction[2] = 0
 
     def step(self):
-
-        if (len(self.plan) == 0):
-            self.BDI()
-
-        self.execute()
-
         self.collision()
 
-        if self.myself.has_collided:
+        if self.collided:
             self.randomDirection()
         
         #falta implementar go to origin, pero ya que tengamos cajas
@@ -478,18 +385,17 @@ class Plataforma:
 
         # Sincronizar la posición de la caja cargada con la plataforma
         if self.caja_cargada:
-            self.caja_cargada.Position[0] = self.carrito.myself.has_position.has_position_x + self.offset_x
+            self.caja_cargada.Position[0] = self.carrito.Position[0] + self.offset_x
             self.caja_cargada.Position[1] = self.carrito.Position[1] + self.posY + 5  # Ajuste de altura
-            self.caja_cargada.Position[2] = self.carrito.myself.has_position.has_position_z + self.offset_z
+            self.caja_cargada.Position[2] = self.carrito.Position[2] + self.offset_z
             print(f"Caja sincronizada en posición: {self.caja_cargada.Position}")
 
     def draw(self):
         """
         Dibuja la plataforma.
         """
-        cx = self.carrito.myself.has_position.has_position_x
-        cy = 5
-        cz = self.carrito.myself.has_position.has_position_z
+        cx, cy, cz = self.carrito.Position
+
         glPushMatrix()
         glTranslatef(cx + self.offset_x, cy + self.posY + self.offset_y, cz + self.offset_z)
         glScalef(20, 1, 20)
