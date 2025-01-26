@@ -2,10 +2,10 @@ from owlready2 import *
 
 onto = get_ontology("./Act Integradora/ontology.owl").load()
 
-#if onto is not None:
-#    onto.destroy()
+if onto is not None:
+    onto.destroy()
 
-with onto: 
+"""with onto: 
     class Agent(Thing):
         pass
 
@@ -32,8 +32,6 @@ with onto:
 
     class has_id(FunctionalProperty, DataProperty):
         domain = [AgentMover]
-        range = [int]
-
-        
+        range = [int]"""
 
 onto.save("./Act Integradora/ontology.owl")
