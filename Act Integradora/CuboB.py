@@ -319,7 +319,14 @@ class CuboB(ap.Agent):
         
     def draw(self):
         glPushMatrix()
-        glTranslatef(self.myself.has_position.has_position_x, self.Position[1], self.myself.has_position.has_position_z)
+        glTranslatef(self.Position[0], self.Position[1], self.Position[2])
+    
+    # Calculate rotation angle
+    # If moving along X and Z plane
+        angle = math.degrees(math.atan2(self.Direction[0], self.Direction[2]))
+        angle += 90
+        glRotatef(angle, 0, 1, 0)  # Rotate around Y-axis
+    
         glScaled(15,15,15)
         self.drawFaces()
         glPopMatrix()
