@@ -414,48 +414,82 @@ class CuboB(ap.Agent):
         
     
 class Plataforma:
-    def __init__(self, carrito, offset_z=5.0):
+    def __init__(self, carrito, offset_x=0.0, offset_y=0.0, offset_z=10.0):
         self.carrito = carrito
+        self.offset_x = offset_x
+        self.offset_y = offset_y
         self.offset_z = offset_z
-        
+
+        self.size = 20  # Tamaño de la plataforma (ancho y largo)
+        self.caja_cargada = None  # Referencia a la caja actual cargada (si hay alguna)
+        self.posY = 0.0  # Altura inicial de la plataforma
+        self.alzada = False  # Indica si la plataforma está arriba
+
+        # Define los puntos de la plataforma para el método draw
         self.points = [
-            [ 0, 1,  1],
-            [ 0, -1, -1],
-            [-1, -1, -1],
-            [-1, 1,  1]
+            [-1.0, 0.0, 1.0],  # Esquina delantera izquierda
+            [0.0, 0.0, 1.0],   # Esquina delantera derecha
+            [0.0, 0.0, -1.0],  # Esquina trasera derecha
+            [-1.0, 0.0, -1.0], # Esquina trasera izquierda
         ]
 
-        # Posición de la plataforma en Y
-        self.posY = 0.0       
+    def detectar_colision(self, caja):
+        """
+        Detecta colisión con una caja (Cubo A).
+        """
+        # Posición de la plataforma
+        px, py, pz = self.carrito.Position
+        half_size = self.size  # Duplica el tamaño de detección
+
+        # Posición de la caja
+        cx, cy, cz = caja.Position
+
+        # Duplica el rango de detección para colisión
+        colision_x = (px - half_size * 2 <= cx <= px + half_size * 2)  # Aumenta el rango en X
+        colision_z = (pz - half_size * 2 <= cz <= pz + half_size * 2)  # Aumenta el rango en Z
+        colision_y = abs(cy - py) <= 20  # Mantén o ajusta el rango en Y si es necesario
+
+        return colision_x and colision_y and colision_z
+
+    def levantar_caja(self, caja):
+        """
+        Engancha la caja a la plataforma y comienza a subir.
+        """
+        self.caja_cargada = caja
+        self.alzada = True  # Indica que la plataforma debe subir
+
 
     def update(self):
         """
-        En lugar de usar tiempo o frames, usaremos
-        la posición en X del carrito para determinar
-        si sube (2.0) o baja (0.0).
+        Actualiza el estado de la plataforma y la posición de la caja cargada.
+        """
+        # Controlar el movimiento vertical de la plataforma
+        if self.alzada and self.posY < 20:  # Subir si está levantada
+            self.posY += 0.2
+        elif not self.alzada and self.posY > 0:  # Bajar si no está levantada
+            self.posY -= 0.2
+
+        # Sincronizar la posición de la caja cargada con la plataforma
+        if self.caja_cargada:
+            self.caja_cargada.Position[0] = self.carrito.Position[0] + self.offset_x
+            self.caja_cargada.Position[1] = self.carrito.Position[1] + self.posY + 5  # Ajuste de altura
+            self.caja_cargada.Position[2] = self.carrito.Position[2] + self.offset_z
+            print(f"Caja sincronizada en posición: {self.caja_cargada.Position}")
+
+    def draw(self):
+        """
+        Dibuja la plataforma.
         """
         cx, cy, cz = self.carrito.Position
 
-        # Si cx >= 0, plataforma sube
-        if cx >= 0 and self.posY < 20:
-            self.posY += 0.1   # Sube lentamente, 0.1 cada frame
-        elif cx < 0 and self.posY > 0:
-            self.posY -= 0.1   # Baja lentamente, 0.1 cada frame
-
-
-    def draw(self):
-        cx, cy, cz = self.carrito.Position
-        
         glPushMatrix()
-        # Trasladamos según posición del carrito,
-        # offset en Z, y la posY calculada.
-        glTranslatef(cx, cy + self.posY, cz + self.offset_z)
+        glTranslatef(cx + self.offset_x, cy + self.posY + self.offset_y, cz + self.offset_z)
         glScalef(20, 1, 20)
 
         glBegin(GL_QUADS)
-        glColor3f(1.0, 0.0, 0.0)
+        glColor3f(1.0, 0.0, 0.0)  # Rojo para distinguir
         for v in self.points:
             glVertex3fv(v)
         glEnd()
-        
+
         glPopMatrix()
