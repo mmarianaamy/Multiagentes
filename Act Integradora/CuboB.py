@@ -26,7 +26,7 @@ class CuboB(ap.Agent):
             class AgentMover(Agent):
                 pass
 
-            class Box(Agent):
+            class Box(Thing):
                 pass
 
             class Position(Thing):
@@ -104,17 +104,24 @@ class CuboB(ap.Agent):
         self.otrosagentes = []
         #TODO: cambiar valor de radio
         self.radio = 40
-        #Collision detection
-        self.goingorigin = False
-        self.collided = False
 
-        #Si alguien puede mejorar esto estaría muy padre. en mi env no quiere jalar bien el import
+        #Si alguien puede mejorar esto estaría muy padre. en mi env no quiere jalar bien el import si no es en el mismo archivo
         self.myself = self.onto.AgentMover()
         self.myself.has_id = self.id
         self.myself.has_position = self.onto.Position(has_position_x = self.Position[0], has_position_z = self.Position[2])
         self.myself.has_direction = self.onto.Direction(has_direction_x= self.Direction[0], has_direction_z = self.Direction[2])
-        self.myself.going_origin = False
         self.myself.has_collided = False
+
+        self.B = {
+            "position": self.myself.has_position,
+            "direction": self.myself.has_direction,
+            "agents": self.otrosagentes,
+            "boxes": self.model.cajas,
+        }
+
+        self.I = None
+        self.D = None
+        self.plan = []
 
         self.onto.save("./Act Integradora/ontology.owl")
         
@@ -122,9 +129,7 @@ class CuboB(ap.Agent):
     def setAgentes(self, agentes):
         self.otrosagentes = agentes
 
-
     def collision(self):
-        self.at_origin = False
         self.myself.has_collided = False
         for agent in self.otrosagentes:
             if self != agent:
@@ -325,7 +330,6 @@ class CuboB(ap.Agent):
 
     #Dirección aleatorio asignado
     def randomDirection(self):
-        self.at_origin = False
         self.myself.has_direction.has_direction_x = random.random() * 2 - 1  # Dirección aleatoria entre -1 y 1
         self.myself.has_direction.has_direction_z = random.random() * 2 - 1  # Dirección aleatoria entre -1 y 1
 
@@ -346,15 +350,13 @@ class CuboB(ap.Agent):
             self.myself.has_direction = self.onto.Direction(has_direction_x = self.myself.has_direction.has_direction_x * -1, has_direction_z = self.myself.has_direction.has_direction_z)
             self.myself.has_position = self.onto.Position(has_position_x=self.myself.has_position.has_position_x + self.myself.has_direction.has_direction_x, has_position_z=self.myself.has_position.has_position_z)
         
-        print(self.myself.has_position.has_position_z, new_z)
-
         if(abs(new_z) > self.DimBoard):
             self.myself.has_direction = self.onto.Direction(has_direction_x = self.myself.has_direction.has_direction_x, has_direction_z = self.myself.has_direction.has_direction_z * -1)
             self.myself.has_position = self.onto.Position(has_position_x=self.myself.has_position.has_position_x, has_position_z=self.myself.has_position.has_position_z + self.myself.has_direction.has_direction_z)
 
     #Dirección hacia orígen
     def pointToOrigin(self):
-        # Si el cubo toca un límite, rebota hacia el origen (0, 0, 0)
+        # Apunta hacia el origen
         direction_to_origin_x = -self.myself.has_position.has_position_x
         direction_to_origin_z = -self.myself.has_position.has_position_z
 
@@ -371,7 +373,39 @@ class CuboB(ap.Agent):
         self.myself.has_direction.has_direction_x = 0
         self.myself.has_direction.has_direction_z = 0
 
+    def execute(self):
+        if (len(self.plan) > 0):
+            action = self.plan.pop()
+            if action is not None:
+                action()
+
+    def BDI(self):
+        self.brf()
+        self.options()
+        self.filter()
+        #self.create_plan()
+
+    def brf(self):
+        self.B["position"] = self.myself.has_position
+        self.B["direction"] = self.myself.has_direction
+        self.B["boxes"] = self.model.cajas
+
+    def options(self):
+        self.D = []
+        for i in self.B["boxes"]:
+            self.D.append(i.Position)
+    
+    def filter(self):
+        self.I = None
+
+
     def step(self):
+
+        if (len(self.plan) == 0):
+            self.BDI()
+
+        self.execute()
+
         self.collision()
 
         if self.myself.has_collided:

@@ -59,7 +59,6 @@ plataforma_b = None
 rows = 5
 estantes = []
 ncajas = 10
-cajas = []
 
 class AgentModel(ap.Model):
     def Axis(self):
@@ -100,7 +99,8 @@ class AgentModel(ap.Model):
         glClearColor(0,0,0,0)
         glEnable(GL_DEPTH_TEST)
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
-
+        
+        self.cajas = []
         self.agents = ap.AgentList(self, self.p.agents, CuboB)
         self.agents.setAgentes(list(self.agents))
 
@@ -108,7 +108,7 @@ class AgentModel(ap.Model):
             estantes.append(Estante(10, DimBoard/rows * i, 8))
 
         for i in range(ncajas):
-            cajas.append(CuboA(DimBoard, 10, 10))
+            self.cajas.append(CuboA(DimBoard, 10, 10))
 
     def step(self):
         self.agents.step()
@@ -144,7 +144,7 @@ class AgentModel(ap.Model):
             plataforma_b.draw()
             plataforma_b.update()
         
-        for caja in cajas:
+        for caja in self.cajas:
             caja.draw()
 
         self.agents.draw()
