@@ -53,7 +53,7 @@ pygame.init()
 #cubo = Cubo(DimBoard, 1.0)
 cubos = []
 #ncubosA = 2
-ncubosB = 2
+ncubosB = 5
 plataforma_b = None
 
 rows = 0
@@ -150,7 +150,7 @@ class AgentModel(ap.Model):
             plataforma_b.update()
         
         for caja in self.cajas:
-            obj.draw()
+            caja.draw()
 
         # Detectar colisiones y levantar cajas
         for plataforma in plataformas:
@@ -173,7 +173,7 @@ class AgentModel(ap.Model):
             plataforma.draw()
 
         # Dibujar las cajas (las que no están cargadas se dibujan normalmente)
-        for caja in cajas:
+        for caja in self.cajas:
             if plataforma.caja_cargada != caja:  # No redibujar la caja cargada
                 caja.draw()
 

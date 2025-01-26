@@ -471,17 +471,18 @@ class Plataforma:
 
         # Sincronizar la posición de la caja cargada con la plataforma
         if self.caja_cargada:
-            self.caja_cargada.Position[0] = self.carrito.Position[0] + self.offset_x
+            self.caja_cargada.Position[0] = self.carrito.myself.has_position.has_position_x + self.offset_x
             self.caja_cargada.Position[1] = self.carrito.Position[1] + self.posY + 5  # Ajuste de altura
-            self.caja_cargada.Position[2] = self.carrito.Position[2] + self.offset_z
+            self.caja_cargada.Position[2] = self.carrito.myself.has_position.has_position_z + self.offset_z
             print(f"Caja sincronizada en posición: {self.caja_cargada.Position}")
 
     def draw(self):
         """
         Dibuja la plataforma.
         """
-        cx, cy, cz = self.carrito.Position
-
+        cx = self.carrito.myself.has_position.has_position_x
+        cy = 5
+        cz = self.carrito.myself.has_position.has_position_z
         glPushMatrix()
         glTranslatef(cx + self.offset_x, cy + self.posY + self.offset_y, cz + self.offset_z)
         glScalef(20, 1, 20)
