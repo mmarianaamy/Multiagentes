@@ -156,7 +156,6 @@ class AgentModel(ap.Model):
         for plataforma in plataformas:
             for caja in self.cajas:
                 if plataforma.caja_cargada is None and plataforma.detectar_colision(caja):
-                    print(f"Levantando la caja en {caja.Position}")
                     plataforma.levantar_caja(caja)
 
             # Actualizar la plataforma (y la caja cargada, si existe)
@@ -176,6 +175,14 @@ class AgentModel(ap.Model):
         for caja in self.cajas:
             if plataforma.caja_cargada != caja:  # No redibujar la caja cargada
                 caja.draw()
+
+        i = 0
+        while i < len(self.cajas):
+            if self.cajas[i] == None:
+                self.cajas.pop(i)
+            elif self.cajas[i].Position[0] < 20 and self.cajas[i].Position[2] < 20:
+                self.cajas.pop(i)
+            i += 1
 
         self.agents.draw()
 

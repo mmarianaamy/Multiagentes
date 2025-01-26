@@ -118,6 +118,7 @@ class CuboB(ap.Agent):
         self.I = None
         self.D = None
         self.plan = []
+        self.randomDirection()
 
         self.onto.save("./Act Integradora/ontology.owl")
         
@@ -135,6 +136,7 @@ class CuboB(ap.Agent):
                 dc = math.sqrt(dx ** 2 + dz**2)
                 if dc < self.radio + agent.radio:
                     self.myself.has_collided = True
+                    self.randomDirection()
                     
     def drawFaces(self):
         #base
@@ -360,6 +362,16 @@ class CuboB(ap.Agent):
         magnitude = math.sqrt(direction_to_origin_x ** 2 + direction_to_origin_z ** 2)
         self.myself.has_direction.has_direction_x = direction_to_origin_x / magnitude
         self.myself.has_direction.has_direction_z = direction_to_origin_z / magnitude
+    
+    def pointToPoint(self, x, z):
+        # Apunta hacia el origen
+        direction_to_origin_x = x-self.myself.has_position.has_position_x
+        direction_to_origin_z = z-self.myself.has_position.has_position_z
+
+        # Normalizamos la dirección hacia el origen
+        magnitude = math.sqrt(direction_to_origin_x ** 2 + direction_to_origin_z ** 2)
+        self.myself.has_direction.has_direction_x = direction_to_origin_x / magnitude
+        self.myself.has_direction.has_direction_z = direction_to_origin_z / magnitude
 
     #Verdadero si está en el orígen
     def atOrigin(self):
@@ -379,7 +391,7 @@ class CuboB(ap.Agent):
         self.brf()
         self.options()
         self.filter()
-        #self.create_plan()
+        self.create_plan()
 
     def brf(self):
         self.B["position"] = self.myself.has_position
@@ -388,11 +400,36 @@ class CuboB(ap.Agent):
 
     def options(self):
         self.D = []
+        self.I = None
         for i in self.B["boxes"]:
             self.D.append(i.Position)
+        if self.B["plataforma"].caja_cargada is not None:
+            self.D = []
+            self.I = self.pointToOrigin()
+        
     
     def filter(self):
-        self.I = None
+        if self.I != None:
+            return
+        
+        mindist = 400
+        targetbox = None
+        for box in self.B["boxes"]:
+            dist = math.sqrt((box.Position[0] - self.myself.has_position.has_position_x)**2 + (box.Position[2] - self.myself.has_position.has_position_z)**2)
+            if dist < mindist:
+                mindist = dist
+                targetbox = box
+        
+        if targetbox != None:
+            self.I = self.pointToPoint(targetbox.Position[0], targetbox.Position[2])
+        else:
+            self.I = self.randomDirection()
+
+    def create_plan(self):
+        self.plan = []
+        self.plan.append(self.collision())
+        self.plan.append(self.I)
+        self.plan.append(self.move())
 
 
     def step(self):
@@ -401,15 +438,6 @@ class CuboB(ap.Agent):
             self.BDI()
 
         self.execute()
-
-        self.collision()
-
-        if self.myself.has_collided:
-            self.randomDirection()
-        
-        #falta implementar go to origin, pero ya que tengamos cajas
-        
-        self.move()
         
         
     
@@ -432,6 +460,7 @@ class Plataforma:
             [0.0, 0.0, -1.0],  # Esquina trasera derecha
             [-1.0, 0.0, -1.0], # Esquina trasera izquierda
         ]
+        self.carrito.B["plataforma"] = self
 
     def detectar_colision(self, caja):
         """
@@ -457,6 +486,7 @@ class Plataforma:
         """
         self.caja_cargada = caja
         self.alzada = True  # Indica que la plataforma debe subir
+        self.carrito.B["plataforma"] = self
 
 
     def update(self):
@@ -471,10 +501,12 @@ class Plataforma:
 
         # Sincronizar la posición de la caja cargada con la plataforma
         if self.caja_cargada:
-            self.caja_cargada.Position[0] = self.carrito.myself.has_position.has_position_x + self.offset_x
-            self.caja_cargada.Position[1] = self.carrito.Position[1] + self.posY + 5  # Ajuste de altura
-            self.caja_cargada.Position[2] = self.carrito.myself.has_position.has_position_z + self.offset_z
-            print(f"Caja sincronizada en posición: {self.caja_cargada.Position}")
+            if self.carrito.myself.has_position.has_position_x < 20 and self.carrito.myself.has_position.has_position_z < 20:
+                self.caja_cargada = None
+            else:
+                self.caja_cargada.Position[0] = self.carrito.myself.has_position.has_position_x + self.offset_x
+                self.caja_cargada.Position[1] = self.carrito.Position[1] + self.posY + 5  # Ajuste de altura
+                self.caja_cargada.Position[2] = self.carrito.myself.has_position.has_position_z + self.offset_z
 
     def draw(self):
         """
