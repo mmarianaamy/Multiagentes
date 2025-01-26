@@ -391,17 +391,35 @@ class Plataforma:
             print(f"Caja sincronizada en posición: {self.caja_cargada.Position}")
 
     def draw(self):
-        """
-        Dibuja la plataforma.
-        """
+        # 1) Tomar la posición del montacargas
         cx, cy, cz = self.carrito.Position
 
-        glPushMatrix()
-        glTranslatef(cx + self.offset_x, cy + self.posY + self.offset_y, cz + self.offset_z)
-        glScalef(20, 1, 20)
+        # 2) Calcular el ángulo de rotación de la misma forma que en CuboB
+        angle = math.degrees(math.atan2(self.carrito.Direction[0], 
+                                        self.carrito.Direction[2]))
+        angle += 90  # Ajuste para que el frente coincida
 
+        glPushMatrix()
+        
+        # 3) Trasladar al centro del montacargas
+        glTranslatef(cx, cy, cz)
+        
+        # 4) Rotar igual que CuboB
+        glRotatef(angle, 0, 1, 0)
+        
+        # 5) Aplicar la traslación extra de la plataforma (offset) + altura (posY)
+        glTranslatef(self.offset_x, 
+                    self.posY + self.offset_y, 
+                    self.offset_z)
+        
+        # 6) Ajustar escala en caso de que quieras que la plataforma coincida
+        #    con el tamaño que ya escalaste en CuboB. Si CuboB está en 15, 
+        #    tal vez quieras mantener la misma o colocar algo coherente.
+        glScalef(20, 1, 20)
+        
+        # Dibuja la plataforma
         glBegin(GL_QUADS)
-        glColor3f(1.0, 0.0, 0.0)  # Rojo para distinguir
+        glColor3f(1.0, 0.0, 0.0)  # Para distinguir la plataforma
         for v in self.points:
             glVertex3fv(v)
         glEnd()
