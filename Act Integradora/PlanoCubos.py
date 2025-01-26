@@ -53,7 +53,7 @@ pygame.init()
 #cubo = Cubo(DimBoard, 1.0)
 cubos = []
 #ncubosA = 2
-ncubosB = 1
+ncubosB = 2
 plataforma_b = None
 
 rows = 0
