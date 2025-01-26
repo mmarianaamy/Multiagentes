@@ -320,6 +320,7 @@ class CuboB(ap.Agent):
 
         if self.collided:
             self.randomDirection()
+            self.move()
         
         #falta implementar go to origin, pero ya que tengamos cajas
         
