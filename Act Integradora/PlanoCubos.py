@@ -53,10 +53,10 @@ pygame.init()
 #cubo = Cubo(DimBoard, 1.0)
 cubos = []
 #ncubosA = 2
-ncubosB = 5
+ncubosB = 1
 plataforma_b = None
 
-rows = 5
+rows = 0
 estantes = []
 ncajas = 10
 cajas = []
@@ -92,36 +92,42 @@ class AgentModel(ap.Model):
 
         glMatrixMode(GL_PROJECTION)
         glLoadIdentity()
-        gluPerspective(FOVY, screen_width/screen_height, ZNEAR, ZFAR)
+        gluPerspective(FOVY, screen_width / screen_height, ZNEAR, ZFAR)
 
         glMatrixMode(GL_MODELVIEW)
         glLoadIdentity()
-        gluLookAt(EYE_X,EYE_Y,EYE_Z,CENTER_X,CENTER_Y,CENTER_Z,UP_X,UP_Y,UP_Z)
-        glClearColor(0,0,0,0)
+        gluLookAt(EYE_X, EYE_Y, EYE_Z, CENTER_X, CENTER_Y, CENTER_Z, UP_X, UP_Y, UP_Z)
+        glClearColor(0, 0, 0, 0)
         glEnable(GL_DEPTH_TEST)
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
 
+        # Crear los agentes (carritos)
         self.agents = ap.AgentList(self, self.p.agents, CuboB)
         self.agents.setAgentes(list(self.agents))
 
+        # Crear plataformas asociadas a cada carrito
+        global plataformas
+        plataformas = [Plataforma(agent, offset_z=10.0) for agent in self.agents]
+
         for i in range(rows):
-            estantes.append(Estante(10, DimBoard/rows * i, 8))
+            estantes.append(Estante(10, DimBoard / rows * i, 8))
 
         for i in range(ncajas):
             cajas.append(CuboA(DimBoard, 10, 10))
+
 
     def step(self):
         self.agents.step()
 
     def update(self):  
-
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         self.Axis()
-        #Se dibuja el plano gris
+
+        # Dibujar el plano gris
         glColor3f(0.3, 0.3, 0.3)
         glBegin(GL_QUADS)
         glVertex3d(-DimBoard, 0, -DimBoard)
@@ -130,22 +136,41 @@ class AgentModel(ap.Model):
         glVertex3d(DimBoard, 0, -DimBoard)
         glEnd()
 
-        #se dibujan estantes
-
+        # Dibujar estantes
         for estante in estantes:
             estante.draw()
 
-        #Se dibuja cubos
+        # Dibujar cubos y actualizar lógica
         for obj in cubos:
-            obj.draw()
             obj.update()
-        
-        if plataforma_b is not None:
-            plataforma_b.draw()
-            plataforma_b.update()
-        
+            obj.draw()
+
+        # Detectar colisiones y levantar cajas
+        for plataforma in plataformas:
+            for caja in cajas:
+                if plataforma.caja_cargada is None and plataforma.detectar_colision(caja):
+                    print(f"Levantando la caja en {caja.Position}")
+                    plataforma.levantar_caja(caja)
+
+            # Actualizar la plataforma (y la caja cargada, si existe)
+            plataforma.update()
+            plataforma.draw()
+
+        # Dibujar las cajas que no están cargadas
         for caja in cajas:
             caja.draw()
+
+
+
+
+            # Actualizar la plataforma y sincronizar caja cargada (si la hay)
+            plataforma.update()
+            plataforma.draw()
+
+        # Dibujar las cajas (las que no están cargadas se dibujan normalmente)
+        for caja in cajas:
+            if plataforma.caja_cargada != caja:  # No redibujar la caja cargada
+                caja.draw()
 
         self.agents.draw()
 

@@ -1,6 +1,6 @@
 from owlready2 import *
 
-onto = get_ontology("./Act Integradora/ontology.owl").load()
+onto = get_ontology("ontology.owl").load()
 
 #if onto is not None:
 #    onto.destroy()
