@@ -50,20 +50,20 @@ class Carro:
 
         self.has_collided = False
 
-    def otrosagentes(self, agentes):
-        self.otrosagentes = agentes
+    def setotrosagentes(self, agentes):
+        self.otrosagentes = [i for i in agentes if i != self]
     
     def collision(self):
         self.has_collided = False
         for agent in self.otrosagentes:
-            if self != agent:
-                dx = agent.Position[0] - self.Position[0]
-                dz = agent.Position[2] - self.Position[2]
-                dc = math.sqrt(dx ** 2 + dz**2)
-                if dc < self.radio + agent.radio:
-                    self.has_collided = True
+            dx = agent.Position[0] - self.Position[0]
+            dz = agent.Position[2] - self.Position[2]
+            dc = math.sqrt(dx ** 2 + dz**2)
+            if dc < self.radio + agent.radio:
+                self.has_collided = True
 
     def update(self):
+        self.collision()
         if not self.has_collided:
             new_x = self.Position[0] + self.Direction[0]
             new_z = self.Position[2] + self.Direction[2]

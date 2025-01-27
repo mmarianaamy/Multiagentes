@@ -114,7 +114,7 @@ def Init():
         cubos.append(Carro(DimBoard, 1.0))
         
     for i in cubos:
-        i.otrosagentes = cubos
+        i.setotrosagentes(cubos)
 
 #Se mueve al observador circularmente al rededor del plano XZ a una altura fija (EYE_Y)
 def lookat():
