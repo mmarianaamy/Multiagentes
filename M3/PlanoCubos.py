@@ -74,6 +74,24 @@ def Axis():
     glVertex3f(0.0,0.0,Z_MAX)
     glEnd()
     glLineWidth(1.0)
+    
+def draw_intersection():
+    glColor3f(0.2, 0.2, 0.2)
+    glBegin(GL_QUADS)
+    # Horizontal road
+    glVertex3f(-DimBoard, 0.1, -20)
+    glVertex3f(-DimBoard, 0.1, 20)
+    glVertex3f(DimBoard, 0.1, 20)
+    glVertex3f(DimBoard, 0.1, -20)
+    glEnd()
+    
+    glBegin(GL_QUADS)
+    # Vertical road
+    glVertex3f(-20, 0.1, -DimBoard)
+    glVertex3f(20, 0.1, -DimBoard)
+    glVertex3f(20, 0.1, DimBoard)
+    glVertex3f(-20, 0.1, DimBoard)
+    glEnd()
 
 
 def Init():
@@ -117,6 +135,9 @@ def display():
     glVertex3d(DimBoard, 0, DimBoard)
     glVertex3d(DimBoard, 0, -DimBoard)
     glEnd()
+    
+    # Dibuja intersección
+    draw_intersection()
     #Se dibuja cubos
     for obj in cubos:
         obj.draw()
