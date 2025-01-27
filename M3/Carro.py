@@ -6,10 +6,12 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 from OpenGL.GLUT import *
 
+from owlready2 import *
+
 import random
 import math
 
-class Cubo:
+class Carro:
     
     def __init__(self, dim, vel):
         #Se inicializa las coordenadas de los vertices del cubo
@@ -43,23 +45,40 @@ class Cubo:
         #Se cambia la maginitud del vector direccion
         self.Direction[0] *= vel
         self.Direction[2] *= vel
-        
+        self.otrosagentes = []
+        self.radio = 10
+
+        self.has_collided = False
+
+    def otrosagentes(self, agentes):
+        self.otrosagentes = agentes
+    
+    def collision(self):
+        self.has_collided = False
+        for agent in self.otrosagentes:
+            if self != agent:
+                dx = agent.Position[0] - self.Position[0]
+                dz = agent.Position[2] - self.Position[2]
+                dc = math.sqrt(dx ** 2 + dz**2)
+                if dc < self.radio + agent.radio:
+                    self.has_collided = True
 
     def update(self):
-        new_x = self.Position[0] + self.Direction[0]
-        new_z = self.Position[2] + self.Direction[2]
-        
-        if(abs(new_x) <= self.DimBoard):
-            self.Position[0] = new_x
-        else:
-            self.Direction[0] *= -1.0
-            self.Position[0] += self.Direction[0]
-        
-        if(abs(new_z) <= self.DimBoard):
-            self.Position[2] = new_z
-        else:
-            self.Direction[2] *= -1.0
-            self.Position[2] += self.Direction[2]
+        if not self.has_collided:
+            new_x = self.Position[0] + self.Direction[0]
+            new_z = self.Position[2] + self.Direction[2]
+            
+            if(abs(new_x) <= self.DimBoard):
+                self.Position[0] = new_x
+            else:
+                self.Direction[0] *= -1.0
+                self.Position[0] += self.Direction[0]
+            
+            if(abs(new_z) <= self.DimBoard):
+                self.Position[2] = new_z
+            else:
+                self.Direction[2] *= -1.0
+                self.Position[2] += self.Direction[2]
 
     def draw(self):
         glPushMatrix()

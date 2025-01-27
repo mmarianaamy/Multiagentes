@@ -11,7 +11,7 @@ import math
 # Se carga el archivo de la clase Cubo
 import sys
 sys.path.append('..')
-from Cubo import Cubo
+from Carro import Carro
 
 screen_width = 500
 screen_height = 500
@@ -111,7 +111,10 @@ def Init():
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
     
     for i in range(ncubos):
-        cubos.append(Cubo(DimBoard, 1.0))
+        cubos.append(Carro(DimBoard, 1.0))
+        
+    for i in cubos:
+        i.otrosagentes = cubos
 
 #Se mueve al observador circularmente al rededor del plano XZ a una altura fija (EYE_Y)
 def lookat():
