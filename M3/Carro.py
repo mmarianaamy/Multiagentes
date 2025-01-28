@@ -47,6 +47,8 @@ class Carro:
         self.Direction[2] *= vel
         self.otrosagentes = []
         self.radio = 15
+        self.initialvel = vel
+        self.vel = vel
 
         self.has_collided = False
 
@@ -70,20 +72,21 @@ class Carro:
     def update(self):
         self.collision()
         if self.has_collided:
-            if self.Direction[0] > 0.1:
-                self.Direction[0] -= 0.1
-            elif self.Direction[0] < -0.1:
-                self.Direction[0] += 0.1
-            if self.Direction[2] > 0.1:
-                self.Direction[2] -= 0.1
-            elif self.Direction[2] < -0.1:
-                self.Direction[2] += 0.1
+            self.Direction[0] = (self.Direction[0] / self.vel) * (self.vel - 0.1)
+            self.Direction[2] = (self.Direction[2] / self.vel) * (self.vel - 0.1)
+            self.vel -= 0.1
+        else:
+            if self.vel < self.initialvel:
+                self.Direction[0] = (self.Direction[0] / self.vel) * (self.vel + 0.1)
+                self.Direction[2] = (self.Direction[2] / self.vel) * (self.vel + 0.1)
+                self.vel += 0.1
+
         
-        if (0 < self.Direction[0] and self.Direction[0] < 0.1) or (0 > self.Direction[0] and self.Direction[0] > -0.1):
+        """if (0 < self.Direction[0] and self.Direction[0] < 0.1) or (0 > self.Direction[0] and self.Direction[0] > -0.1):
             self.Direction[0] = 0
 
         if (0 < self.Direction[2] and self.Direction[2] < 0.1) or (0 > self.Direction[2] and self.Direction[2] > -0.1):
-            self.Direction[2] = 0
+            self.Direction[2] = 0"""
 
         new_x = self.Position[0] + self.Direction[0]
         new_z = self.Position[2] + self.Direction[2]
