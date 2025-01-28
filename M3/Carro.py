@@ -35,9 +35,14 @@ class Carro:
         self.Position.append(random.randint(-1 * self.DimBoard, self.DimBoard))
         #Se inicializa un vector de direccion aleatorio
         self.Direction = []
-        self.Direction.append(random.random())
-        self.Direction.append(5.0)
-        self.Direction.append(random.random())
+        if (round(random.random(), 0) == 0):
+            self.Direction.append(1)
+            self.Direction.append(5.0)
+            self.Direction.append(0)
+        else:
+            self.Direction.append(0)
+            self.Direction.append(5.0)
+            self.Direction.append(1)
         #Se normaliza el vector de direccion
         m = math.sqrt(self.Direction[0]*self.Direction[0] + self.Direction[2]*self.Direction[2])
         self.Direction[0] /= m
