@@ -75,38 +75,53 @@ class Carro:
                 self.has_collided = True
 
     def update(self):
-        self.collision()
-        if self.has_collided:
-            self.Direction[0] = (self.Direction[0] / self.vel) * (self.vel - 0.1)
-            self.Direction[2] = (self.Direction[2] / self.vel) * (self.vel - 0.1)
-            self.vel -= 0.1
-        else:
-            if self.vel < self.initialvel:
-                self.Direction[0] = (self.Direction[0] / self.vel) * (self.vel + 0.1)
-                self.Direction[2] = (self.Direction[2] / self.vel) * (self.vel + 0.1)
-                self.vel += 0.1
+                self.collision()
+                
+                if self.has_collided:
+                    self.Direction[0] = (self.Direction[0] / self.vel) * (self.vel - 0.1)
+                    self.Direction[2] = (self.Direction[2] / self.vel) * (self.vel - 0.1)
+                    self.vel -= 0.1
+                else:
+                    if self.vel < self.initialvel:
+                        self.Direction[0] = (self.Direction[0] / self.vel) * (self.vel + 0.1)
+                        self.Direction[2] = (self.Direction[2] / self.vel) * (self.vel + 0.1)
+                        self.vel += 0.1
 
-        
-        """if (0 < self.Direction[0] and self.Direction[0] < 0.1) or (0 > self.Direction[0] and self.Direction[0] > -0.1):
-            self.Direction[0] = 0
+                # actualiza la posición
+                new_x = self.Position[0] + self.Direction[0]
+                new_z = self.Position[2] + self.Direction[2]
 
-        if (0 < self.Direction[2] and self.Direction[2] < 0.1) or (0 > self.Direction[2] and self.Direction[2] > -0.1):
-            self.Direction[2] = 0"""
+                # restriccion de movimiento en las carreteras
+                if abs(new_x) > 20 and abs(new_z) > 20:
+                    #  ajusta la dirección
+                    if abs(self.Position[0]) > abs(self.Position[2]):
+                        #  carretera horizontal
+                        self.Position[2] = 20 if self.Position[2] > 0 else -20
+                        self.Direction[0], self.Direction[2] = (1 if self.Position[0] < 0 else -1), 0
+                    else:
+                        #  carretera vertical
+                        self.Position[0] = 20 if self.Position[0] > 0 else -20
+                        self.Direction[0], self.Direction[2] = 0, (1 if self.Position[2] < 0 else -1)
+                else:
+                    #  actualiza normalmente
+                    self.Position[0] = new_x
+                    self.Position[2] = new_z
 
-        new_x = self.Position[0] + self.Direction[0]
-        new_z = self.Position[2] + self.Direction[2]
-        
-        if(abs(new_x) <= self.DimBoard):
-            self.Position[0] = new_x
-        else:
-            self.Direction[0] *= -1.0
-            self.Position[0] += self.Direction[0]
-        
-        if(abs(new_z) <= self.DimBoard):
-            self.Position[2] = new_z
-        else:
-            self.Direction[2] *= -1.0
-            self.Position[2] += self.Direction[2]
+
+                new_x = self.Position[0] + self.Direction[0]
+                new_z = self.Position[2] + self.Direction[2]
+                
+                if(abs(new_x) <= self.DimBoard):
+                    self.Position[0] = new_x
+                else:
+                    self.Direction[0] *= -1.0
+                    self.Position[0] += self.Direction[0]
+                
+                if(abs(new_z) <= self.DimBoard):
+                    self.Position[2] = new_z
+                else:
+                    self.Direction[2] *= -1.0
+                    self.Position[2] += self.Direction[2]
 
     def draw(self):
         glPushMatrix()
