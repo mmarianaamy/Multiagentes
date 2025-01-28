@@ -12,6 +12,7 @@ import math
 import sys
 sys.path.append('..')
 from Carro import Carro
+from Semaforo import Semaforo
 
 screen_width = 500
 screen_height = 500
@@ -44,6 +45,9 @@ DimBoard = 200
 #cubo = Cubo(DimBoard, 1.0)
 cubos = []
 ncubos = 20
+
+semaforos = []
+nsemaforos = 2
 
 #Variables para el control del observador
 theta = 0.0
@@ -115,6 +119,17 @@ def Init():
         
     for i in cubos:
         i.setotrosagentes(cubos)
+        
+        
+    for i in range(nsemaforos):
+        if i == 0:
+            semaforos.append(Semaforo(50, 0, -50, 5.0,i ))
+        elif i == 1:
+            semaforos.append(Semaforo(-50, 0, 50, 5.0,i))
+    
+    for semaforo in semaforos:
+        semaforo.otros_semaforos = [s for s in semaforos if s != semaforo]
+    
 
 #Se mueve al observador circularmente al rededor del plano XZ a una altura fija (EYE_Y)
 def lookat():
@@ -141,10 +156,17 @@ def display():
     
     # Dibuja intersección
     draw_intersection()
-    #Se dibuja cubos
+    
+    # Dibuja cubos
     for obj in cubos:
         obj.draw()
         obj.update()
+        
+    # Dibuja semaforos
+    for obj in semaforos:
+        obj.draw()
+        obj.update([s for s in semaforos if s != obj])
+
     
 done = False
 Init()
