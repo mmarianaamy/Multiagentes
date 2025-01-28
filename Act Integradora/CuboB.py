@@ -426,6 +426,7 @@ class CuboB(ap.Agent):
             self.I = self.randomDirection()
 
     def create_plan(self):
+        print(self.I)
         self.plan = []
         self.plan.append(self.collision())
         self.plan.append(self.I)
