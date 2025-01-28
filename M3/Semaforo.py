@@ -96,7 +96,14 @@ class Semaforo:
         glPushMatrix()
         glTranslatef(self.Position[0], self.Position[1], self.Position[2])
         glScaled(self.scale,self.scale,self.scale)
-        glColor3f(1.0, 1.0, 1.0)
+        # Cambiar el color según el estado
+        if self.estado == "ROJO":
+            glColor3f(1.0, 0.0, 0.0)
+        elif self.estado =="AMARILLO":
+            glColor3f(1.0, 1.0, 0.0)
+        elif self.estado == "VERDE":
+            glColor3f(0.0, 1.0 ,0.0)
+        
         self.drawFaces()
         glPopMatrix()
         
