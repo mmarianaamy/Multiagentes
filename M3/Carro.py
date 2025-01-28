@@ -69,21 +69,30 @@ class Carro:
 
     def update(self):
         self.collision()
-        if not self.has_collided:
-            new_x = self.Position[0] + self.Direction[0]
-            new_z = self.Position[2] + self.Direction[2]
-            
-            if(abs(new_x) <= self.DimBoard):
-                self.Position[0] = new_x
-            else:
-                self.Direction[0] *= -1.0
-                self.Position[0] += self.Direction[0]
-            
-            if(abs(new_z) <= self.DimBoard):
-                self.Position[2] = new_z
-            else:
-                self.Direction[2] *= -1.0
-                self.Position[2] += self.Direction[2]
+        if self.has_collided:
+            self.Direction[0] -= 0.1
+            self.Direction[2] -= 0.1
+        
+        if 0 < self.Direction[0] and self.Direction[0] < 0.1:
+            self.Direction[0] = 0
+
+        if 0 < self.Direction[2] and self.Direction[2] < 0.1:
+            self.Direction[2] = 0
+
+        new_x = self.Position[0] + self.Direction[0]
+        new_z = self.Position[2] + self.Direction[2]
+        
+        if(abs(new_x) <= self.DimBoard):
+            self.Position[0] = new_x
+        else:
+            self.Direction[0] *= -1.0
+            self.Position[0] += self.Direction[0]
+        
+        if(abs(new_z) <= self.DimBoard):
+            self.Position[2] = new_z
+        else:
+            self.Direction[2] *= -1.0
+            self.Position[2] += self.Direction[2]
 
     def draw(self):
         glPushMatrix()
