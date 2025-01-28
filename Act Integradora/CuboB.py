@@ -371,6 +371,16 @@ class CuboB(ap.Agent):
         magnitude = math.sqrt(direction_to_origin_x ** 2 + direction_to_origin_z ** 2)
         self.myself.has_direction.has_direction_x = direction_to_origin_x / magnitude
         self.myself.has_direction.has_direction_z = direction_to_origin_z / magnitude
+    
+    def pointToPoint(self, x, z):
+        # Apunta hacia el origen
+        direction_to_origin_x = x-self.myself.has_position.has_position_x
+        direction_to_origin_z = z-self.myself.has_position.has_position_z
+
+        # Normalizamos la dirección hacia el origen
+        magnitude = math.sqrt(direction_to_origin_x ** 2 + direction_to_origin_z ** 2)
+        self.myself.has_direction.has_direction_x = direction_to_origin_x / magnitude
+        self.myself.has_direction.has_direction_z = direction_to_origin_z / magnitude
 
     #Verdadero si está en el orígen
     def atOrigin(self):
@@ -391,6 +401,7 @@ class CuboB(ap.Agent):
         self.options()
         self.filter()
         self.create_plan()
+        self.create_plan()
 
     def brf(self):
         self.B["position"] = self.myself.has_position
@@ -399,6 +410,7 @@ class CuboB(ap.Agent):
 
     def options(self):
         self.D = []
+        self.I = None
         self.I = None
         for i in self.B["boxes"]:
             self.D.append(i.Position)
@@ -462,6 +474,7 @@ class Plataforma:
             [-1.0, 0.0, -1.0], # Esquina trasera izquierda
         ]
         self.carrito.B["plataforma"] = self
+        self.carrito.B["plataforma"] = self
 
     def detectar_colision(self, caja):
         """
@@ -488,6 +501,7 @@ class Plataforma:
         self.caja_cargada = caja
         self.alzada = True  # Indica que la plataforma debe subir
         self.carrito.B["plataforma"] = self
+        self.carrito.B["plataforma"] = self
 
 
     def update(self):
@@ -502,6 +516,12 @@ class Plataforma:
 
         # Sincronizar la posición de la caja cargada con la plataforma
         if self.caja_cargada:
+            if self.carrito.myself.has_position.has_position_x < 20 and self.carrito.myself.has_position.has_position_z < 20:
+                self.caja_cargada = None
+            else:
+                self.caja_cargada.Position[0] = self.carrito.myself.has_position.has_position_x + self.offset_x
+                self.caja_cargada.Position[1] = self.carrito.Position[1] + self.posY + 5  # Ajuste de altura
+                self.caja_cargada.Position[2] = self.carrito.myself.has_position.has_position_z + self.offset_z
             if self.carrito.myself.has_position.has_position_x < 20 and self.carrito.myself.has_position.has_position_z < 20:
                 self.caja_cargada = None
             else:
