@@ -99,7 +99,7 @@ class CuboB(ap.Agent):
         #guardar los otros agentes 
         self.otrosagentes = []
         #TODO: cambiar valor de radio
-        self.radio = 40
+        self.radio = 20
 
         #Si alguien puede mejorar esto estaría muy padre. en mi env no quiere jalar bien el import si no es en el mismo archivo
         self.myself = self.onto.AgentMover()
@@ -124,19 +124,18 @@ class CuboB(ap.Agent):
         
 
     def setAgentes(self, agentes):
-        self.otrosagentes = agentes
+        self.otrosagentes = [i for i in agentes if i != self]
 
     def collision(self):
         self.myself.has_collided = False
         for agent in self.otrosagentes:
-            if self != agent:
-                #Encontrar distancia entre agentes
-                dx = agent.myself.has_position.has_position_x - self.myself.has_position.has_position_x
-                dz =agent.myself.has_position.has_position_z - self.myself.has_position.has_position_z
-                dc = math.sqrt(dx ** 2 + dz**2)
-                if dc < self.radio + agent.radio:
-                    self.myself.has_collided = True
-                    self.randomDirection()
+            #Encontrar distancia entre agentes
+            dx = agent.myself.has_position.has_position_x - self.myself.has_position.has_position_x
+            dz =agent.myself.has_position.has_position_z - self.myself.has_position.has_position_z
+            dc = math.sqrt(dx ** 2 + dz**2)
+            if dc < self.radio + agent.radio:
+                self.myself.has_collided = True
+                self.randomDirection()
                     
     def drawFaces(self):
         #base
@@ -406,10 +405,11 @@ class CuboB(ap.Agent):
         if self.B["plataforma"].caja_cargada is not None:
             self.D = []
             self.I = self.pointToOrigin()
+            print("got box")
         
     
     def filter(self):
-        if self.I != None:
+        if self.I == self.pointToOrigin():
             return
         
         mindist = 400
