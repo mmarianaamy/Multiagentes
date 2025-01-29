@@ -77,6 +77,56 @@ def load_texture(image_path):
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
     
     return texture_id
+
+from OpenGL.GL import *
+from OpenGL.GLU import *
+import math
+
+def draw_sphere(radius, slices, stacks):
+    """Dibuja una esfera usando triángulos."""
+    for i in range(stacks):
+        lat0 = math.pi * (-0.5 + float(i) / stacks)  # Latitude
+        lat1 = math.pi * (-0.5 + float(i + 1) / stacks)
+        z0 = radius * math.sin(lat0)
+        z1 = radius * math.sin(lat1)
+        r0 = radius * math.cos(lat0)
+        r1 = radius * math.cos(lat1)
+
+        glBegin(GL_QUAD_STRIP)
+        for j in range(slices + 1):
+            lng = 2 * math.pi * float(j) / slices  # Longitude
+            x0 = r0 * math.cos(lng)
+            y0 = r0 * math.sin(lng)
+            x1 = r1 * math.cos(lng)
+            y1 = r1 * math.sin(lng)
+
+            glVertex3f(x0, y0, z0)
+            glVertex3f(x1, y1, z1)
+        glEnd()
+
+def draw_tree(x, y, z):
+    # Trasladar todo hacia arriba en el eje Z
+    glPushMatrix()
+    glTranslatef(x, y + 10, z - 50)  # Añadir traslación en Z para mover toda la figura arriba
+
+    # Dibuja el tronco (un cilindro)
+    glPushMatrix()
+    glRotatef(90, 1, 0, 0)  # Rota el cilindro para que esté vertical
+    glColor3f(0.55, 0.27, 0.07)  # Color marrón para el tronco
+    gluCylinder(gluNewQuadric(), 5, 5, 20, 8, 8)  # Tronco
+    glPopMatrix()
+    
+    # Dibuja las hojas (una esfera manual)
+    glPushMatrix()
+    glTranslatef(0, 15, 0)  # Mueve la esfera arriba del tronco
+    glColor3f(0.0, 1.0, 0.0)  # Color verde para las hojas
+    draw_sphere(15, 10, 10)  # Hojas
+    glPopMatrix()
+
+    glPopMatrix()
+
+
+
 def Axis():
     glShadeModel(GL_FLAT)
     glLineWidth(3.0)
@@ -233,6 +283,8 @@ def display():
     for obj in semaforos:
         obj.draw()
         obj.update([s for s in semaforos if s != obj])
+        
+    draw_tree(100, 0, 100)  # Ubicación del árbol (x, y, z)
 
 
     
