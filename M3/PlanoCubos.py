@@ -1,5 +1,6 @@
 import pygame
 from pygame.locals import *
+import random
 
 # Cargamos las bibliotecas de OpenGL
 from OpenGL.GL import *
@@ -13,7 +14,6 @@ import sys
 sys.path.append('..')
 from Carro import Carro
 from Semaforo import Semaforo
-from Message import Message
 
 screen_width = 500
 screen_height = 500
@@ -45,14 +45,17 @@ DimBoard = 200
 #Variables asociados a los objetos de la clase Cubo
 #cubo = Cubo(DimBoard, 1.0)
 cubos = []
-ncubos = 20
+ncubos = 5
 
 semaforos = []
+nsemaforos = 2
 
 #Variables para el control del observador
 theta = 0.0
 radius = 300
 
+ultimo_spawn = 0
+intervalo_spawn = 5000
 
 pygame.init()
 
@@ -83,22 +86,62 @@ def draw_intersection():
     glColor3f(0.2, 0.2, 0.2)
     glBegin(GL_QUADS)
     # Horizontal road
-    glVertex3f(-DimBoard, 0.1, -20)
-    glVertex3f(-DimBoard, 0.1, 20)
-    glVertex3f(DimBoard, 0.1, 20)
-    glVertex3f(DimBoard, 0.1, -20)
+    glVertex3f(-DimBoard, 2, -20)
+    glVertex3f(-DimBoard, 2, 20)
+    glVertex3f(DimBoard, 2, 20)
+    glVertex3f(DimBoard, 2, -20)
     glEnd()
     
     glBegin(GL_QUADS)
     # Vertical road
-    glVertex3f(-20, 0.1, -DimBoard)
-    glVertex3f(20, 0.1, -DimBoard)
-    glVertex3f(20, 0.1, DimBoard)
-    glVertex3f(-20, 0.1, DimBoard)
+    glVertex3f(-20, 2, -DimBoard)
+    glVertex3f(20, 2, -DimBoard)
+    glVertex3f(20, 2, DimBoard)
+    glVertex3f(-20, 2, DimBoard)
     glEnd()
 
+def generar_carro():
+    """Genera un nuevo carro solo en los lados derecho (x+) e inferior (z-) en posiciones fijas"""
+    lado = random.choice(["x+", "z-"])  # Solo aparecen en dos lados
+    velocidad = 1.0  # Puedes ajustar según el tipo de vehículo
+
+    if lado == "x+":  # Desde la derecha hacia la izquierda
+        return Carro([DimBoard, 0, 0], velocidad, [-1, 0, 0])  
+    elif lado == "z-":  # Desde abajo hacia arriba
+        return Carro([0, 0, -DimBoard], velocidad, [0, 0, 1])  
+
+import pygame
+
+ultimo_spawn = 0  
+intervalo_spawn = 10000  
+
+def actualizar_carros():
+    global cubos, ultimo_spawn
+    
+    # 🚗 Eliminar carros que han salido de la simulación
+    cubos = [carro for carro in cubos if not ha_salido_de_simulacion(carro)]
+
+    # ⏳ Verificar si han pasado 10 segundos desde el último spawn
+    tiempo_actual = pygame.time.get_ticks()
+    if tiempo_actual - ultimo_spawn >= intervalo_spawn:
+        # 🚗🚗 Generar 1 o 2 carros
+        cantidad_carros = random.choice([2, 3])  
+        for _ in range(cantidad_carros):
+            nuevo_carro = generar_carro()
+            nuevo_carro.setotrosagentes(cubos)
+            nuevo_carro.setsemaforos(semaforos)
+            cubos.append(nuevo_carro)
+        
+        ultimo_spawn = tiempo_actual  
+
+
+def ha_salido_de_simulacion(carro):
+    """Verifica si el carro ha pasado el centro y salió del área de simulación"""
+    x, _, z = carro.Position
+    return abs(x) > DimBoard + 40 or abs(z) > DimBoard + 40  # Margen extra de 10
 
 def Init():
+    global cubos, semaforos
     screen = pygame.display.set_mode(
         (screen_width, screen_height), DOUBLEBUF | OPENGL)
     pygame.display.set_caption("OpenGL: cubos")
@@ -115,17 +158,15 @@ def Init():
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
         
         
-    semaforos.append(Semaforo(10, 0, 0, 5.0, 30, [-1, 0, 0]))
+    semaforos = [
+        Semaforo(-5, 0, -50, 5.0, 0, [0, 0, 1]),
+        Semaforo(50, 0, 5, 5.0, 1, [1, 0, 0])
+    ]
     
     for semaforo in semaforos:
         semaforo.otros_semaforos = [s for s in semaforos if s != semaforo]
-    
-    for i in range(ncubos):
-        cubos.append(Carro(DimBoard, 1.0, i, 0, 200))
-        
-    for i in cubos:
-        i.setotrosagentes(cubos)
-        i.setsemaforos(semaforos)
+
+    cubos = []
     
 
 #Se mueve al observador circularmente al rededor del plano XZ a una altura fija (EYE_Y)
@@ -200,9 +241,8 @@ while not done:
     #            lookat()
     #        if event.key == pygame.K_ESCAPE:
     #            done = True
+    actualizar_carros()
     display()
-
-    Message.environment_buffer.clear()
 
     pygame.display.flip()
     pygame.time.wait(10)
