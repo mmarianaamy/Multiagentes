@@ -137,13 +137,13 @@ def Init():
     glShadeModel(GL_SMOOTH)
 
     # Cargamos el modelo de la casa
-    objetos.append(OBJ("BrickOutbuilding.obj", swapyz=True))
+    objetos.append(OBJ("Ejemplo12_objetos/BrickOutbuilding.obj", swapyz=True))
     objetos[0].generate()
-    objetos.append(OBJ("parque.obj", swapyz=True))
+    objetos.append(OBJ("Ejemplo12_objetos/parque.obj", swapyz=True))
     objetos[1].generate()
-    objetos.append(OBJ("Chevrolet_Camaro_SS_Low.obj", swapyz=True))
+    objetos.append(OBJ("Ejemplo12_objetos/Chevrolet_Camaro_SS_Low.obj", swapyz=True))
     objetos[2].generate()
-    objetos.append(OBJ("Jeep_Renegade_2016.obj", swapyz=True))
+    objetos.append(OBJ("Ejemplo12_objetos/Jeep_Renegade_2016.obj", swapyz=True))
     objetos[3].generate()
     
 
@@ -162,7 +162,7 @@ def lookat():
 
 def draw_square_ring():
     
-    texture_id = load_texture("Calle.jpg")  # Cambia por el camino a tu imagen
+    texture_id = load_texture("Ejemplo12_objetos/Calle.jpg")  # Cambia por el camino a tu imagen
     glEnable(GL_TEXTURE_2D)
     margin = 50
     ring_thickness = 30
