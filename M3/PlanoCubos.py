@@ -47,7 +47,6 @@ cubos = []
 ncubos = 20
 
 semaforos = []
-nsemaforos = 2
 
 #Variables para el control del observador
 theta = 0.0
@@ -115,17 +114,13 @@ def Init():
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
         
         
-    for i in range(nsemaforos):
-        if i == 0:
-            semaforos.append(Semaforo(50, 0, -50, 5.0, i, [0, 0, 1]))
-        elif i == 1:
-            semaforos.append(Semaforo(-50, 0, 50, 5.0, i, [1, 0, 0]))
+    semaforos.append(Semaforo(10, 0, 0, 5.0, 30, [0, 0, 1]))
     
     for semaforo in semaforos:
         semaforo.otros_semaforos = [s for s in semaforos if s != semaforo]
     
     for i in range(ncubos):
-        cubos.append(Carro(DimBoard, 1.0))
+        cubos.append(Carro(DimBoard, 1.0, i, 0, 200))
         
     for i in cubos:
         i.setotrosagentes(cubos)

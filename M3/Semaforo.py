@@ -118,4 +118,8 @@ class Semaforo:
         
         self.drawFaces()
         glPopMatrix()
+    
+    def returnState(self, receiver):
+        msg = Message(sender=self.id, receiver=receiver.id, performative="responder",content={"verde": self.estado == "VERDE"})
+        msg.send()
         
