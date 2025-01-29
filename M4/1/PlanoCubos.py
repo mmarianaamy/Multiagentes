@@ -152,7 +152,7 @@ def Axis():
     
 def draw_intersection(offsetZ=110, offsetX=130, offsetY=-130):
     # Cargar la textura
-    texture_id = load_texture("M3\Calle.jpg")  # Reemplaza con el path correcto
+    texture_id = load_texture("1\Calle.jpg")  # Reemplaza con el path correcto
     
     # Activar el uso de texturas
     glEnable(GL_TEXTURE_2D)

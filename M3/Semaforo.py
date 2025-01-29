@@ -11,9 +11,11 @@ import numpy as np
 import random
 import math
 
+from Message import Message
+
 class Semaforo:
     
-    def __init__(self, x, y, z, scale, semaforo_id):
+    def __init__(self, x, y, z, scale, semaforo_id, direction):
         self.id = semaforo_id
         self.points = [[-1.0,-1.0, 1.0], [1.0,-1.0, 1.0], [1.0,-1.0,-1.0], [-1.0,-1.0,-1.0],
                                 [-1.0, 1.0, 1.0], [1.0, 1.0, 1.0], [1.0, 1.0,-1.0], [-1.0, 1.0,-1.0]]
@@ -28,11 +30,21 @@ class Semaforo:
         
         self.esperando = False
         self.otros_semaforos = []
+        self.direction = direction
 
-        
+
+    def take_msg(self):
+        for msg in Message.environment_buffer:
+            if msg.receiver == self.id:
+                if msg.performative == "activar":
+                    self.temporizador -= 1
 
     def update(self, otros_semaforos):
+
+        self.take_msg()
+
         # Verificar si otro semáforo está en verde
+
         semaforo_verde = any(semaforo.estado == "VERDE" for semaforo in otros_semaforos if semaforo.id != self)
 
         if not semaforo_verde or self.estado != "ROJO":

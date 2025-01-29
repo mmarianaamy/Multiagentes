@@ -113,22 +113,23 @@ def Init():
     glClearColor(0,0,0,0)
     glEnable(GL_DEPTH_TEST)
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
+        
+        
+    for i in range(nsemaforos):
+        if i == 0:
+            semaforos.append(Semaforo(50, 0, -50, 5.0, i, [0, 0, 1]))
+        elif i == 1:
+            semaforos.append(Semaforo(-50, 0, 50, 5.0, i, [1, 0, 0]))
+    
+    for semaforo in semaforos:
+        semaforo.otros_semaforos = [s for s in semaforos if s != semaforo]
     
     for i in range(ncubos):
         cubos.append(Carro(DimBoard, 1.0))
         
     for i in cubos:
         i.setotrosagentes(cubos)
-        
-        
-    for i in range(nsemaforos):
-        if i == 0:
-            semaforos.append(Semaforo(50, 0, -50, 5.0,i ))
-        elif i == 1:
-            semaforos.append(Semaforo(-50, 0, 50, 5.0,i))
-    
-    for semaforo in semaforos:
-        semaforo.otros_semaforos = [s for s in semaforos if s != semaforo]
+        i.setsemaforos(semaforos)
     
 
 #Se mueve al observador circularmente al rededor del plano XZ a una altura fija (EYE_Y)
