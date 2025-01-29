@@ -37,11 +37,14 @@ class Semaforo:
         for msg in Message.environment_buffer:
             if msg.receiver == self.id:
                 if msg.performative == "activar":
-                    self.temporizador -= 1
+                    self.estado == "VERDE"
+                if msg.performative=="askstate":
+                    self.returnState()
 
     def update(self, otros_semaforos):
 
         self.take_msg()
+        self.returnState()
 
         # Verificar si otro semáforo está en verde
 
@@ -119,7 +122,10 @@ class Semaforo:
         self.drawFaces()
         glPopMatrix()
     
-    def returnState(self, receiver):
-        msg = Message(sender=self.id, receiver=receiver.id, performative="responder",content={"verde": self.estado == "VERDE"})
+    def returnState(self, receiver=None):
+        if receiver is not None:
+            msg = Message(sender=self.id, receiver=receiver.id, performative="responder",content={"verde": self.estado == "VERDE"})
+        else:
+            msg = Message(sender=self.id, receiver=None, performative="responder",content={"verde": self.estado == "VERDE"})
         msg.send()
         

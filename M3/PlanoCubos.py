@@ -13,6 +13,7 @@ import sys
 sys.path.append('..')
 from Carro import Carro
 from Semaforo import Semaforo
+from Message import Message
 
 screen_width = 500
 screen_height = 500
@@ -114,7 +115,7 @@ def Init():
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
         
         
-    semaforos.append(Semaforo(10, 0, 0, 5.0, 30, [0, 0, 1]))
+    semaforos.append(Semaforo(10, 0, 0, 5.0, 30, [-1, 0, 0]))
     
     for semaforo in semaforos:
         semaforo.otros_semaforos = [s for s in semaforos if s != semaforo]
@@ -200,6 +201,8 @@ while not done:
     #        if event.key == pygame.K_ESCAPE:
     #            done = True
     display()
+
+    Message.environment_buffer.clear()
 
     pygame.display.flip()
     pygame.time.wait(10)

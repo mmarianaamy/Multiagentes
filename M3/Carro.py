@@ -39,11 +39,13 @@ class Carro:
         self.Direction = []
         self.Direction.append(0)
         self.Direction.append(5.0)
-        self.Direction.append(1)
+        self.Direction.append(-1)
         #Se normaliza el vector de direccion
         m = math.sqrt(self.Direction[0]*self.Direction[0] + self.Direction[2]*self.Direction[2])
         self.Direction[0] /= m
         self.Direction[2] /= m
+
+        self.initialdirection = self.Direction
         #Se cambia la maginitud del vector direccion
         self.Direction[0] *= vel
         self.Direction[2] *= vel
@@ -55,6 +57,7 @@ class Carro:
         self.has_collided = False
         self.semaforos = None
         self.id = id
+        self.greensemaforo = None
 
     def setotrosagentes(self, agentes):
         self.otrosagentes = [i for i in agentes if i != self]
@@ -66,6 +69,13 @@ class Carro:
         dx = point1[0] - point2[0]
         dz = point1[2] - point2[2]
         return math.sqrt(dx ** 2 + dz ** 2)
+    
+    def take_msg(self):
+        self.greensemaforo = None
+        for msg in Message.environment_buffer:
+            if msg.receiver == self.id:
+                if msg.performative == "responder":
+                    self.greensemaforo = msg.content["verde"]
 
     def collision(self):
         self.has_collided = False
@@ -84,6 +94,7 @@ class Carro:
 
     def update(self):
         self.collision()
+        self.take_msg()
         
         if self.has_collided:
             self.decelerar()
@@ -97,23 +108,17 @@ class Carro:
         new_x = self.Position[0] + self.Direction[0]
         new_z = self.Position[2] + self.Direction[2]
         
-        if(abs(new_x) <= self.DimBoard):
-            self.Position[0] = new_x
-        else:
-            self.Direction[0] *= -1.0
-            self.Position[0] += self.Direction[0]
-        
-        if(abs(new_z) <= self.DimBoard):
-            self.Position[2] = new_z
-        else:
-            self.Direction[2] *= -1.0
-            self.Position[2] += self.Direction[2]
+        self.Position[0] = new_x
+        self.Position[2] = new_z
 
         for i in self.semaforos:
-            if self.getDistance(i.Position, self.Position) < 50 and i.direction == self.Direction:
-                self.decelerar()
-                msg = Message(sender=self.id, receiver=i.id, performative="activar",content={})
+            if self.getDistance(i.Position, self.Position) < 50 and i.direction == self.initialdirection:
+                msg = Message(sender=self.id, receiver=i.id, performative="askstate",content={})
                 msg.send()
+                if not self.greensemaforo:
+                    self.decelerar()
+                    msg = Message(sender=self.id, receiver=i.id, performative="activar",content={})
+                    msg.send()
         
         
 
