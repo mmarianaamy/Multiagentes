@@ -48,7 +48,7 @@ DimBoard = 200
 
 # Cubos (de ejemplo)
 cubos = []
-ncubos =  20
+ncubos =  0
 
 # Lista de objetos .OBJ (la casa)
 objetos = []
@@ -137,11 +137,12 @@ def Init():
     glShadeModel(GL_SMOOTH)
 
     # Cargamos el modelo de la casa
-    objetos.append(OBJ("Ejemplo12_objetos\BrickOutbuilding.obj", swapyz=True))
+    objetos.append(OBJ("BrickOutbuilding.obj", swapyz=True))
     objetos[0].generate()
-    objetos.append(OBJ("Ejemplo12_objetos\parque.obj", swapyz=True))
+    objetos.append(OBJ("parque.obj", swapyz=True))
     objetos[1].generate()
-    
+    objetos.append(OBJ("Chevrolet_Camaro_SS_Low.obj", swapyz=True))
+    objetos[2].generate()
     
 
 
@@ -159,7 +160,7 @@ def lookat():
 
 def draw_square_ring():
     
-    texture_id = load_texture("Ejemplo12_objetos\Calle.jpg")  # Cambia por el camino a tu imagen
+    texture_id = load_texture("Calle.jpg")  # Cambia por el camino a tu imagen
     glEnable(GL_TEXTURE_2D)
     margin = 50
     ring_thickness = 30
@@ -218,16 +219,16 @@ def draw_square_ring():
 
 
 
-def displayobj_central():
+def displayobj_carro(x, y, z, i):
     """
     Dibuja la casa que va en el centro del plano (y=0).
     Ajusta la rotación/traslación/escala según tu OBJ.
     """
     glPushMatrix()
     glRotatef(-90.0, 1.0, 0.0, 0.0)  # si tu modelo sale "acostado", ajusta
-    glTranslatef(0.0, 0.0, 15.0)
-    glScale(4.0, 4.0, 4.0)
-    objetos[0].render()
+    glTranslatef(x, y, z)
+    glScale(5.0, 5.0, 5.0)
+    objetos[i].render()
     glPopMatrix()
 
 
@@ -282,7 +283,7 @@ def display():
         c.update()
 
     displayobjs_borders()
-    displayobj_central()
+    displayobj_carro(135.0, 0.0, 5.0, 2)
 
 
 
