@@ -54,8 +54,6 @@ nsemaforos = 2
 theta = 0.0
 radius = 300
 
-ultimo_spawn = 0
-intervalo_spawn = 5000
 
 pygame.init()
 
@@ -111,20 +109,28 @@ def generar_carro():
         return Carro([0, 0, -DimBoard], velocidad, [0, 0, 1])  
 
 import pygame
-
 ultimo_spawn = 0  
-intervalo_spawn = 10000  
+intervalo_spawn = 4000  
+
+def ha_salido_de_simulacion(carro):
+    """Verifica si el carro ha pasado el área de simulación y debe ser eliminado"""
+    x, _, z = carro.Position
+    limite = DimBoard - 5  # 🔥 Ahora eliminamos antes de que lleguen al borde
+
+    if -x > limite or z > limite:
+        return True
+    return False
 
 def actualizar_carros():
     global cubos, ultimo_spawn
     
-    # 🚗 Eliminar carros que han salido de la simulación
+    # Eliminar carros que han salido de la simulación
     cubos = [carro for carro in cubos if not ha_salido_de_simulacion(carro)]
 
-    # ⏳ Verificar si han pasado 10 segundos desde el último spawn
+    # Verificar si han pasado 10 segundos desde el último spawn
     tiempo_actual = pygame.time.get_ticks()
     if tiempo_actual - ultimo_spawn >= intervalo_spawn:
-        # 🚗🚗 Generar 1 o 2 carros
+        # Generar 1 o 2 carros nuevos
         cantidad_carros = random.choice([2, 3])  
         for _ in range(cantidad_carros):
             nuevo_carro = generar_carro()
@@ -132,14 +138,7 @@ def actualizar_carros():
             nuevo_carro.setsemaforos(semaforos)
             cubos.append(nuevo_carro)
         
-        ultimo_spawn = tiempo_actual  
-
-
-def ha_salido_de_simulacion(carro):
-    """Verifica si el carro ha pasado el centro y salió del área de simulación"""
-    x, _, z = carro.Position
-    return abs(x) > DimBoard + 40 or abs(z) > DimBoard + 40  # Margen extra de 10
-
+        ultimo_spawn = tiempo_actual 
 def Init():
     global cubos, semaforos
     screen = pygame.display.set_mode(

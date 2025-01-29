@@ -16,6 +16,7 @@ from Message import Message
 class Carro:
     
     def __init__(self, position=None, vel=1.0, direction=None, dim=200):
+        self.DimBoard = dim
         # Se inicializa las coordenadas de los vertices del cubo
         self.vertexCoords = [  
                    1,1,1,   1,1,-1,   1,-1,-1,   1,-1,1,
@@ -81,26 +82,27 @@ class Carro:
     def update(self):
         self.collision()
 
-        # Verificar si hay colisión y reducir velocidad
-        if self.has_collided:
-            self.vel = max(0, self.vel - 0.1)  # Evitar valores negativos de velocidad
-        else:
-            # Si el semáforo está en verde y no hay colisión, reanudar velocidad
-            if self.vel == 0:
-                self.vel = self.initialvel  # Solo se restablece si estaba detenido
-            elif self.vel < self.initialvel:
-                self.vel = min(self.initialvel, self.vel + 0.1)  # No superar la velocidad inicial
+        # 🚗 Si el carro está cerca del borde, permitimos que siga sin restricciones
+        borde_limite = self.DimBoard - 60  # 🔥 Ajustamos el umbral de borde
+        if abs(self.Position[0]) > borde_limite or abs(self.Position[2]) > borde_limite:
+            self.has_collided = False  # 🚀 Desactiva colisiones para salir
 
-        # Verificar semáforo cercano
+        # 🔥 Si no hay colisión, restauramos la velocidad original
+        if not self.has_collided:
+            self.vel = self.initialvel
+        else:
+            self.vel = max(0, self.vel - 0.1)
+
+        # 🚦 Verificar semáforo cercano
         for semaforo in self.semaforos:
             distancia = self.getDistance(semaforo.Position, self.Position)
-            if distancia < 15:  # Umbral de proximidad al semáforo
+            if distancia < 10:
                 if semaforo.estado == "ROJO":
-                    self.vel = 0  # Detener el carro
+                    self.vel = 0  # 🚗 Detener carro
                 elif semaforo.estado == "VERDE" and self.vel == 0:
-                    self.vel = self.initialvel  # Reanudar el movimiento si estaba detenido
+                    self.vel = self.initialvel  # ✅ Reanudar movimiento
 
-        # Si el carro tiene velocidad, actualiza su posición
+        # ✅ Mover carro si tiene velocidad
         if self.vel > 0:
             self.Position[0] += self.Direction[0] * (self.vel / self.initialvel)
             self.Position[2] += self.Direction[2] * (self.vel / self.initialvel)
