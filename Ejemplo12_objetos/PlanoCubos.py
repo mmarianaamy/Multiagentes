@@ -143,6 +143,8 @@ def Init():
     objetos[1].generate()
     objetos.append(OBJ("Chevrolet_Camaro_SS_Low.obj", swapyz=True))
     objetos[2].generate()
+    objetos.append(OBJ("Jeep_Renegade_2016.obj", swapyz=True))
+    objetos[3].generate()
     
 
 
@@ -219,7 +221,7 @@ def draw_square_ring():
 
 
 
-def displayobj_carro(x, y, z, i):
+def displayobj_carro(x, y, z, a, b, c, i):
     """
     Dibuja la casa que va en el centro del plano (y=0).
     Ajusta la rotación/traslación/escala según tu OBJ.
@@ -227,7 +229,7 @@ def displayobj_carro(x, y, z, i):
     glPushMatrix()
     glRotatef(-90.0, 1.0, 0.0, 0.0)  # si tu modelo sale "acostado", ajusta
     glTranslatef(x, y, z)
-    glScale(5.0, 5.0, 5.0)
+    glScale(a,b,c)
     objetos[i].render()
     glPopMatrix()
 
@@ -283,7 +285,8 @@ def display():
         c.update()
 
     displayobjs_borders()
-    displayobj_carro(135.0, 0.0, 5.0, 2)
+    displayobj_carro(135.0, -50.0, 5.0, 5.0, 5.0, 5.0, 2)
+    displayobj_carro(140.0, 50.0, 5.0, 10.0, 10.0, 10.0, 3)
 
 
 
