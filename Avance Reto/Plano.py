@@ -266,6 +266,19 @@ def draw_square_ring():
     glPopMatrix()
 
 
+def draw_covering_squares():
+    texture_id2 = load_texture("Avance Reto/Modelos/Calle2.jpg")  # Nueva textura para los cuadrados
+    glEnable(GL_TEXTURE_2D)
+    
+    y_level = 1.1  # Ligeramente por encima de la calle para evitar z-fighting
+
+    # Posiciones de los dos cuadrados
+    square_positions = [
+        (120, 120),  # Primer cuadrado en X=-30, Z=30
+        (120, -120)   # Segundo cuadrado en X=40, Z=-20
+    ]
+
+
 
 def displayobj_carro(x, y, z, a, b, c, i):
     """
@@ -403,6 +416,8 @@ def display():
 
     # Llamada al anillo (calle hueca) 
     draw_square_ring()
+    
+    draw_covering_squares()
 
     # Dibujas cubos, casas en las orillas, casa central...
     for c in cubos:
