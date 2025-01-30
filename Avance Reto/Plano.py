@@ -166,7 +166,7 @@ def Init():
     glShadeModel(GL_SMOOTH)
 
     # Cargamos los modelos de las casas
-    casas.append(OBJ("Avance Reto\Modelos\edificio_chido\edificio_chido.obj", swapyz=True))
+    casas.append(OBJ("Avance Reto\Modelos\edificio_chido\edificio_chido2.obj", swapyz=True))
     casas[0].generate()
     #casas.append(OBJ("Avance Reto/Modelos/parque.obj", swapyz=True))
     #casas[1].generate()
@@ -188,7 +188,7 @@ def Init():
     semaforos[0].generate()
 
     # Cargamos los modelos de los arboles
-    arboles.append(OBJ("Avance Reto\Modelos\Trees\Trees.obj", swapyz=True))
+    arboles.append(OBJ("Avance Reto\Modelos\Trees\Trees2.obj", swapyz=True))
     arboles[0].generate()
     arboles.append(OBJ("Avance Reto\Modelos\Bench\white_bench.obj", swapyz=True))
     arboles[1].generate()
