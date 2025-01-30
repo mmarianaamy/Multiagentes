@@ -30,7 +30,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 3
-map_Bump pt74ptg87d34-traffic_light/traffic light/metal bamp.png -bm 0.179856
+map_Bump
 
 newmtl blinn5SG
 Ns 0.000000
@@ -41,7 +41,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Bump pt74ptg87d34-traffic_light/traffic light/metal bamp.png -bm 0.05
+map_Bump
 
 newmtl blinn7SG
 Ns 0.000000
@@ -52,7 +52,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 3
-map_Bump pt74ptg87d34-traffic_light/traffic light/metal bamp.png -bm 0.755396
+map_Bump
 
 newmtl blinn9SG
 Ns 0.000000

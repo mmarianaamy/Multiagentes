@@ -56,6 +56,8 @@ casas = []
 # Lista de objetos .OBJ (los carros)
 carros = []
 
+semaforos = []
+
 # Control para la cámara orbital
 theta  = 0.0
 radius = 300
@@ -177,6 +179,9 @@ def Init():
     carros[0].generate()
     carros.append(OBJ("Avance Reto\Modelos\Jeep_Renegade_2016.obj", swapyz=True))
     carros[1].generate()
+    semaforos.append(OBJ("Avance Reto\Modelos\Traffic_light.obj", swapyz = True))
+    semaforos[0].generate()
+
 
 
 
@@ -275,6 +280,18 @@ def displayobj_casa(x, y, z, a, b, c, i):
     glRotatef(-90.0, 1.0, 0.0, 0.0)  # si tu modelo sale "acostado", ajusta
     glScale(a, b, c)
     casas[i].render()
+    glPopMatrix()
+
+def displayobj_semaforo(x, y, z, a, b, c, i):
+    
+    #Dibuja las casas en el plano.
+    #Ajusta la rotación/traslación/escala según tu OBJ.
+    
+    glPushMatrix()
+    glTranslatef(x, y, z)
+    glRotatef(-90.0, 1.0, 0.0, 0.0)  # si tu modelo sale "acostado", ajusta
+    glScale(a, b, c)
+    semaforos[i].render()
     glPopMatrix()
 """
 def displayobjs_casas():
@@ -395,6 +412,8 @@ def display():
     
     displayobj_casa(180, 0.0, 80, 5.0, 5.0, 5.0, 0)
     displayobj_casa(180, 0.0, 30, 5.0, 5.0, 5.0, 0)
+
+    displayobj_semaforo(160, 0, -100, 2.0, 2.0, 2.0, 0)
     
     
     #displayobj_casa(50.0, 0.0, 50.0, 10.0, 10.0, 10.0, 1)
