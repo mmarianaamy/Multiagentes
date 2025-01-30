@@ -56,6 +56,9 @@ casas = []
 # Lista de objetos .OBJ (los carros)
 carros = []
 
+# Lista de objetos .OBJ (los arboles)
+arboles = []
+
 semaforos = []
 
 # Control para la cámara orbital
@@ -179,9 +182,14 @@ def Init():
     carros[0].generate()
     carros.append(OBJ("Avance Reto\Modelos\Jeep_Renegade_2016.obj", swapyz=True))
     carros[1].generate()
+    
+    # Cargamos los modelos de los semaforos
     semaforos.append(OBJ("Avance Reto\Modelos\Traffic_light.obj", swapyz = True))
     semaforos[0].generate()
 
+    # Cargamos los modelos de los arboles
+    arboles.append(OBJ("Avance Reto\Modelos\Trees\Trees.obj", swapyz=True))
+    arboles[0].generate()
 
 
 
@@ -269,6 +277,18 @@ def displayobj_carro(x, y, z, a, b, c, i):
     carros[i].render()
     glPopMatrix()
 
+
+def displayobj_arboles(x, y, z, a, b, c, i):
+    
+    #Dibuja las casas en el plano.
+    #Ajusta la rotación/traslación/escala según tu OBJ.
+    
+    glPushMatrix()
+    glTranslatef(x, y, z)
+    glRotatef(-90.0, 1.0, 0.0, 0.0)  # si tu modelo sale "acostado", ajusta
+    glScale(a, b, c)
+    arboles[i].render()
+    glPopMatrix()
 
 def displayobj_casa(x, y, z, a, b, c, i):
     
@@ -412,9 +432,12 @@ def display():
     
     displayobj_casa(180, 0.0, 80, 5.0, 5.0, 5.0, 0)
     displayobj_casa(180, 0.0, 30, 5.0, 5.0, 5.0, 0)
+    
+    # Dibujar arboles
+    displayobj_arboles(180, 0.0, -180, 3.0, 3.0, 3.0, 0)
 
     displayobj_semaforo(160, 0, -100, 2.0, 2.0, 2.0, 0)
-    
+
     
     #displayobj_casa(50.0, 0.0, 50.0, 10.0, 10.0, 10.0, 1)
     #displayobj_casa(100.0, 0.0, 100.0, 10.0, 10.0, 10.0, 2)
