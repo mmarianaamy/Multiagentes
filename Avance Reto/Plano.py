@@ -184,12 +184,14 @@ def Init():
     carros[1].generate()
     
     # Cargamos los modelos de los semaforos
-    semaforos.append(OBJ("Avance Reto\Modelos\Traffic_light.obj", swapyz = True))
+    semaforos.append(OBJ("Avance Reto\\Modelos\\traffic_light.obj", swapyz = True))
     semaforos[0].generate()
 
     # Cargamos los modelos de los arboles
     arboles.append(OBJ("Avance Reto\Modelos\Trees\Trees.obj", swapyz=True))
     arboles[0].generate()
+    arboles.append(OBJ("Avance Reto\Modelos\Bench\white_bench.obj", swapyz=True))
+    arboles[1].generate()
 
 
 
@@ -435,8 +437,9 @@ def display():
     
     # Dibujar arboles
     displayobj_arboles(180, 0.0, -180, 3.0, 3.0, 3.0, 0)
+    displayobj_arboles(80, 0.0, 180, 3.0, 3.0, 3.0, 1) # banca
 
-    displayobj_semaforo(160, 0, -100, 2.0, 2.0, 2.0, 0)
+    displayobj_semaforo(160, 0, -100, 0.3, 0.3, 0.3, 0)
 
     
     #displayobj_casa(50.0, 0.0, 50.0, 10.0, 10.0, 10.0, 1)
