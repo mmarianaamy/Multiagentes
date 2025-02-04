@@ -58,6 +58,10 @@ class Carro:
         self.has_collided = False
         self.semaforos = None
 
+        # 🚗 Si el carro está cerca del borde, permitimos que siga sin restricciones
+        self.borde_limite1 = self.DimBoardW - 60  #5 🔥 Ajustamos el umbral de borde
+        self.borde_limite2 = self.DimBoardH - 60  # 🔥 Ajustamos el umbral de borde
+
     def setotrosagentes(self, agentes):
         self.otrosagentes = [i for i in agentes if i != self]
     
@@ -82,11 +86,7 @@ class Carro:
     def update(self):
         self.collision()
 
-        # 🚗 Si el carro está cerca del borde, permitimos que siga sin restricciones
-        borde_limite1 = self.DimBoardW - 60  #5 🔥 Ajustamos el umbral de borde
-        borde_limite2 = self.DimBoardH - 60  # 🔥 Ajustamos el umbral de borde
-
-        if abs(self.Position[0]) > borde_limite1 or abs(self.Position[2]) > borde_limite2:
+        if abs(self.Position[0]) > self.borde_limite1 or abs(self.Position[2]) > self.borde_limite2:
             self.has_collided = False  # 🚀 Desactiva colisiones para salir
 
         # 🔥 Si no hay colisión, restauramos la velocidad original
@@ -98,7 +98,9 @@ class Carro:
         # 🚦 Verificar semáforo cercano
         for semaforo in self.semaforos:
             distancia = self.getDistance(semaforo.Position, self.Position)
-            if distancia < 10:
+            #newPosition = [self.Position[0] + (self.Direction[0] * self.vel), self.Position[1], self.Position[2] + (self.Direction[2] * self.vel)]
+            #newDistance = self.getDistance(semaforo.Position, newPosition)
+            if distancia < 10 and self.Direction == semaforo.direction:
                 if semaforo.estado == "ROJO":
                     self.vel = 0  # 🚗 Detener carro
                 elif semaforo.estado == "VERDE" and self.vel == 0:
@@ -106,8 +108,8 @@ class Carro:
 
         # ✅ Mover carro si tiene velocidad
         if self.vel > 0:
-            self.Position[0] += self.Direction[0] * (self.vel / self.initialvel)
-            self.Position[2] += self.Direction[2] * (self.vel / self.initialvel)
+            self.Position[0] += self.Direction[0] * self.vel
+            self.Position[2] += self.Direction[2] * self.vel
 
 
         
