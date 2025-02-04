@@ -66,7 +66,7 @@ nsemaforos = 2
 # Lista de objetos .OBJ (los arboles)
 #arboles = []
 
-#semaforos = []
+traffic_light = []
 
 # Control para la cámara orbital
 theta  = 0.0
@@ -186,7 +186,7 @@ def actualizar_carros():
         ultimo_spawn = tiempo_actual 
     
 def Init():
-    global cubos, semaforos
+    global cubos, semaforos, textures, traffic_light
     screen = pygame.display.set_mode(
         (screen_width, screen_height), DOUBLEBUF | OPENGL
     )
@@ -224,8 +224,10 @@ def Init():
     """
     
     semaforos = [
-        Semaforo(-5, 0, -50, 5.0, 0, [0, 0, 1]),
-        Semaforo(50, 0, 5, 5.0, 1, [1, 0, 0])
+        Semaforo(-160, 0, -50, 5.0, 0, [0, 0, 1]),
+        Semaforo(140, 0, -50, 5.0, 1, [1, 0, 0]),
+        Semaforo(-140, 0, 50, 5.0, 0, [0, 0, 1]),
+        Semaforo(160, 0, 50, 5.0, 1, [1, 0, 0])
     ]
     
     for semaforo in semaforos:
@@ -261,8 +263,11 @@ def Init():
     #carros[1].generate()
     
     # Cargamos los modelos de los semaforos
-    #semaforos.append(OBJ("Avance Reto\\Modelos\\traffic_light.obj", swapyz = True))
-    #semaforos[0].generate()
+    traffic_light.append(OBJ("Avance Reto\\Modelos\\traffic_light.obj", swapyz = True))
+    traffic_light[0].generate()
+    traffic_light.append(OBJ("Avance Reto\\Modelos\\traffic_light.obj", swapyz=True))
+    print(f"Modelo del semáforo cargado: {traffic_light}")  # Verifica si se cargó
+
 
     # Cargamos los modelos de los arboles
     #arboles.append(OBJ("Avance Reto\Modelos\Trees\Trees2.obj", swapyz=True))
@@ -408,6 +413,7 @@ def displayobj_casa(x, y, z, a, b, c, i):
     glScale(a, b, c)
     casas[i].render()
     glPopMatrix()
+"""
 
 def displayobj_semaforo(x, y, z, a, b, c, i):
     
@@ -416,11 +422,13 @@ def displayobj_semaforo(x, y, z, a, b, c, i):
     
     glPushMatrix()
     glTranslatef(x, y, z)
+    if z > 0:
+        glRotatef(180, 0, 1, 0)
     glRotatef(-90.0, 1.0, 0.0, 0.0)  # si tu modelo sale "acostado", ajusta
     glScale(a, b, c)
-    semaforos[i].render()
+    traffic_light[i].render()
     glPopMatrix()
-"""
+
 
 def Plano():
     # Plano gris (suelo)
@@ -480,9 +488,11 @@ def display():
         obj.draw()
         obj.update([s for s in semaforos if s != obj])
 
+    #for tl in traffic_light:
+        #tl.render()
     #displayobjs_casas()
     
-"""
+    """
     # Dibujar carros
     displayobj_carro(135.0, -50.0, 5.0, 5.0, 5.0, 5.0, 0)
     displayobj_carro(140.0, 50.0, 5.0, 10.0, 10.0, 10.0, 1)
@@ -511,7 +521,12 @@ def display():
     displayobj_arboles(80, 0.0, 180, 3.0, 3.0, 3.0, 1) # banca
 
     displayobj_semaforo(160, 0, -100, 0.3, 0.3, 0.3, 0)
-"""
+    """
+    displayobj_semaforo(120, 0, -50, 2.0, 2.0, 2.0, 0)
+    displayobj_semaforo(180, 0, 50, 2.0, 2.0, 2.0, 0)
+    displayobj_semaforo(-120, 0, 50, 2.0, 2.0, 2.0, 0)
+    displayobj_semaforo(-180, 0, -50, 2.0, 2.0, 2.0, 0)
+
     
     #displayobj_casa(50.0, 0.0, 50.0, 10.0, 10.0, 10.0, 1)
     #displayobj_casa(100.0, 0.0, 100.0, 10.0, 10.0, 10.0, 2)
@@ -531,7 +546,8 @@ def display():
     if len(casas) > 1:
         displayobj_casa(50.0, 0.0, 50.0, 10.0, 10.0, 10.0, 1)
 """
-
+    #pygame.display.flip()
+    
 def main():
     done = False
     Init()
@@ -558,7 +574,7 @@ def main():
                     done = True
                     
         actualizar_carros()
-        draw_cars()
+        #draw_cars()
         display()
         pygame.display.flip()
         pygame.time.wait(10)
