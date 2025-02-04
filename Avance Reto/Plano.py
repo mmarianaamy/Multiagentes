@@ -75,6 +75,7 @@ radius = 300
 # Arreglo para manejo de texturas
 textures = []
 image1 = "Avance Reto/Modelos/grass.jpg"
+image2 = "Avance Reto/Modelos/background.jpg"
 
 
 # Dimensiones de las intersecciones
@@ -204,7 +205,8 @@ def Init():
     glLoadIdentity()
     gluLookAt(EYE_X, EYE_Y, EYE_Z, CENTER_X, CENTER_Y, CENTER_Z, UP_X, UP_Y, UP_Z)
 
-    glClearColor(0, 0, 0, 0)
+    #glClearColor(0, 0, 0, 0)
+    glClearColor(0.5, 0.7, 1.0, 1.0)  # Azul claro
     glEnable(GL_DEPTH_TEST)
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
     
@@ -213,6 +215,9 @@ def Init():
     texture_id = OBJ.loadTexture(image1)
     textures.append(texture_id)
     
+    background_texture = OBJ.loadTexture(image2)
+    textures.append(background_texture)
+
     # Cargar la nueva textura para las intersecciones
     #intersection_texture_id = OBJ.loadTexture("Avance Reto/Modelos/Calle2.jpg")
     #textures.append(intersection_texture_id)
@@ -460,6 +465,28 @@ def PlanoTexturizado():
     glEnd()              
     glDisable(GL_TEXTURE_2D)
     
+def draw_background():
+    #"""
+    #Dibuja una imagen de fondo como skybox.
+    glEnable(GL_TEXTURE_2D)
+    glBindTexture(GL_TEXTURE_2D, textures[1])
+    
+    glPushMatrix()
+    glLoadIdentity()
+    #gluLookAt(0, 0, 0, 0, 0, -1, 0, 1, 0)  # Fija la vista
+    glColor3f(1.0, 1.0, 1.0)
+    glBegin(GL_QUADS)
+    glTexCoord2f(0, 0); glVertex3f(-600, -200, -1000)
+    glTexCoord2f(1, 0); glVertex3f(600, -200, -1000)
+    glTexCoord2f(1, 1); glVertex3f(600, 400, -1000)
+    glTexCoord2f(0, 1); glVertex3f(-600, 400, -1000)
+    glEnd()
+
+    glPopMatrix()
+    glDisable(GL_TEXTURE_2D)
+    #"""
+
+    
 def draw_cars():
     for carro in cubos:
         carro.draw()
@@ -467,9 +494,8 @@ def draw_cars():
         
 def display():
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-
+    draw_background()
     Axis()
-
     PlanoTexturizado()
 
     draw_road()

@@ -1,0 +1,45 @@
+# Blender 4.3.2 MTL File: 'casita pro.blend'
+# www.blender.org
+
+newmtl Concreto
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Users/User/OneDrive/Documents/texturas/concreto.jpg
+map_Ns C:/Users/User/OneDrive/Documents/texturas/concreto 2.jpg
+map_refl C:/Users/User/OneDrive/Documents/texturas/concreto 2.jpg
+
+newmtl Puerta
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Users/User/OneDrive/Documents/texturas/puerta.jpg
+
+newmtl Techo
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Users/User/OneDrive/Documents/texturas/TECHO2.jpg
+map_refl C:/Users/User/OneDrive/Documents/texturas/TECHO2.jpg
+
+newmtl Ventana
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Users/User/OneDrive/Documents/EDIFICIO CHIDO _V/Texturas/ventana 4.jpg
+map_Ns C:/Users/User/OneDrive/Documents/texturas/ventana.jpg
+map_refl C:/Users/User/OneDrive/Documents/texturas/ventana.jpg
