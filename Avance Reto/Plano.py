@@ -44,7 +44,8 @@ Z_MIN=-500
 Z_MAX= 500
 
 # Dimensión del “suelo” en XZ
-DimBoard = 200
+DimBoardHeight = 200
+DimBoardWidth = 300
 
 # Cubos (de ejemplo)
 cubos = []
@@ -68,6 +69,17 @@ radius = 300
 # Arreglo para manejo de texturas
 textures = []
 image1 = "Avance Reto/Modelos/grass.jpg"
+
+
+# Dimensiones de las intersecciones
+intersection_width = 50
+intersection_height = 50
+
+# Posiciones de las intersecciones
+intersection_positions = [
+    (150, 0),  # Primera intersección
+    (-150, -0)  # Segunda intersección
+]
 
 pygame.init()
 
@@ -99,6 +111,8 @@ def Axis():
 
     glLineWidth(1.0)
     
+    
+"""
 def load_texture(imagepath):
     
     textures.append(glGenTextures(1))
@@ -113,7 +127,9 @@ def load_texture(imagepath):
     image_data = pygame.image.tostring(image,"RGBA")
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data)
     glGenerateMipmap(GL_TEXTURE_2D) 
-    """
+    
+"""
+"""
     texture_surface = pygame.image.load(image_path)
     texture_data = pygame.image.tostring(texture_surface, "RGB", 1)
     width, height = texture_surface.get_size()
@@ -148,13 +164,22 @@ def Init():
     glEnable(GL_DEPTH_TEST)
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
     
-    load_texture(image1)
+    # Carga la textura usando la función loadTexture de la clase OBJ
+    # y la agrega a la lista de texturas
+    texture_id = OBJ.loadTexture(image1)
+    textures.append(texture_id)
+    
+    # Cargar la nueva textura para las intersecciones
+    #intersection_texture_id = OBJ.loadTexture("Avance Reto/Modelos/Calle2.jpg")
+    #textures.append(intersection_texture_id)
 
+    """
     # Cubos de ejemplo
     for _ in range(ncubos):
         cubos.append(Cubo(DimBoard, 1.0, 5.0))
     for c in cubos:
         c.getCubos(cubos)
+    """
 
     # Configuramos iluminación
     glLightfv(GL_LIGHT0, GL_POSITION, (0.0, 200.0, 0.0, 0.0))
@@ -206,12 +231,12 @@ def lookat():
     gluLookAt(EYE_X, EYE_Y, EYE_Z, CENTER_X, CENTER_Y, CENTER_Z, UP_X, UP_Y, UP_Z)
 
 
-def draw_square_ring():
+def draw_road():
     
-    texture_id = load_texture("Avance Reto/Modelos/Calle.jpg")  # Cambia por el camino a tu imagen
+    texture_id = OBJ.loadTexture("Avance Reto/Modelos/Calle.jpg")  # Cambia por el camino a tu imagen
     glEnable(GL_TEXTURE_2D)
     margin = 50
-    ring_thickness = 30
+    road_width = 50
     y_street = 1.0
 
     # Escala y rotación
@@ -220,11 +245,11 @@ def draw_square_ring():
 
     #glBindTexture(GL_TEXTURE_2D, texture_id)
 
-    # Coordenadas externas del anillo
-    x1 = -DimBoard + margin
-    x2 =  DimBoard - margin
-    z1 = -DimBoard + margin
-    z2 =  DimBoard - margin
+    # Coordenadas de la carretera
+    x1 = -DimBoardWidth #+ margin
+    x2 =  DimBoardWidth #- margin
+    z1 = -DimBoardHeight #+ margin
+    z2 =  DimBoardHeight #- margin
 
     glPushMatrix()
     glColor3f(1.0, 1.0, 1.0)  # Mantén el color blanco para no alterar la textura
@@ -239,23 +264,27 @@ def draw_square_ring():
 
     glBegin(GL_QUADS)
 
-    # ----- Franja superior -----
-    glTexCoord2f(0.0, scale_factor); glVertex3f(x1-50, y_street, z2)
-    glTexCoord2f(scale_factor, scale_factor); glVertex3f(x2+50, y_street, z2)
-    glTexCoord2f(scale_factor, 0.0); glVertex3f(x2+50, y_street, z2 - ring_thickness)
-    glTexCoord2f(0.0, 0.0); glVertex3f(x1-50, y_street, z2 - ring_thickness)
+    # ----- Franja central -----
+    #glTexCoord2f(0.0, scale_factor); glVertex3f(x1-50, y_street, z2)
+    glTexCoord2f(0.0, 0.0); glVertex3f(x1, y_street, 0 - road_width/2)
+    #glTexCoord2f(scale_factor, scale_factor); glVertex3f(x2+50, y_street, z2)
+    glTexCoord2f(1.0, 0.0); glVertex3f(x2, y_street, 0 - road_width/2)
+    #glTexCoord2f(scale_factor, 0.0); glVertex3f(x2+50, y_street, z2 - ring_thickness)
+    glTexCoord2f(1.0, 1.0); glVertex3f(x2, y_street, 0 + road_width/2)
+    #glTexCoord2f(0.0, 0.0); glVertex3f(x1-50, y_street, z2 - ring_thickness)
+    glTexCoord2f(0.0, 1.0); glVertex3f(x1, y_street, 0 + road_width/2)
 
-    # ----- Franja inferior -----
-    glTexCoord2f(0.0, 0.0); glVertex3f(x1-50, y_street, z1 + ring_thickness)
-    glTexCoord2f(scale_factor, 0.0); glVertex3f(x2+50, y_street, z1 + ring_thickness)
-    glTexCoord2f(scale_factor, scale_factor); glVertex3f(x2+50, y_street, z1)
-    glTexCoord2f(0.0, scale_factor); glVertex3f(x1-50, y_street, z1)
+    # ----- Franja izquierda -----
+    glTexCoord2f(0.0, 0.0); glVertex3f(x1 - road_width/2 + 150, y_street, z1)
+    glTexCoord2f(1.0, 0.0); glVertex3f(x1 - road_width/2 + 150, y_street, z2)
+    glTexCoord2f(1.0, 1.0); glVertex3f(x1 + road_width/2 + 150, y_street, z2)
+    glTexCoord2f(0.0, 1.0); glVertex3f(x1 + road_width/2 + 150, y_street, z1)
 
     # ----- Franja derecha -----
-    glTexCoord2f(0.0, 0.0); glVertex3f(x2 - ring_thickness, y_street, z1-50)
-    glTexCoord2f(scale_factor, 0.0); glVertex3f(x2 - ring_thickness, y_street, z2+50)
-    glTexCoord2f(scale_factor, scale_factor); glVertex3f(x2, y_street, z2+50)
-    glTexCoord2f(0.0, scale_factor); glVertex3f(x2, y_street, z1-50)
+    glTexCoord2f(0.0, 0.0); glVertex3f(x2 - road_width/2 - 150, y_street, z1)
+    glTexCoord2f(1.0, 0.0); glVertex3f(x2 - road_width/2 - 150, y_street, z2)
+    glTexCoord2f(1.0, 1.0); glVertex3f(x2 + road_width/2 - 150, y_street, z2)
+    glTexCoord2f(0.0, 1.0); glVertex3f(x2 + road_width/2 - 150, y_street, z1)
 
     glEnd()
 
@@ -265,8 +294,30 @@ def draw_square_ring():
 
     glPopMatrix()
 
+#"""
+def draw_intersection(x, z, width, height):
+    texture_id = OBJ.loadTexture("Avance Reto/Modelos/Calle2.jpg")  # Cambia por el camino a tu imagen
+    glEnable(GL_TEXTURE_2D)
+    glBindTexture(GL_TEXTURE_2D, texture_id)
+        
+    y_level = 1.1  # Ligeramente por encima de la calle para evitar z-fighting
 
-def draw_covering_squares():
+    glPushMatrix()
+    glColor3f(1.0, 1.0, 1.0)  # Mantén el color blanco para no alterar la textura
+
+    glBegin(GL_QUADS)
+    glTexCoord2f(0.0, 0.0); glVertex3f(x - width / 2, y_level, z - height / 2)
+    glTexCoord2f(1.0, 0.0); glVertex3f(x + width / 2, y_level, z - height / 2)
+    glTexCoord2f(1.0, 1.0); glVertex3f(x + width / 2, y_level, z + height / 2)
+    glTexCoord2f(0.0, 1.0); glVertex3f(x - width / 2, y_level, z + height / 2)
+    glEnd()
+
+    glDisable(GL_TEXTURE_2D)
+    glPopMatrix()
+#"""
+
+"""
+def road_intersection():
     texture_id2 = load_texture("Avance Reto/Modelos/Calle2.jpg")  # Nueva textura para los cuadrados
     glEnable(GL_TEXTURE_2D)
     
@@ -277,7 +328,7 @@ def draw_covering_squares():
         (120, 120),  # Primer cuadrado en X=-30, Z=30
         (120, -120)   # Segundo cuadrado en X=40, Z=-20
     ]
-
+"""
 
 
 def displayobj_carro(x, y, z, a, b, c, i):
@@ -349,7 +400,7 @@ def displayobjs_casas():
     #for x in range(-DimBoard + margin, DimBoard - margin + 1, spacing):
         #positions.append((x,  DimBoard - margin))
         #positions.append((x, -DimBoard + margin))
-     # Borde superior e inferior (sin tocar la carretera)
+    # Borde superior e inferior (sin tocar la carretera)
     for x in range(area_min, area_max + 1, spacing):
         positions.append((x, area_max))  # Arriba
         positions.append((x, area_min))  # Abajo
@@ -381,10 +432,10 @@ def Plano():
     # Plano gris (suelo)
         glColor3f(0.3, 0.3, 0.3)
         glBegin(GL_QUADS)
-        glVertex3f(-DimBoard, 0, -DimBoard)
-        glVertex3f(-DimBoard, 0,  DimBoard)
-        glVertex3f( DimBoard, 0,  DimBoard)
-        glVertex3f( DimBoard, 0, -DimBoard)
+        glVertex3f(-DimBoardWidth/2, 0, -DimBoardHeight/2)
+        glVertex3f(-DimBoardWidth/2, 0,  DimBoardHeight/2)
+        glVertex3f( DimBoardWidth/2, 0,  DimBoardHeight/2)
+        glVertex3f( DimBoardWidth/2, 0, -DimBoardHeight/2)
         glEnd()
         
 def PlanoTexturizado():
@@ -395,13 +446,13 @@ def PlanoTexturizado():
     glBindTexture(GL_TEXTURE_2D, textures[0])    
     glBegin(GL_QUADS)
     glTexCoord2f(0.0, 0.0)
-    glVertex3d(-DimBoard, 0, -DimBoard)
+    glVertex3d(-DimBoardWidth, 0, -DimBoardHeight)
     glTexCoord2f(0.0, 1.0)
-    glVertex3d(-DimBoard, 0, DimBoard)
+    glVertex3d(-DimBoardWidth, 0, DimBoardHeight)
     glTexCoord2f(1.0, 1.0)
-    glVertex3d(DimBoard, 0, DimBoard)
+    glVertex3d(DimBoardWidth, 0, DimBoardHeight)
     glTexCoord2f(1.0, 0.0)
-    glVertex3d(DimBoard, 0, -DimBoard)
+    glVertex3d(DimBoardWidth, 0, -DimBoardHeight)
     glEnd()              
     glDisable(GL_TEXTURE_2D)
     
@@ -415,9 +466,13 @@ def display():
     
 
     # Llamada al anillo (calle hueca) 
-    draw_square_ring()
+    draw_road()
+    #draw_intersection()
     
-    draw_covering_squares()
+    # Dibujar las intersecciones
+    for pos in intersection_positions:
+        draw_intersection(pos[0], pos[1], intersection_width, intersection_height)
+
 
     # Dibujas cubos, casas en las orillas, casa central...
     for c in cubos:
@@ -426,7 +481,7 @@ def display():
 
     #displayobjs_casas()
     
-    
+"""
     # Dibujar carros
     displayobj_carro(135.0, -50.0, 5.0, 5.0, 5.0, 5.0, 0)
     displayobj_carro(140.0, 50.0, 5.0, 10.0, 10.0, 10.0, 1)
@@ -455,7 +510,7 @@ def display():
     displayobj_arboles(80, 0.0, 180, 3.0, 3.0, 3.0, 1) # banca
 
     displayobj_semaforo(160, 0, -100, 0.3, 0.3, 0.3, 0)
-
+"""
     
     #displayobj_casa(50.0, 0.0, 50.0, 10.0, 10.0, 10.0, 1)
     #displayobj_casa(100.0, 0.0, 100.0, 10.0, 10.0, 10.0, 2)
