@@ -98,7 +98,9 @@ class Carro:
         # 🚦 Verificar semáforo cercano
         for semaforo in self.semaforos:
             distancia = self.getDistance(semaforo.Position, self.Position)
-            if distancia < 5:
+            #newPosition = [self.Position[0] + (self.Direction[0] * self.vel), self.Position[1], self.Position[2] + (self.Direction[2] * self.vel)]
+            #newDistance = self.getDistance(semaforo.Position, newPosition)
+            if distancia < 5 and self.Direction == semaforo.Direction:
                 if semaforo.estado == "ROJO":
                     self.vel = 0  # 🚗 Detener carro
                 elif semaforo.estado == "VERDE" and self.vel == 0:
