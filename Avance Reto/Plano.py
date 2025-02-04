@@ -605,7 +605,6 @@ def main():
         #draw_cars()
         display()
         pygame.display.flip()
-        pygame.time.wait(10)
 
     pygame.quit()
 
