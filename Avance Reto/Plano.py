@@ -175,8 +175,8 @@ def actualizar_carros():
     cubos = [carro for carro in cubos if not ha_salido_de_simulacion(carro)]
 
     # Verificar si han pasado 10 segundos desde el último spawn
-    tiempo_actual = pygame.time.get_ticks()
-    if tiempo_actual - ultimo_spawn >= intervalo_spawn:
+    if ultimo_spawn >= 150:
+        ultimo_spawn = 0
         # Generar 1 o 2 carros nuevos
         cantidad_carros = random.choice([2, 3])  
         for _ in range(cantidad_carros):
@@ -184,9 +184,9 @@ def actualizar_carros():
             nuevo_carro.setotrosagentes(cubos)
             nuevo_carro.setsemaforos(semaforos)
             cubos.append(nuevo_carro)
-            print(f"Carro generado en {nuevo_carro.Position}")  # 👀 Verifica que se están creando
+            #print(f"Carro generado en {nuevo_carro.Position}")  # 👀 Verifica que se están creando
         
-        ultimo_spawn = tiempo_actual 
+    ultimo_spawn += 1
     
 def Init():
     global cubos, semaforos, textures, traffic_light
@@ -232,9 +232,9 @@ def Init():
     
     semaforos = [
         Semaforo(-160, 0, -50, 5.0, 0, [0, 0, 1]),
-        Semaforo(140, 0, -50, 5.0, 1, [1, 0, 0]),
-        Semaforo(-140, 0, 50, 5.0, 0, [0, 0, 1]),
-        Semaforo(160, 0, 50, 5.0, 1, [1, 0, 0])
+        Semaforo(140, 0, -50, 5.0, 1, [0, 0, 1]),
+        Semaforo(-140, 0, 50, 5.0, 0, [0, 0, -1]),
+        Semaforo(160, 0, 50, 5.0, 1, [0, 0, -1])
     ]
     
     for semaforo in semaforos:
