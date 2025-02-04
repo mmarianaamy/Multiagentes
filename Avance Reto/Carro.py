@@ -18,21 +18,7 @@ from objloader import OBJ
 class Carro:
     
     def __init__(self, position=None, vel=1.0, direction=None, dimw=300, dimh=200):
-        #self.DimBoard = dim
-        """        
-        # Se inicializa las coordenadas de los vertices del cubo
-        self.vertexCoords = [  
-                   1,1,1,   1,1,-1,   1,-1,-1,   1,-1,1,
-                  -1,1,1,  -1,1,-1,  -1,-1,-1,  -1,-1,1  ]
-        # Se inicializa los colores de los vertices del cubo
-        self.vertexColors = [ 
-                   1,1,1,   1,0,0,   1,1,0,   0,1,0,
-                   0,0,1,   1,0,1,   0,0,0,   0,1,1  ]
-        # Se inicializa el arreglo para la indexacion de los vertices
-        self.elementArray = [ 
-                  0,1,2,3, 0,3,7,4, 0,4,5,1,
-                  6,2,1,5, 6,5,4,7, 6,7,3,2  ]
-        """
+        
         # Lista de objetos .OBJ (los carros)
         #carros = []
         
@@ -128,36 +114,22 @@ class Carro:
         
 
     def draw(self):
-        """
-        glPushMatrix()
-        glTranslatef(self.Position[0], self.Position[1], self.Position[2])
-        glScaled(5,5,5)
-        glEnableClientState(GL_VERTEX_ARRAY)
-        glEnableClientState(GL_COLOR_ARRAY)
-        glVertexPointer(3, GL_FLOAT, 0, self.vertexCoords)
-        glColorPointer(3, GL_FLOAT, 0, self.vertexColors)
-        glDrawElements(GL_QUADS, 24, GL_UNSIGNED_INT, self.elementArray)
-        glDisableClientState(GL_VERTEX_ARRAY)
-        glDisableClientState(GL_COLOR_ARRAY)
-        glPopMatrix()
-        """
-        
-        """
-        glPushMatrix()
-        glRotatef(-90.0, 1.0, 0.0, 0.0)  # si tu modelo sale "acostado", ajusta
-        glTranslatef(x, y, z)
-        glScale(a,b,c)
-        carros[i].render()
-        glPopMatrix()
-        """
         
         glPushMatrix()
         glTranslatef(self.Position[0], self.Position[1], self.Position[2])
-        glRotatef(-90.0, 1.0, 0.0, 0.0)  # si tu modelo sale "acostado", ajusta
+        
+        # Calcular el ángulo de rotación en función de la dirección del vehículo
+        angle = math.degrees(math.atan2(self.Direction[0], self.Direction[2]))  # Eje Y
+        
+        # Aplicar la rotación en función de la dirección
+        glRotatef(angle, 0, 1, 0)
+        
+        # Corregir la orientación del modelo 3D (si está al revés)
+        glRotatef(180, 0, 1, 0)  # Girar el modelo 180° para que el frente quede adelante
+
+        glRotatef(-90.0, 1.0, 0.0, 0.0)  # ajusta si el modelo sale "acostado" 
         # Calcular el ángulo de rotación en función de la dirección
-        #angle = math.degrees(math.atan2(self.Direction[2], self.Direction[0]))
-        #glRotatef(angle, -90.0, 1, 0)  # Rotar alrededor del eje Y
-        
+                
         glScaled(5, 5, 5)
         self.model.render()  # Renderizar el modelo OBJ
         glPopMatrix()

@@ -121,10 +121,10 @@ def generar_carro():
     
     """Genera un carro solo en las posiciones definidas moviéndose de abajo hacia arriba."""
     puntos_generacion = [
-        ([150, 1, -200], [0, 0, 1]),   # De abajo hacia arriba
-        ([-150, 1, -200], [0, 0, 1]),  # De abajo hacia arriba
-        ([150, 1, 200], [0, 0, -1]),   # De arriba hacia abajo
-        ([-150, 1, 200], [0, 0, -1])   # De arriba hacia abajo
+        ([140, 1, -200], [0, 0, 1]),   # De abajo hacia arriba
+        ([-160, 1, -200], [0, 0, 1]),  # De abajo hacia arriba
+        ([160, 1, 200], [0, 0, -1]),   # De arriba hacia abajo
+        ([-140, 1, 200], [0, 0, -1])   # De arriba hacia abajo
     ]
     
     
@@ -160,8 +160,10 @@ def ha_salido_de_simulacion(carro):
         #return True
     #return False
     
-    if z > DimBoardHeight or z < DimBoardWidth:
-        print(f"Carro fuera de pantalla en {carro.Position}")  # 👀
+#    if z > DimBoardHeight or z < DimBoardWidth:
+    if z > DimBoardHeight or z < -DimBoardHeight:
+        #print(f"Carro fuera de pantalla en {carro.Position}")  # 👀
+        print(f"Carro eliminado en {carro.Position}")
         return True
     return False
 
