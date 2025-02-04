@@ -122,10 +122,10 @@ def generar_carro():
     
     """Genera un carro solo en las posiciones definidas moviéndose de abajo hacia arriba."""
     puntos_generacion = [
-        ([140, 1, -200], [0, 0, 1]),   # De abajo hacia arriba
-        ([-160, 1, -200], [0, 0, 1]),  # De abajo hacia arriba
-        ([160, 1, 200], [0, 0, -1]),   # De arriba hacia abajo
-        ([-140, 1, 200], [0, 0, -1])   # De arriba hacia abajo
+        ([135, 1, -200], [0, 0, 1]),   # De abajo hacia arriba
+        ([-165, 1, -200], [0, 0, 1]),  # De abajo hacia arriba
+        ([165, 1, 200], [0, 0, -1]),   # De arriba hacia abajo
+        ([-135, 1, 200], [0, 0, -1])   # De arriba hacia abajo
     ]
     
     
