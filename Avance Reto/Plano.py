@@ -7,9 +7,11 @@ from OpenGL.GLUT import *
 
 import math
 import sys
+import random
 
 sys.path.append('..')
-from Cubo import Cubo
+from Carro import Carro
+from Semaforo import Semaforo
 from objloader import OBJ
 
 # ------------------------
@@ -47,20 +49,24 @@ Z_MAX= 500
 DimBoardHeight = 200
 DimBoardWidth = 300
 
-# Cubos (de ejemplo)
+# Carros
 cubos = []
 ncubos =  0
 
+semaforos = []
+nsemaforos = 2
+
+
 # Lista de objetos .OBJ (las casas)
-casas = []
+#casas = []
 
 # Lista de objetos .OBJ (los carros)
-carros = []
+#carros = []
 
 # Lista de objetos .OBJ (los arboles)
-arboles = []
+#arboles = []
 
-semaforos = []
+#semaforos = []
 
 # Control para la cámara orbital
 theta  = 0.0
@@ -111,40 +117,76 @@ def Axis():
 
     glLineWidth(1.0)
     
+def generar_carro():
     
-"""
-def load_texture(imagepath):
+    """Genera un carro solo en las posiciones definidas moviéndose de abajo hacia arriba."""
+    puntos_generacion = [
+        ([150, 1, -200], [0, 0, 1]),   # De abajo hacia arriba
+        ([-150, 1, -200], [0, 0, 1]),  # De abajo hacia arriba
+        ([150, 1, 200], [0, 0, -1]),   # De arriba hacia abajo
+        ([-150, 1, 200], [0, 0, -1])   # De arriba hacia abajo
+    ]
     
-    textures.append(glGenTextures(1))
-    id = len(textures) - 1
-    glBindTexture(GL_TEXTURE_2D, textures[id])
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S, GL_CLAMP)
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T, GL_CLAMP)
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
-    image = pygame.image.load (imagepath).convert()
-    w, h = image.get_rect().size
-    image_data = pygame.image.tostring(image,"RGBA")
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data)
-    glGenerateMipmap(GL_TEXTURE_2D) 
     
-"""
-"""
-    texture_surface = pygame.image.load(image_path)
-    texture_data = pygame.image.tostring(texture_surface, "RGB", 1)
-    width, height = texture_surface.get_size()
+    position, direction = random.choice(puntos_generacion)  # Selecciona una de las posiciones iniciales
+    velocidad = 1.0  # Velocidad del carro
+    #direction = [0, 0, 1]  # Movimiento de abajo hacia arriba
 
-    texture_id = glGenTextures(1)
-    glBindTexture(GL_TEXTURE_2D, texture_id)
+    return Carro(position=position, vel=velocidad, direction=direction)
 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, texture_data)
 
-    return texture_id
-"""
+"""Genera un nuevo carro solo en los lados derecho (x+) e inferior (z-) en posiciones fijas"""
+    #lado = random.choice(["x+", "z-"])  # Solo aparecen en dos lados
+    #velocidad = 1.0  # Puedes ajustar según el tipo de vehículo
 
+    #if lado == "x+":  # Desde la derecha hacia la izquierda
+        #return Carro([DimBoardWidth, 0, 0], velocidad, [-1, 0, 0])  
+    #elif lado == "z-":  # Desde abajo hacia arriba
+        #return Carro([0, 0, -DimBoardHeight], velocidad, [0, 0, 1])  
+    
+import pygame
+ultimo_spawn = 0  
+intervalo_spawn = 4000  
+
+def ha_salido_de_simulacion(carro):
+    """Verifica si el carro ha pasado el área de simulación y debe ser eliminado"""
+    #x, _, z = carro.Position
+    _, _, z = carro.Position
+    
+    #limite1 = DimBoardWidth - 5  # 🔥 Ahora eliminamos antes de que lleguen al borde
+    #limite2 = DimBoardHeight - 5  # 🔥 Ahora eliminamos antes de que lleguen al borde
+
+    #if -x > limite1 or z > limite2:
+        #return True
+    #return False
+    
+    if z > DimBoardHeight or z < DimBoardWidth:
+        print(f"Carro fuera de pantalla en {carro.Position}")  # 👀
+        return True
+    return False
+
+def actualizar_carros():
+    global cubos, ultimo_spawn
+    
+    # Eliminar carros que han salido de la simulación
+    cubos = [carro for carro in cubos if not ha_salido_de_simulacion(carro)]
+
+    # Verificar si han pasado 10 segundos desde el último spawn
+    tiempo_actual = pygame.time.get_ticks()
+    if tiempo_actual - ultimo_spawn >= intervalo_spawn:
+        # Generar 1 o 2 carros nuevos
+        cantidad_carros = random.choice([2, 3])  
+        for _ in range(cantidad_carros):
+            nuevo_carro = generar_carro()
+            nuevo_carro.setotrosagentes(cubos)
+            nuevo_carro.setsemaforos(semaforos)
+            cubos.append(nuevo_carro)
+            print(f"Carro generado en {nuevo_carro.Position}")  # 👀 Verifica que se están creando
+        
+        ultimo_spawn = tiempo_actual 
+    
 def Init():
+    global cubos, semaforos
     screen = pygame.display.set_mode(
         (screen_width, screen_height), DOUBLEBUF | OPENGL
     )
@@ -180,6 +222,16 @@ def Init():
     for c in cubos:
         c.getCubos(cubos)
     """
+    
+    semaforos = [
+        Semaforo(-5, 0, -50, 5.0, 0, [0, 0, 1]),
+        Semaforo(50, 0, 5, 5.0, 1, [1, 0, 0])
+    ]
+    
+    for semaforo in semaforos:
+        semaforo.otros_semaforos = [s for s in semaforos if s != semaforo]
+    cubos = []
+
 
     # Configuramos iluminación
     glLightfv(GL_LIGHT0, GL_POSITION, (0.0, 200.0, 0.0, 0.0))
@@ -191,8 +243,8 @@ def Init():
     glShadeModel(GL_SMOOTH)
 
     # Cargamos los modelos de las casas
-    casas.append(OBJ("Avance Reto\Modelos\edificio_chido\edificio_chido2.obj", swapyz=True))
-    casas[0].generate()
+    #casas.append(OBJ("Avance Reto\Modelos\edificio_chido\edificio_chido2.obj", swapyz=True))
+    #casas[0].generate()
     #casas.append(OBJ("Avance Reto/Modelos/parque.obj", swapyz=True))
     #casas[1].generate()
     #casas.append(OBJ("Avance Reto/Modelos/Building,.obj", swapyz=True))
@@ -203,20 +255,20 @@ def Init():
     #casas[4].generate()
     
     # Cargamos los modelos de los carros
-    carros.append(OBJ("Avance Reto\Modelos\Chevrolet_Camaro_SS_Low.obj", swapyz=True))
-    carros[0].generate()
-    carros.append(OBJ("Avance Reto\Modelos\Jeep_Renegade_2016.obj", swapyz=True))
-    carros[1].generate()
+    #carros.append(OBJ("Avance Reto\Modelos\Chevrolet_Camaro_SS_Low.obj", swapyz=True))
+    #carros[0].generate()
+    #carros.append(OBJ("Avance Reto\Modelos\Jeep_Renegade_2016.obj", swapyz=True))
+    #carros[1].generate()
     
     # Cargamos los modelos de los semaforos
-    semaforos.append(OBJ("Avance Reto\\Modelos\\traffic_light.obj", swapyz = True))
-    semaforos[0].generate()
+    #semaforos.append(OBJ("Avance Reto\\Modelos\\traffic_light.obj", swapyz = True))
+    #semaforos[0].generate()
 
     # Cargamos los modelos de los arboles
-    arboles.append(OBJ("Avance Reto\Modelos\Trees\Trees2.obj", swapyz=True))
-    arboles[0].generate()
-    arboles.append(OBJ("Avance Reto\Modelos\Bench\white_bench.obj", swapyz=True))
-    arboles[1].generate()
+    #arboles.append(OBJ("Avance Reto\Modelos\Trees\Trees2.obj", swapyz=True))
+    #arboles[0].generate()
+    #arboles.append(OBJ("Avance Reto\Modelos\Bench\white_bench.obj", swapyz=True))
+    #arboles[1].generate()
 
 
 
@@ -266,12 +318,14 @@ def draw_road():
 
     # ----- Franja central -----
     #glTexCoord2f(0.0, scale_factor); glVertex3f(x1-50, y_street, z2)
-    glTexCoord2f(0.0, 0.0); glVertex3f(x1, y_street, 0 - road_width/2)
     #glTexCoord2f(scale_factor, scale_factor); glVertex3f(x2+50, y_street, z2)
-    glTexCoord2f(1.0, 0.0); glVertex3f(x2, y_street, 0 - road_width/2)
     #glTexCoord2f(scale_factor, 0.0); glVertex3f(x2+50, y_street, z2 - ring_thickness)
-    glTexCoord2f(1.0, 1.0); glVertex3f(x2, y_street, 0 + road_width/2)
     #glTexCoord2f(0.0, 0.0); glVertex3f(x1-50, y_street, z2 - ring_thickness)
+    
+    # ----- Franja central -----
+    glTexCoord2f(0.0, 0.0); glVertex3f(x1, y_street, 0 - road_width/2)
+    glTexCoord2f(1.0, 0.0); glVertex3f(x2, y_street, 0 - road_width/2)
+    glTexCoord2f(1.0, 1.0); glVertex3f(x2, y_street, 0 + road_width/2)
     glTexCoord2f(0.0, 1.0); glVertex3f(x1, y_street, 0 + road_width/2)
 
     # ----- Franja izquierda -----
@@ -314,28 +368,15 @@ def draw_intersection(x, z, width, height):
 
     glDisable(GL_TEXTURE_2D)
     glPopMatrix()
-#"""
-
 """
-def road_intersection():
-    texture_id2 = load_texture("Avance Reto/Modelos/Calle2.jpg")  # Nueva textura para los cuadrados
-    glEnable(GL_TEXTURE_2D)
-    
-    y_level = 1.1  # Ligeramente por encima de la calle para evitar z-fighting
 
-    # Posiciones de los dos cuadrados
-    square_positions = [
-        (120, 120),  # Primer cuadrado en X=-30, Z=30
-        (120, -120)   # Segundo cuadrado en X=40, Z=-20
-    ]
-"""
 
 
 def displayobj_carro(x, y, z, a, b, c, i):
-    """
-    Dibuja los carros que van sobre la carretera.
-    Ajusta la rotación/traslación/escala según tu OBJ.
-    """
+    
+    #Dibuja los carros que van sobre la carretera.
+    #Ajusta la rotación/traslación/escala según tu OBJ.
+    
     glPushMatrix()
     glRotatef(-90.0, 1.0, 0.0, 0.0)  # si tu modelo sale "acostado", ajusta
     glTranslatef(x, y, z)
@@ -380,53 +421,6 @@ def displayobj_semaforo(x, y, z, a, b, c, i):
     semaforos[i].render()
     glPopMatrix()
 """
-def displayobjs_casas():
-    
-    #Dibuja la casa repetida en las orillas del plano XZ.
-    #Se usa la misma escala y rotación que la casa central.
-    
-    spacing = 50  # Distancia entre casas
-    margin = 10 # Casas fuera de la carretera
-    positions = []
-
-    #Areas de edificios
-    area_min = - DimBoard + margin
-    area_max = DimBoard - margin
-    
-    # Borde superior e inferior
-    #for x in range(-DimBoard, DimBoard + 1, spacing):
-        #positions.append((x,  DimBoard))
-        #positions.append((x, -DimBoard))
-    #for x in range(-DimBoard + margin, DimBoard - margin + 1, spacing):
-        #positions.append((x,  DimBoard - margin))
-        #positions.append((x, -DimBoard + margin))
-    # Borde superior e inferior (sin tocar la carretera)
-    for x in range(area_min, area_max + 1, spacing):
-        positions.append((x, area_max))  # Arriba
-        positions.append((x, area_min))  # Abajo
-
-    # Borde izquierdo y derecho
-    #for z in range(-DimBoard + spacing, DimBoard, spacing):
-        #positions.append((-DimBoard, z))
-        #positions.append(( DimBoard, z))
-        
-    #for z in range(-DimBoard + margin + spacing, DimBoard - margin, spacing):
-        #positions.append((-DimBoard + margin, z))
-        #positions.append(( DimBoard - margin, z))
-    # Borde izquierdo y derecho (sin tocar la carretera)
-    for z in range(area_min + spacing, area_max, spacing):
-        positions.append((area_min, z))  # Izquierda
-        positions.append((area_max, z))  # Derecha
-
-    for (x, z) in positions:
-        glPushMatrix()
-        glTranslatef(x, 0.0, z)
-        glRotatef(-90.0, 0.1, 0.0, 0.0)
-        glTranslatef(0.0, 0.0, 15.0)
-        glScale(3.0, 3.0, 3.0)
-        casas[0].render()
-        glPopMatrix()
-"""
 
 def Plano():
     # Plano gris (suelo)
@@ -456,16 +450,18 @@ def PlanoTexturizado():
     glEnd()              
     glDisable(GL_TEXTURE_2D)
     
-    
+def draw_cars():
+    for carro in cubos:
+        carro.draw()
+        carro.update()
+        
 def display():
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
     Axis()
 
     PlanoTexturizado()
-    
 
-    # Llamada al anillo (calle hueca) 
     draw_road()
     #draw_intersection()
     
@@ -475,9 +471,14 @@ def display():
 
 
     # Dibujas cubos, casas en las orillas, casa central...
-    for c in cubos:
-        c.draw()
-        c.update()
+    #for c in cubos:
+        #c.draw()
+        #c.update()
+    draw_cars()
+    # Dibuja semaforos
+    for obj in semaforos:
+        obj.draw()
+        obj.update([s for s in semaforos if s != obj])
 
     #displayobjs_casas()
     
@@ -555,7 +556,9 @@ def main():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     done = True
-
+                    
+        actualizar_carros()
+        draw_cars()
         display()
         pygame.display.flip()
         pygame.time.wait(10)
