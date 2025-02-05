@@ -56,12 +56,10 @@ ncubos =  0
 semaforos = []
 nsemaforos = 2
 
-
 # Lista de objetos .OBJ (las casas)
-#casas = []
+casas = []
 
 # Lista de objetos .OBJ (los carros)
-#carros = []
 modelos_carros = [
             "Avance Reto\Modelos\Jeep_Renegade_2016.obj",
             "Avance Reto\Modelos\pack vehicles\sedan.obj",
@@ -70,7 +68,7 @@ modelos_carros = [
         ]
 
 # Lista de objetos .OBJ (los arboles)
-#arboles = []
+arboles = []
 
 traffic_light = []
 
@@ -82,7 +80,6 @@ radius = 300
 textures = []
 image1 = "Avance Reto/Modelos/grass.jpg"
 image2 = "Avance Reto/Modelos/background.jpg"
-
 
 # Dimensiones de las intersecciones
 intersection_width = 50
@@ -125,7 +122,6 @@ def Axis():
     glLineWidth(1.0)
     
 def generar_carro():
-    
     """Genera un carro solo en las posiciones definidas moviéndose de abajo hacia arriba."""
     puntos_generacion = [
         ([135, 1, -200], [0, 0, 1]),   # De abajo hacia arriba
@@ -133,6 +129,9 @@ def generar_carro():
         ([165, 1, 200], [0, 0, -1]),   # De arriba hacia abajo
         ([-135, 1, 200], [0, 0, -1])   # De arriba hacia abajo
     ]
+
+    movimientos = [[0, 0, 1], [0, 0, -1], [1, 0, 0], [-1, 0, 0]]
+    
     
     position, direction = random.choice(puntos_generacion)  # Selecciona una de las posiciones iniciales
     velocidad = 1.0  # Velocidad del carro
@@ -145,16 +144,6 @@ def generar_carro():
 
     return Carro(position=position, vel=velocidad, direction=direction, modelo=modelo, movimientos=movimientos)
 
-
-
-"""Genera un nuevo carro solo en los lados derecho (x+) e inferior (z-) en posiciones fijas"""
-    #lado = random.choice(["x+", "z-"])  # Solo aparecen en dos lados
-    #velocidad = 1.0  # Puedes ajustar según el tipo de vehículo
-
-    #if lado == "x+":  # Desde la derecha hacia la izquierda
-        #return Carro([DimBoardWidth, 0, 0], velocidad, [-1, 0, 0])  
-    #elif lado == "z-":  # Desde abajo hacia arriba
-        #return Carro([0, 0, -DimBoardHeight], velocidad, [0, 0, 1])  
     
 import pygame
 ultimo_spawn = 0  
@@ -165,14 +154,6 @@ def ha_salido_de_simulacion(carro):
     x, _, z = carro.Position
     _, _, z = carro.Position
     
-    #limite1 = DimBoardWidth - 5  # 🔥 Ahora eliminamos antes de que lleguen al borde
-    #limite2 = DimBoardHeight - 5  # 🔥 Ahora eliminamos antes de que lleguen al borde
-
-    #if -x > limite1 or z > limite2:
-        #return True
-    #return False
-    
-#    if z > DimBoardHeight or z < DimBoardWidth:
     if z > DimBoardHeight or z < -DimBoardHeight:
         #print(f"Carro fuera de pantalla en {carro.Position}")  # 
         print(f"Carro eliminado en {carro.Position}")
@@ -199,7 +180,7 @@ def actualizar_carros():
             nuevo_carro.setotrosagentes(cubos)
             nuevo_carro.setsemaforos(semaforos)
             cubos.append(nuevo_carro)
-            #print(f"Carro generado en {nuevo_carro.Position}")  # 👀 Verifica que se están creando
+            #print(f"Carro generado en {nuevo_carro.Position}")  # Verifica que se están creando
         
     ultimo_spawn += 1
     
@@ -236,14 +217,6 @@ def Init():
     # Cargar la nueva textura para las intersecciones
     #intersection_texture_id = OBJ.loadTexture("Avance Reto/Modelos/Calle2.jpg")
     #textures.append(intersection_texture_id)
-
-    """
-    # Cubos de ejemplo
-    for _ in range(ncubos):
-        cubos.append(Cubo(DimBoard, 1.0, 5.0))
-    for c in cubos:
-        c.getCubos(cubos)
-    """
     
     semaforos = [
         Semaforo(-160, 0, -40, 5.0, 0, [0, 0, 1]),
@@ -272,35 +245,27 @@ def Init():
     glShadeModel(GL_SMOOTH)
 
     # Cargamos los modelos de las casas
-    #casas.append(OBJ("Avance Reto\Modelos\edificio_chido\edificio_chido2.obj", swapyz=True))
-    #casas[0].generate()
-    #casas.append(OBJ("Avance Reto/Modelos/parque.obj", swapyz=True))
-    #casas[1].generate()
+    casas.append(OBJ("Avance Reto\Modelos\edificio_chido\edificio_chido2.obj", swapyz=True))
+    casas[0].generate()
+    casas.append(OBJ("Avance Reto\Modelos\casita pro\casa_pro2.obj", swapyz=True))
+    casas[1].generate()
     #casas.append(OBJ("Avance Reto/Modelos/Building,.obj", swapyz=True))
     #casas[2].generate()
     #casas.append(OBJ("Avance Reto/Modelos/building_05.obj", swapyz=True))
     #casas[3].generate()
-    #casas.append(OBJ("Avance Reto/Modelos/Bambo_House.obj", swapyz=True))
-    #casas[4].generate()
     
-    # Cargamos los modelos de los carros
-    #carros.append(OBJ("Avance Reto\Modelos\Chevrolet_Camaro_SS_Low.obj", swapyz=True))
-    #carros[0].generate()
-    #carros.append(OBJ("Avance Reto\Modelos\Jeep_Renegade_2016.obj", swapyz=True))
-    #carros[1].generate()
     
     # Cargamos los modelos de los semaforos
     traffic_light.append(OBJ("Avance Reto\\Modelos\\traffic_light.obj", swapyz = True))
     traffic_light[0].generate()
-    #traffic_light.append(OBJ("Avance Reto\\Modelos\\traffic_light.obj", swapyz=True))
     print(f"Modelo del semáforo cargado: {traffic_light}")  # Verifica si se cargó
 
 
     # Cargamos los modelos de los arboles
-    #arboles.append(OBJ("Avance Reto\Modelos\Trees\Trees2.obj", swapyz=True))
-    #arboles[0].generate()
-    #arboles.append(OBJ("Avance Reto\Modelos\Bench\white_bench.obj", swapyz=True))
-    #arboles[1].generate()
+    arboles.append(OBJ("Avance Reto\Modelos\Trees\Trees2.obj", swapyz=True))
+    arboles[0].generate()
+    arboles.append(OBJ("Avance Reto\Modelos\Bench\white_bench.obj", swapyz=True))
+    arboles[1].generate()
 
 
 
@@ -316,24 +281,21 @@ def lookat():
 
 
 def draw_road():
-    
     texture_id = OBJ.loadTexture("Avance Reto/Modelos/Calle.jpg")  # Cambia por el camino a tu imagen
     glEnable(GL_TEXTURE_2D)
-    margin = 50
     road_width = 50
     y_street = 1.0
 
     # Escala y rotación
-    scale_factor = 1.0  
     rotation_angle = 90  #  rotar la textura
 
     #glBindTexture(GL_TEXTURE_2D, texture_id)
 
     # Coordenadas de la carretera
-    x1 = -DimBoardWidth #+ margin
-    x2 =  DimBoardWidth #- margin
-    z1 = -DimBoardHeight #+ margin
-    z2 =  DimBoardHeight #- margin
+    x1 = -DimBoardWidth 
+    x2 =  DimBoardWidth 
+    z1 = -DimBoardHeight 
+    z2 =  DimBoardHeight 
 
     glPushMatrix()
     glColor3f(1.0, 1.0, 1.0)  # Mantén el color blanco para no alterar la textura
@@ -347,12 +309,6 @@ def draw_road():
     glTranslatef(-0.5, -0.5, 0.0)  # Regresar el centro de rotación
 
     glBegin(GL_QUADS)
-
-    # ----- Franja central -----
-    #glTexCoord2f(0.0, scale_factor); glVertex3f(x1-50, y_street, z2)
-    #glTexCoord2f(scale_factor, scale_factor); glVertex3f(x2+50, y_street, z2)
-    #glTexCoord2f(scale_factor, 0.0); glVertex3f(x2+50, y_street, z2 - ring_thickness)
-    #glTexCoord2f(0.0, 0.0); glVertex3f(x1-50, y_street, z2 - ring_thickness)
     
     # ----- Franja central -----
     glTexCoord2f(0.0, 0.0); glVertex3f(x1, y_street, 0 - road_width/2)
@@ -380,7 +336,7 @@ def draw_road():
 
     glPopMatrix()
 
-#"""
+
 def draw_intersection(x, z, width, height):
     texture_id = OBJ.loadTexture("Avance Reto/Modelos/Calle2.jpg")  # Cambia por el camino a tu imagen
     glEnable(GL_TEXTURE_2D)
@@ -400,55 +356,43 @@ def draw_intersection(x, z, width, height):
 
     glDisable(GL_TEXTURE_2D)
     glPopMatrix()
-"""
-
-
-
-def displayobj_carro(x, y, z, a, b, c, i):
     
-    #Dibuja los carros que van sobre la carretera.
-    #Ajusta la rotación/traslación/escala según tu OBJ.
-    
-    glPushMatrix()
-    glRotatef(-90.0, 1.0, 0.0, 0.0)  # si tu modelo sale "acostado", ajusta
-    glTranslatef(x, y, z)
-    glScale(a,b,c)
-    carros[i].render()
-    glPopMatrix()
-
 
 def displayobj_arboles(x, y, z, a, b, c, i):
-    
-    #Dibuja las casas en el plano.
-    #Ajusta la rotación/traslación/escala según tu OBJ.
-    
+    """
+    Dibuja los arboles y bancas en el plano.
+    Ajusta la rotación/traslación/escala según tu OBJ.
+    """
+    glColor3f(1.0, 1.0, 1.0)
     glPushMatrix()
     glTranslatef(x, y, z)
+    #if arboles[1] and z > 0:
+        #glRotatef(180, 0, 1, 0)
+    glRotatef(90.0, 0.0, 1.0, 0.0)
     glRotatef(-90.0, 1.0, 0.0, 0.0)  # si tu modelo sale "acostado", ajusta
     glScale(a, b, c)
     arboles[i].render()
     glPopMatrix()
 
 def displayobj_casa(x, y, z, a, b, c, i):
-    
-    #Dibuja las casas en el plano.
-    #Ajusta la rotación/traslación/escala según tu OBJ.
-    
+    """
+    Dibuja las casas en el plano.
+    Ajusta la rotación/traslación/escala según tu OBJ.
+    """
+    glColor3f(1.0, 1.0, 1.0)
     glPushMatrix()
     glTranslatef(x, y, z)
     glRotatef(-90.0, 1.0, 0.0, 0.0)  # si tu modelo sale "acostado", ajusta
     glScale(a, b, c)
     casas[i].render()
     glPopMatrix()
-"""
+
 
 def displayobj_semaforo(x, y, z, a, b, c, i):
-    
     """
     Dibuja los semaforos en el plano.
     Ajusta la rotación/traslación/escala según tu OBJ.
     """
-    
     glPushMatrix()
     glTranslatef(x, y, z)
     if z > 0:
@@ -461,13 +405,13 @@ def displayobj_semaforo(x, y, z, a, b, c, i):
 
 def Plano():
     # Plano gris (suelo)
-        glColor3f(0.3, 0.3, 0.3)
-        glBegin(GL_QUADS)
-        glVertex3f(-DimBoardWidth/2, 0, -DimBoardHeight/2)
-        glVertex3f(-DimBoardWidth/2, 0,  DimBoardHeight/2)
-        glVertex3f( DimBoardWidth/2, 0,  DimBoardHeight/2)
-        glVertex3f( DimBoardWidth/2, 0, -DimBoardHeight/2)
-        glEnd()
+    glColor3f(0.3, 0.3, 0.3)
+    glBegin(GL_QUADS)
+    glVertex3f(-DimBoardWidth/2, 0, -DimBoardHeight/2)
+    glVertex3f(-DimBoardWidth/2, 0,  DimBoardHeight/2)
+    glVertex3f( DimBoardWidth/2, 0,  DimBoardHeight/2)
+    glVertex3f( DimBoardWidth/2, 0, -DimBoardHeight/2)
+    glEnd()
         
 def PlanoTexturizado():
     #Activate textures
@@ -488,8 +432,9 @@ def PlanoTexturizado():
     glDisable(GL_TEXTURE_2D)
     
 def draw_background():
-    #"""
-    #Dibuja una imagen de fondo como skybox.
+    """
+    Dibuja una imagen de fondo como skybox.
+    """
     glEnable(GL_TEXTURE_2D)
     glBindTexture(GL_TEXTURE_2D, textures[1])
     
@@ -506,7 +451,6 @@ def draw_background():
 
     glPopMatrix()
     glDisable(GL_TEXTURE_2D)
-    #"""
 
     
 def draw_cars():
@@ -521,57 +465,56 @@ def display():
     PlanoTexturizado()
 
     draw_road()
-    #draw_intersection()
     
     # Dibujar las intersecciones
     for pos in intersection_positions:
         draw_intersection(pos[0], pos[1], intersection_width, intersection_height)
 
-
-    # Dibujas cubos, casas en las orillas, casa central...
-    #for c in cubos:
-        #c.draw()
-        #c.update()
     draw_cars()
+    
     # Dibuja semaforos
     for obj in semaforos:
         obj.draw()
         obj.update([s for s in semaforos if s != obj])
 
-    #for tl in traffic_light:
-        #tl.render()
-    #displayobjs_casas()
-    
     """
-    # Dibujar carros
-    displayobj_carro(135.0, -50.0, 5.0, 5.0, 5.0, 5.0, 0)
-    displayobj_carro(140.0, 50.0, 5.0, 10.0, 10.0, 10.0, 1)
-    
-    # Dibujar casas
-    displayobj_casa(-150, 0.0, -180, 5.0, 5.0, 5.0, 0)
-    displayobj_casa(-100, 0.0, -180, 5.0, 5.0, 5.0, 0)
-    displayobj_casa(-50, 0.0, -180, 5.0, 5.0, 5.0, 0)
-    displayobj_casa(-0, 0.0, -180, 5.0, 5.0, 5.0, 0)
-    displayobj_casa(50, 0.0, -180, 5.0, 5.0, 5.0, 0)
+    # Dibujar edificios
+    displayobj_casa(-100, 0.0, -170, 5.0, 5.0, 5.0, 0)
+    displayobj_casa(-50, 0.0, -170, 5.0, 5.0, 5.0, 0)
+    displayobj_casa(-0, 0.0, -170, 5.0, 5.0, 5.0, 0)
+    displayobj_casa(50, 0.0, -170, 5.0, 5.0, 5.0, 0)
+    displayobj_casa(100, 0.0, -170, 5.0, 5.0, 5.0, 0)
 
-    displayobj_casa(-150, 0.0, 180, 5.0, 5.0, 5.0, 0)
-    displayobj_casa(-100, 0.0, 180, 5.0, 5.0, 5.0, 0)
-    displayobj_casa(-50, 0.0, 180, 5.0, 5.0, 5.0, 0)
-    displayobj_casa(-0, 0.0, 180, 5.0, 5.0, 5.0, 0)
-    displayobj_casa(50, 0.0, 180, 5.0, 5.0, 5.0, 0)
-    
-    displayobj_casa(180, 0.0, -30, 5.0, 5.0, 5.0, 0)
-    displayobj_casa(180, 0.0, -80, 5.0, 5.0, 5.0, 0)
-    
-    displayobj_casa(180, 0.0, 80, 5.0, 5.0, 5.0, 0)
-    displayobj_casa(180, 0.0, 30, 5.0, 5.0, 5.0, 0)
+    displayobj_casa(-100, 0.0, 170, 5.0, 5.0, 5.0, 0)
+    displayobj_casa(-50, 0.0, 170, 5.0, 5.0, 5.0, 0)
+    displayobj_casa(-0, 0.0, 170, 5.0, 5.0, 5.0, 0)
+    displayobj_casa(50, 0.0, 170, 5.0, 5.0, 5.0, 0)
+    displayobj_casa(100, 0.0, 170, 5.0, 5.0, 5.0, 0)
+
+    # Dibujar casas
+    displayobj_casa(250.0, 0.0, 180.0, 5.0, 5.0, 5.0, 1)
+    displayobj_casa(250.0, 0.0, 80.0, 5.0, 5.0, 5.0, 1)
+    displayobj_casa(250.0, 0.0, -180.0, 5.0, 5.0, 5.0, 1)
+    displayobj_casa(250.0, 0.0, -80.0, 5.0, 5.0, 5.0, 1)
     
     # Dibujar arboles
-    displayobj_arboles(180, 0.0, -180, 3.0, 3.0, 3.0, 0)
-    displayobj_arboles(80, 0.0, 180, 3.0, 3.0, 3.0, 1) # banca
+    displayobj_arboles(-90, 0.0, -80, 3.0, 3.0, 3.0, 0)
+    displayobj_arboles(0, 0.0, -80, 3.0, 3.0, 3.0, 0)
+    displayobj_arboles(90, 0.0, -80, 3.0, 3.0, 3.0, 0)
 
-    displayobj_semaforo(160, 0, -100, 0.3, 0.3, 0.3, 0)
+    displayobj_arboles(-90, 0.0, 80, 3.0, 3.0, 3.0, 0)
+    displayobj_arboles(0, 0.0, 80, 3.0, 3.0, 3.0, 0)
+    displayobj_arboles(90, 0.0, 80, 3.0, 3.0, 3.0, 0)
+    
+    # Dibuja bancas
+    displayobj_arboles(-100, 0.0, -50, 3.0, 3.0, 3.0, 1) 
+    displayobj_arboles(0, 0.0, -50, 3.0, 3.0, 3.0, 1) 
+    displayobj_arboles(100, 0.0, -50, 3.0, 3.0, 3.0, 1) 
+    displayobj_arboles(-100, 0.0, 50, 3.0, 3.0, 3.0, 1) 
+    displayobj_arboles(0, 0.0, 50, 3.0, 3.0, 3.0, 1) 
+    displayobj_arboles(100, 0.0, 50, 3.0, 3.0, 3.0, 1) 
     """
+    # Dibuja semaforos
     displayobj_semaforo(120, 0, -40, 1.0, 1.0, 1.0, 0)
     displayobj_semaforo(180, 0, 40, 1.0, 1.0, 1.0, 0)
     displayobj_semaforo(-120, 0, 40, 1.0, 1.0, 1.0, 0)
@@ -582,28 +525,6 @@ def display():
     displayobj_semaforo(-180, 0, 40, 1.0, 1.0, 1.0, 0)
     displayobj_semaforo(-120, 0, -40, 1.0, 1.0, 1.0, 0)
 
-
-
-    
-    #displayobj_casa(50.0, 0.0, 50.0, 10.0, 10.0, 10.0, 1)
-    #displayobj_casa(100.0, 0.0, 100.0, 10.0, 10.0, 10.0, 2)
-    #displayobj_casa(150.0, 0.0, 150.0, 10.0, 10.0, 10.0, 3)
-    #displayobj_casa(200.0, 0.0, 200.0, 10.0, 10.0, 10.0, 4)
-"""
-
-    # Dibujar carros
-    if len(carros) > 0:
-        displayobj_carro(135.0, -50.0, 5.0, 5.0, 5.0, 0)
-    if len(carros) > 1:
-        displayobj_carro(140.0, 50.0, 5.0, 10.0, 10.0, 1)
-
-    # Dibujar casas
-    if len(casas) > 0:
-        displayobj_casa(0.0, 0.0, 0.0, 10.0, 10.0, 10.0, 0)
-    if len(casas) > 1:
-        displayobj_casa(50.0, 0.0, 50.0, 10.0, 10.0, 10.0, 1)
-"""
-    #pygame.display.flip()
     
 def main():
     done = False
@@ -631,7 +552,6 @@ def main():
                     done = True
                     
         actualizar_carros()
-        #draw_cars()
         display()
         pygame.display.flip()
 
