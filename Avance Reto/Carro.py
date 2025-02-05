@@ -17,16 +17,22 @@ from objloader import OBJ
 
 class Carro:
     
-    def __init__(self, position=None, vel=1.0, direction=None, dimw=300, dimh=200):
+    def __init__(self, position=None, vel=1.0, direction=None, modelo=None, dimw=300, dimh=200):
         
-        # Lista de objetos .OBJ (los carros)
-        #carros = []
+        # Lista de modelos .OBJ (los carros)
+        #modelos_carros = [
+            #"Avance Reto\Modelos\Jeep_Renegade_2016.obj",
+            #"Avance Reto\Modelos\Chevrolet_Camaro_SS_Low.obj",
+        #]
         
         #carros.append(OBJ("Avance Reto\Modelos\Jeep_Renegade_2016.obj", swapyz=True))
         #carros[0].generate()
         
         # Cargar el modelo OBJ
-        self.model = OBJ("Avance Reto\Modelos\Jeep_Renegade_2016.obj", swapyz=True)  # Cambia el path al archivo OBJ de tu carro
+        #self.model = OBJ("Avance Reto\Modelos\Jeep_Renegade_2016.obj", swapyz=True)  # Cambia el path al archivo OBJ de tu carro
+        self.model = OBJ(modelo, swapyz=True) if modelo else None
+        if self.model:
+            self.model.generate()
 
         self.DimBoardW = dimw  # Se almacena la dimensión del tablero
         self.DimBoardH= dimh
@@ -133,5 +139,7 @@ class Carro:
         # Calcular el ángulo de rotación en función de la dirección
                 
         glScaled(5, 5, 5)
-        self.model.render()  # Renderizar el modelo OBJ
+        #self.model.render()  # Renderizar el modelo OBJ
+        if self.model:
+            self.model.render()
         glPopMatrix()
