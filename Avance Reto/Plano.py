@@ -58,6 +58,7 @@ nsemaforos = 2
 
 # Lista de objetos .OBJ (las casas)
 casas = []
+edificios = []
 
 # Lista de objetos .OBJ (los carros)
 modelos_carros = [
@@ -69,6 +70,7 @@ modelos_carros = [
 
 # Lista de objetos .OBJ (los arboles)
 arboles = []
+bancas = []
 
 traffic_light = []
 
@@ -245,12 +247,12 @@ def Init():
     glShadeModel(GL_SMOOTH)
 
     # Cargamos los modelos de las casas
-    casas.append(OBJ("Avance Reto\Modelos\edificio_chido\edificio_chido2.obj", swapyz=True))
-    casas[0].generate()
+    edificios.append(OBJ("Avance Reto\Modelos\edificio_chido\edificio_chido.obj", swapyz=True))
+    edificios[0].generate()
     casas.append(OBJ("Avance Reto\Modelos\casita pro\casa_pro2.obj", swapyz=True))
-    casas[1].generate()
-    #casas.append(OBJ("Avance Reto/Modelos/Building,.obj", swapyz=True))
-    #casas[2].generate()
+    casas[0].generate()
+    edificios.append(OBJ("Avance Reto\\Modelos\\building,.obj", swapyz=True))
+    edificios[1].generate()
     #casas.append(OBJ("Avance Reto/Modelos/building_05.obj", swapyz=True))
     #casas[3].generate()
     
@@ -261,11 +263,15 @@ def Init():
     print(f"Modelo del semáforo cargado: {traffic_light}")  # Verifica si se cargó
 
 
-    # Cargamos los modelos de los arboles
-    arboles.append(OBJ("Avance Reto\Modelos\Trees\Trees2.obj", swapyz=True))
+    # Cargamos los modelos de los objetos
+    arboles.append(OBJ("Avance Reto\\Modelos\\tree_pack\\arbol3.obj", swapyz=True))
     arboles[0].generate()
-    arboles.append(OBJ("Avance Reto\Modelos\Bench\white_bench.obj", swapyz=True))
+    arboles.append(OBJ("Avance Reto\\Modelos\\tree_pack\\arbol4.obj", swapyz=True))
     arboles[1].generate()
+    arboles.append(OBJ("Avance Reto\\Modelos\\tree_pack\\pino.obj", swapyz=True))
+    arboles[2].generate()
+    bancas.append(OBJ("Avance Reto\Modelos\Bench\white_bench.obj", swapyz=True))
+    bancas[0].generate()
 
 
 
@@ -368,10 +374,26 @@ def displayobj_arboles(x, y, z, a, b, c, i):
     glTranslatef(x, y, z)
     #if arboles[1] and z > 0:
         #glRotatef(180, 0, 1, 0)
-    glRotatef(90.0, 0.0, 1.0, 0.0)
+    #glRotatef(90.0, 0.0, 1.0, 0.0)
     glRotatef(-90.0, 1.0, 0.0, 0.0)  # si tu modelo sale "acostado", ajusta
     glScale(a, b, c)
     arboles[i].render()
+    glPopMatrix()
+    
+def displayobj_bancas(x, y, z, a, b, c, i):
+    """
+    Dibuja los arboles y bancas en el plano.
+    Ajusta la rotación/traslación/escala según tu OBJ.
+    """
+    glColor3f(1.0, 1.0, 1.0)
+    glPushMatrix()
+    glTranslatef(x, y, z)
+    if z < 0:
+        glRotatef(180, 0, 1, 0)
+    #glRotatef(90.0, 0.0, 1.0, 0.0)
+    glRotatef(-90.0, 1.0, 0.0, 0.0)  # si tu modelo sale "acostado", ajusta
+    glScale(a, b, c)
+    bancas[i].render()
     glPopMatrix()
 
 def displayobj_casa(x, y, z, a, b, c, i):
@@ -382,9 +404,26 @@ def displayobj_casa(x, y, z, a, b, c, i):
     glColor3f(1.0, 1.0, 1.0)
     glPushMatrix()
     glTranslatef(x, y, z)
+    #if casas[0]:
+    glRotatef(90, 0, 1, 0)
     glRotatef(-90.0, 1.0, 0.0, 0.0)  # si tu modelo sale "acostado", ajusta
     glScale(a, b, c)
     casas[i].render()
+    glPopMatrix()
+    
+def displayobj_edificio(x, y, z, a, b, c, i):
+    """
+    Dibuja las casas en el plano.
+    Ajusta la rotación/traslación/escala según tu OBJ.
+    """
+    glColor3f(1.0, 1.0, 1.0)
+    glPushMatrix()
+    glTranslatef(x, y, z)
+    #if casas[1]:
+        #glRotatef(90, 0, 1, 0)
+    glRotatef(-90.0, 1.0, 0.0, 0.0)  # si tu modelo sale "acostado", ajusta
+    glScale(a, b, c)
+    edificios[i].render()
     glPopMatrix()
 
 
@@ -478,42 +517,53 @@ def display():
         obj.update([s for s in semaforos if s != obj])
 
     # Dibujar edificios
-    displayobj_casa(-100, 0.0, -170, 5.0, 5.0, 5.0, 0)
-    displayobj_casa(-50, 0.0, -170, 5.0, 5.0, 5.0, 0)
-    displayobj_casa(-0, 0.0, -170, 5.0, 5.0, 5.0, 0)
-    displayobj_casa(50, 0.0, -170, 5.0, 5.0, 5.0, 0)
-    displayobj_casa(100, 0.0, -170, 5.0, 5.0, 5.0, 0)
+    displayobj_edificio(-70, 0.0, -150, 5.0, 5.0, 5.0, 0)
+    displayobj_edificio(-20, 0.0, -150, 5.0, 5.0, 5.0, 0)
+    displayobj_edificio(20, 0.0, -150, 5.0, 5.0, 5.0, 0)
+    displayobj_edificio(70, 0.0, -150, 5.0, 5.0, 5.0, 0)
 
-    displayobj_casa(-100, 0.0, 170, 5.0, 5.0, 5.0, 0)
-    displayobj_casa(-50, 0.0, 170, 5.0, 5.0, 5.0, 0)
-    displayobj_casa(-0, 0.0, 170, 5.0, 5.0, 5.0, 0)
-    displayobj_casa(50, 0.0, 170, 5.0, 5.0, 5.0, 0)
-    displayobj_casa(100, 0.0, 170, 5.0, 5.0, 5.0, 0)
-    """
+    displayobj_edificio(-70, 0.0, 150, 5.0, 5.0, 5.0, 0)
+    displayobj_edificio(-20, 0.0, 150, 5.0, 5.0, 5.0, 0)
+    displayobj_edificio(20, 0.0, 150, 5.0, 5.0, 5.0, 0)
+    displayobj_edificio(70, 0.0, 150, 5.0, 5.0, 5.0, 0)
+    
+    displayobj_edificio(-230.0, 0.0, -160.0, 10.0, 10.0, 1.0, 1)
+
 
     # Dibujar casas
-    displayobj_casa(250.0, 0.0, 180.0, 5.0, 5.0, 5.0, 1)
-    displayobj_casa(250.0, 0.0, 80.0, 5.0, 5.0, 5.0, 1)
-    displayobj_casa(250.0, 0.0, -180.0, 5.0, 5.0, 5.0, 1)
-    displayobj_casa(250.0, 0.0, -80.0, 5.0, 5.0, 5.0, 1)
-    
+    displayobj_casa(240.0, 0.0, 160.0, 3.0, 3.0, 3.0, 0)
+    displayobj_casa(240.0, 0.0, 80.0, 3.0, 3.0, 3.0, 0)
+    displayobj_casa(240.0, 0.0, -160.0, 3.0, 3.0, 3.0, 0)
+    displayobj_casa(240.0, 0.0, -80.0, 3.0, 3.0, 3.0, 0)
+    #"""
     # Dibujar arboles
-    displayobj_arboles(-90, 0.0, -80, 3.0, 3.0, 3.0, 0)
-    displayobj_arboles(0, 0.0, -80, 3.0, 3.0, 3.0, 0)
-    displayobj_arboles(90, 0.0, -80, 3.0, 3.0, 3.0, 0)
+    displayobj_arboles(-90, 0.0, -80, 20.0, 20.0, 20.0, 0)
+    displayobj_arboles(0, 0.0, -80, 20.0, 20.0, 20.0, 1)
+    displayobj_arboles(90, 0.0, -80, 20.0, 20.0, 20.0, 0)
 
-    displayobj_arboles(-90, 0.0, 80, 3.0, 3.0, 3.0, 0)
-    displayobj_arboles(0, 0.0, 80, 3.0, 3.0, 3.0, 0)
-    displayobj_arboles(90, 0.0, 80, 3.0, 3.0, 3.0, 0)
+    displayobj_arboles(-90, 0.0, 80, 20.0, 20.0, 20.0, 0)
+    displayobj_arboles(0, 0.0, 80, 20.0, 20.0, 20.0, 1)
+    displayobj_arboles(90, 0.0, 80, 20.0, 20.0, 20.0, 0)
     
+    #displayobj_arboles(-230.0, 0.0, 160.0, 20.0, 20.0, 20.0, 2)
+    #displayobj_arboles(-230.0, 0.0, 180.0, 20.0, 20.0, 20.0, 2)
+    displayobj_arboles(-200.0, 0.0, 100.0, 20.0, 20.0, 20.0, 2)
+    displayobj_arboles(-180.0, 0.0, 120.0, 20.0, 20.0, 20.0, 2)
+    displayobj_arboles(-160.0, 0.0, 140.0, 20.0, 20.0, 20.0, 2)
+    displayobj_arboles(-140.0, 0.0, 160.0, 20.0, 20.0, 20.0, 2)
+    displayobj_arboles(-120.0, 0.0, 180.0, 20.0, 20.0, 20.0, 2)
+    #displayobj_arboles(-100.0, 0.0, 100.0, 20.0, 20.0, 20.0, 2)
+    #displayobj_arboles(0, 0.0, 0, 5.0, 5.0, 5.0, 1)
+
+    #"""
     # Dibuja bancas
-    displayobj_arboles(-100, 0.0, -50, 3.0, 3.0, 3.0, 1) 
-    displayobj_arboles(0, 0.0, -50, 3.0, 3.0, 3.0, 1) 
-    displayobj_arboles(100, 0.0, -50, 3.0, 3.0, 3.0, 1) 
-    displayobj_arboles(-100, 0.0, 50, 3.0, 3.0, 3.0, 1) 
-    displayobj_arboles(0, 0.0, 50, 3.0, 3.0, 3.0, 1) 
-    displayobj_arboles(100, 0.0, 50, 3.0, 3.0, 3.0, 1) 
-    """
+    displayobj_bancas(-80, 0.0, -50, 3.0, 3.0, 3.0, 0) 
+    displayobj_bancas(0, 0.0, -50, 3.0, 3.0, 3.0, 0) 
+    displayobj_bancas(80, 0.0, -50, 3.0, 3.0, 3.0, 0) 
+    displayobj_bancas(-80, 0.0, 50, 3.0, 3.0, 3.0, 0) 
+    displayobj_bancas(0, 0.0, 50, 3.0, 3.0, 3.0, 0) 
+    displayobj_bancas(80, 0.0, 50, 3.0, 3.0, 3.0, 0) 
+    
     # Dibuja semaforos
     displayobj_semaforo(120, 0, -40, 1.0, 1.0, 1.0, 0)
     displayobj_semaforo(180, 0, 40, 1.0, 1.0, 1.0, 0)
