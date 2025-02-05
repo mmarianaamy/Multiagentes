@@ -62,9 +62,9 @@ casas = []
 # Lista de objetos .OBJ (los carros)
 modelos_carros = [
             "Avance Reto\Modelos\Jeep_Renegade_2016.obj",
-            "Avance Reto\Modelos\pack vehicles\sedan.obj",
-            "Avance Reto\Modelos\pack vehicles\deportivo.obj",
-            "Avance Reto\Modelos\\pack vehicles\\roadster.obj"
+            "Avance Reto\Modelos\pack vehicles\sedant.obj",
+            "Avance Reto\Modelos\pack vehicles\deportivot.obj",
+            "Avance Reto\Modelos\\pack vehicles\\roadstert.obj"
         ]
 
 # Lista de objetos .OBJ (los arboles)
@@ -477,7 +477,6 @@ def display():
         obj.draw()
         obj.update([s for s in semaforos if s != obj])
 
-    """
     # Dibujar edificios
     displayobj_casa(-100, 0.0, -170, 5.0, 5.0, 5.0, 0)
     displayobj_casa(-50, 0.0, -170, 5.0, 5.0, 5.0, 0)
@@ -490,6 +489,7 @@ def display():
     displayobj_casa(-0, 0.0, 170, 5.0, 5.0, 5.0, 0)
     displayobj_casa(50, 0.0, 170, 5.0, 5.0, 5.0, 0)
     displayobj_casa(100, 0.0, 170, 5.0, 5.0, 5.0, 0)
+    """
 
     # Dibujar casas
     displayobj_casa(250.0, 0.0, 180.0, 5.0, 5.0, 5.0, 1)
