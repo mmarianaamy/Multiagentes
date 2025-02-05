@@ -62,6 +62,12 @@ nsemaforos = 2
 
 # Lista de objetos .OBJ (los carros)
 #carros = []
+modelos_carros = [
+            "Avance Reto\Modelos\Jeep_Renegade_2016.obj",
+            "Avance Reto\Modelos\pack vehicles\sedan.obj",
+            "Avance Reto\Modelos\pack vehicles\deportivo.obj",
+            "Avance Reto\Modelos\\pack vehicles\\roadster.obj"
+        ]
 
 # Lista de objetos .OBJ (los arboles)
 #arboles = []
@@ -133,12 +139,11 @@ def generar_carro():
     
     position, direction = random.choice(puntos_generacion)  # Selecciona una de las posiciones iniciales
     velocidad = 1.0  # Velocidad del carro
+    modelo = random.choice(modelos_carros) # Selecciona un modelo aleatorio
     #direction = [0, 0, 1]  # Movimiento de abajo hacia arriba
 
-    posiblesDirecciones.remove([i * -1 for i in direction])
-    movimientos = [random.choice(posiblesDirecciones)]
+    return Carro(position=position, vel=velocidad, direction=direction, modelo=modelo, movimientos=movimientos)
 
-    return Carro(position=position, vel=velocidad, direction=direction, movimientos=movimientos)
 
 
 """Genera un nuevo carro solo en los lados derecho (x+) e inferior (z-) en posiciones fijas"""
