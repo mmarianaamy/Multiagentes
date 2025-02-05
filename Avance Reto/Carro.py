@@ -65,7 +65,8 @@ class Carro:
         self.borde_limite2 = self.DimBoardH - 60  # 🔥 Ajustamos el umbral de borde
 
         self.movimientos = movimientos
-        self.turning = False
+        self.turningleft = False
+        self.turningright = False
 
     def setotrosagentes(self, agentes):
         self.otrosagentes = [i for i in agentes if i != self]
@@ -90,12 +91,19 @@ class Carro:
 
     def turn(self):
         if self.movimientos:
-            if (self.Direction[0] - self.movimientos[0][0]) < 0.2 and (self.Direction[2] - self.movimientos[0][2]) < 0.2:
+            if abs(self.Direction[0] - self.movimientos[0][0]) < 0.1 and abs(self.Direction[2] - self.movimientos[0][2]) < 0.1:
                 self.Direction = self.movimientos.pop(0)
-                self.turning = False
+                self.turningright = False
+                self.turningleft = False
                 return
-        if self.turning:
-            degturn = math.radians(2)
+        if self.turningright:
+            degturn = math.radians(1.75)
+            turnmatrix = np.array([[math.cos(degturn), -1 * math.sin(degturn)], [math.sin(degturn), math.cos(degturn)]])
+            direction = np.array([[self.Direction[0]], [self.Direction[2]]])
+            newpoints = turnmatrix @ direction
+            self.Direction = [round(newpoints[0][0], 3), self.Direction[1], round(newpoints[1][0], 3)]
+        if self.turningleft:
+            degturn = math.radians(-0.9)
             turnmatrix = np.array([[math.cos(degturn), -1 * math.sin(degturn)], [math.sin(degturn), math.cos(degturn)]])
             direction = np.array([[self.Direction[0]], [self.Direction[2]]])
             newpoints = turnmatrix @ direction
@@ -128,7 +136,11 @@ class Carro:
                     if self.vel == 0:
                         self.vel = self.initialvel  # ✅ Reanudar movimiento
                     if self.movimientos:
-                        self.turning = True
+                        posiblesDirecciones = [[0, 0, 1], [-1, 0, 0], [0, 0, -1], [1, 0, 0]]
+                        present = posiblesDirecciones.index(self.Direction)
+                        next = posiblesDirecciones.index(self.movimientos[0])
+                        self.turningright = (present + 1 == next or (present == 3 and next == 0))
+                        self.turningleft = not self.turningright
 
         # ✅ Mover carro si tiene velocidad
         if self.vel > 0:
