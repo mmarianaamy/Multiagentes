@@ -135,6 +135,7 @@ def generar_carro():
     velocidad = 1.0  # Velocidad del carro
     #direction = [0, 0, 1]  # Movimiento de abajo hacia arriba
 
+    posiblesDirecciones.remove([i * -1 for i in direction])
     movimientos = [random.choice(posiblesDirecciones)]
 
     return Carro(position=position, vel=velocidad, direction=direction, movimientos=movimientos)
@@ -235,10 +236,10 @@ def Init():
     """
     
     semaforos = [
-        Semaforo(-160, 0, -50, 5.0, 0, [0, 0, 1]),
-        Semaforo(140, 0, -50, 5.0, 1, [0, 0, 1]),
-        Semaforo(-140, 0, 50, 5.0, 0, [0, 0, -1]),
-        Semaforo(160, 0, 50, 5.0, 1, [0, 0, -1])
+        Semaforo(-160, 0, -40, 5.0, 0, [0, 0, 1]),
+        Semaforo(140, 0, -40, 5.0, 1, [0, 0, 1]),
+        Semaforo(-140, 0, 40, 5.0, 0, [0, 0, -1]),
+        Semaforo(160, 0, 40, 5.0, 1, [0, 0, -1])
     ]
     
     for semaforo in semaforos:

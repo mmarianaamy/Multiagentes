@@ -14,6 +14,8 @@ import math
 from Message import Message
 from objloader import OBJ
 
+import numpy as np
+
 
 class Carro:
     
@@ -62,7 +64,8 @@ class Carro:
         self.borde_limite1 = self.DimBoardW - 60  #5 🔥 Ajustamos el umbral de borde
         self.borde_limite2 = self.DimBoardH - 60  # 🔥 Ajustamos el umbral de borde
 
-        self.direccionesdeseadas = movimientos
+        self.movimientos = movimientos
+        self.turning = False
 
     def setotrosagentes(self, agentes):
         self.otrosagentes = [i for i in agentes if i != self]
@@ -85,8 +88,24 @@ class Carro:
             if dc < self.radio + agent.radio and dc2 < dc:
                 self.has_collided = True
 
+    def turn(self):
+        if self.movimientos:
+            if (self.Direction[0] - self.movimientos[0][0]) < 0.2 and (self.Direction[2] - self.movimientos[0][2]) < 0.2:
+                self.Direction = self.movimientos.pop(0)
+                self.turning = False
+                return
+        if self.turning:
+            degturn = math.radians(2)
+            turnmatrix = np.array([[math.cos(degturn), -1 * math.sin(degturn)], [math.sin(degturn), math.cos(degturn)]])
+            direction = np.array([[self.Direction[0]], [self.Direction[2]]])
+            newpoints = turnmatrix @ direction
+            self.Direction = [round(newpoints[0][0], 3), self.Direction[1], round(newpoints[1][0], 3)]
+
+
     def update(self):
         self.collision()
+
+        self.turn()
 
         if abs(self.Position[0]) > self.borde_limite1 or abs(self.Position[2]) > self.borde_limite2:
             self.has_collided = False  # 🚀 Desactiva colisiones para salir
@@ -105,8 +124,11 @@ class Carro:
             if distancia < 10 and self.Direction == semaforo.direction:
                 if semaforo.estado == "ROJO":
                     self.vel = 0  # 🚗 Detener carro
-                elif semaforo.estado == "VERDE" and self.vel == 0:
-                    self.vel = self.initialvel  # ✅ Reanudar movimiento
+                elif semaforo.estado == "VERDE":
+                    if self.vel == 0:
+                        self.vel = self.initialvel  # ✅ Reanudar movimiento
+                    if self.movimientos:
+                        self.turning = True
 
         # ✅ Mover carro si tiene velocidad
         if self.vel > 0:
