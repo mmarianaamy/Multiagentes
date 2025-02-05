@@ -127,13 +127,17 @@ def generar_carro():
         ([165, 1, 200], [0, 0, -1]),   # De arriba hacia abajo
         ([-135, 1, 200], [0, 0, -1])   # De arriba hacia abajo
     ]
+
+    posiblesDirecciones = [[0, 0, 1], [0, 0, -1], [1, 0, 0], [-1, 0, 0]]
     
     
     position, direction = random.choice(puntos_generacion)  # Selecciona una de las posiciones iniciales
     velocidad = 1.0  # Velocidad del carro
     #direction = [0, 0, 1]  # Movimiento de abajo hacia arriba
 
-    return Carro(position=position, vel=velocidad, direction=direction)
+    movimientos = [random.choice(posiblesDirecciones)]
+
+    return Carro(position=position, vel=velocidad, direction=direction, movimientos=movimientos)
 
 
 """Genera un nuevo carro solo en los lados derecho (x+) e inferior (z-) en posiciones fijas"""

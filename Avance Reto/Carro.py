@@ -17,7 +17,7 @@ from objloader import OBJ
 
 class Carro:
     
-    def __init__(self, position=None, vel=1.0, direction=None, dimw=300, dimh=200):
+    def __init__(self, position=None, vel=1.0, direction=None, dimw=300, dimh=200, movimientos=[]):
         
         # Lista de objetos .OBJ (los carros)
         #carros = []
@@ -61,6 +61,8 @@ class Carro:
         # 🚗 Si el carro está cerca del borde, permitimos que siga sin restricciones
         self.borde_limite1 = self.DimBoardW - 60  #5 🔥 Ajustamos el umbral de borde
         self.borde_limite2 = self.DimBoardH - 60  # 🔥 Ajustamos el umbral de borde
+
+        self.direccionesdeseadas = movimientos
 
     def setotrosagentes(self, agentes):
         self.otrosagentes = [i for i in agentes if i != self]
