@@ -162,7 +162,7 @@ intervalo_spawn = 4000
 
 def ha_salido_de_simulacion(carro):
     """Verifica si el carro ha pasado el área de simulación y debe ser eliminado"""
-    #x, _, z = carro.Position
+    x, _, z = carro.Position
     _, _, z = carro.Position
     
     #limite1 = DimBoardWidth - 5  # 🔥 Ahora eliminamos antes de que lleguen al borde
@@ -174,7 +174,11 @@ def ha_salido_de_simulacion(carro):
     
 #    if z > DimBoardHeight or z < DimBoardWidth:
     if z > DimBoardHeight or z < -DimBoardHeight:
-        #print(f"Carro fuera de pantalla en {carro.Position}")  # 👀
+        #print(f"Carro fuera de pantalla en {carro.Position}")  # 
+        print(f"Carro eliminado en {carro.Position}")
+        return True
+    elif x > DimBoardWidth or x < -DimBoardWidth:
+        #print(f"Carro fuera de pantalla en {carro.Position}")  # 
         print(f"Carro eliminado en {carro.Position}")
         return True
     return False
@@ -245,7 +249,12 @@ def Init():
         Semaforo(-160, 0, -40, 5.0, 0, [0, 0, 1]),
         Semaforo(140, 0, -40, 5.0, 1, [0, 0, 1]),
         Semaforo(-140, 0, 40, 5.0, 0, [0, 0, -1]),
-        Semaforo(160, 0, 40, 5.0, 1, [0, 0, -1])
+        Semaforo(160, 0, 40, 5.0, 1, [0, 0, -1]),
+        
+        Semaforo(190, 0, -10, 5.0, 1, [0, 0, 1]),
+        Semaforo(110, 0, 10, 5.0, 1, [0, 0, 1]),
+        Semaforo(-110, 0, -10, 5.0, 1, [0, 0, -1]),
+        Semaforo(-190, 0, 10, 5.0, 1, [0, 0, -1]),
     ]
     
     for semaforo in semaforos:
@@ -283,7 +292,7 @@ def Init():
     # Cargamos los modelos de los semaforos
     traffic_light.append(OBJ("Avance Reto\\Modelos\\traffic_light.obj", swapyz = True))
     traffic_light[0].generate()
-    traffic_light.append(OBJ("Avance Reto\\Modelos\\traffic_light.obj", swapyz=True))
+    #traffic_light.append(OBJ("Avance Reto\\Modelos\\traffic_light.obj", swapyz=True))
     print(f"Modelo del semáforo cargado: {traffic_light}")  # Verifica si se cargó
 
 
@@ -435,8 +444,10 @@ def displayobj_casa(x, y, z, a, b, c, i):
 
 def displayobj_semaforo(x, y, z, a, b, c, i):
     
-    #Dibuja las casas en el plano.
-    #Ajusta la rotación/traslación/escala según tu OBJ.
+    """
+    Dibuja los semaforos en el plano.
+    Ajusta la rotación/traslación/escala según tu OBJ.
+    """
     
     glPushMatrix()
     glTranslatef(x, y, z)
@@ -561,10 +572,17 @@ def display():
 
     displayobj_semaforo(160, 0, -100, 0.3, 0.3, 0.3, 0)
     """
-    displayobj_semaforo(120, 0, -50, 2.0, 2.0, 2.0, 0)
-    displayobj_semaforo(180, 0, 50, 2.0, 2.0, 2.0, 0)
-    displayobj_semaforo(-120, 0, 50, 2.0, 2.0, 2.0, 0)
-    displayobj_semaforo(-180, 0, -50, 2.0, 2.0, 2.0, 0)
+    displayobj_semaforo(120, 0, -40, 1.0, 1.0, 1.0, 0)
+    displayobj_semaforo(180, 0, 40, 1.0, 1.0, 1.0, 0)
+    displayobj_semaforo(-120, 0, 40, 1.0, 1.0, 1.0, 0)
+    displayobj_semaforo(-180, 0, -40, 1.0, 1.0, 1.0, 0)
+    
+    displayobj_semaforo(180, 0, -40, 1.0, 1.0, 1.0, 0)
+    displayobj_semaforo(120, 0, 40, 1.0, 1.0, 1.0, 0)
+    displayobj_semaforo(-180, 0, 40, 1.0, 1.0, 1.0, 0)
+    displayobj_semaforo(-120, 0, -40, 1.0, 1.0, 1.0, 0)
+
+
 
     
     #displayobj_casa(50.0, 0.0, 50.0, 10.0, 10.0, 10.0, 1)
