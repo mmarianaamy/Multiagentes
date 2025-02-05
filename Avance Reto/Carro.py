@@ -14,10 +14,13 @@ import math
 from Message import Message
 from objloader import OBJ
 
+import numpy as np
+
 
 class Carro:
-    
-    def __init__(self, position=None, vel=1.0, direction=None, modelo=None, dimw=300, dimh=200):
+
+    def __init__(self, position=None, vel=1.0, direction=None, modelo=None, dimw=300, dimh=200, movimientos=[]):
+
         
         # Lista de modelos .OBJ (los carros)
         #modelos_carros = [
@@ -68,6 +71,10 @@ class Carro:
         self.borde_limite1 = self.DimBoardW - 60  #5 🔥 Ajustamos el umbral de borde
         self.borde_limite2 = self.DimBoardH - 60  # 🔥 Ajustamos el umbral de borde
 
+        self.movimientos = movimientos
+        self.turningleft = False
+        self.turningright = False
+
     def setotrosagentes(self, agentes):
         self.otrosagentes = [i for i in agentes if i != self]
     
@@ -89,8 +96,31 @@ class Carro:
             if dc < self.radio + agent.radio and dc2 < dc:
                 self.has_collided = True
 
+    def turn(self):
+        if self.movimientos:
+            if abs(self.Direction[0] - self.movimientos[0][0]) < 0.1 and abs(self.Direction[2] - self.movimientos[0][2]) < 0.1:
+                self.Direction = self.movimientos.pop(0)
+                self.turningright = False
+                self.turningleft = False
+                return
+        if self.turningright:
+            degturn = math.radians(1.75)
+            turnmatrix = np.array([[math.cos(degturn), -1 * math.sin(degturn)], [math.sin(degturn), math.cos(degturn)]])
+            direction = np.array([[self.Direction[0]], [self.Direction[2]]])
+            newpoints = turnmatrix @ direction
+            self.Direction = [round(newpoints[0][0], 3), self.Direction[1], round(newpoints[1][0], 3)]
+        if self.turningleft:
+            degturn = math.radians(-0.9)
+            turnmatrix = np.array([[math.cos(degturn), -1 * math.sin(degturn)], [math.sin(degturn), math.cos(degturn)]])
+            direction = np.array([[self.Direction[0]], [self.Direction[2]]])
+            newpoints = turnmatrix @ direction
+            self.Direction = [round(newpoints[0][0], 3), self.Direction[1], round(newpoints[1][0], 3)]
+
+
     def update(self):
         self.collision()
+
+        self.turn()
 
         if abs(self.Position[0]) > self.borde_limite1 or abs(self.Position[2]) > self.borde_limite2:
             self.has_collided = False  # 🚀 Desactiva colisiones para salir
@@ -109,8 +139,15 @@ class Carro:
             if distancia < 10 and self.Direction == semaforo.direction:
                 if semaforo.estado == "ROJO":
                     self.vel = 0  # 🚗 Detener carro
-                elif semaforo.estado == "VERDE" and self.vel == 0:
-                    self.vel = self.initialvel  # ✅ Reanudar movimiento
+                elif semaforo.estado == "VERDE":
+                    if self.vel == 0:
+                        self.vel = self.initialvel  # ✅ Reanudar movimiento
+                    if self.movimientos:
+                        posiblesDirecciones = [[0, 0, 1], [-1, 0, 0], [0, 0, -1], [1, 0, 0]]
+                        present = posiblesDirecciones.index(self.Direction)
+                        next = posiblesDirecciones.index(self.movimientos[0])
+                        self.turningright = (present + 1 == next or (present == 3 and next == 0))
+                        self.turningleft = not self.turningright
 
         # ✅ Mover carro si tiene velocidad
         if self.vel > 0:

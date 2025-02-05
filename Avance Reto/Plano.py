@@ -133,6 +133,8 @@ def generar_carro():
         ([165, 1, 200], [0, 0, -1]),   # De arriba hacia abajo
         ([-135, 1, 200], [0, 0, -1])   # De arriba hacia abajo
     ]
+
+    posiblesDirecciones = [[0, 0, 1], [0, 0, -1], [1, 0, 0], [-1, 0, 0]]
     
     
     position, direction = random.choice(puntos_generacion)  # Selecciona una de las posiciones iniciales
@@ -140,7 +142,8 @@ def generar_carro():
     modelo = random.choice(modelos_carros) # Selecciona un modelo aleatorio
     #direction = [0, 0, 1]  # Movimiento de abajo hacia arriba
 
-    return Carro(position=position, vel=velocidad, direction=direction, modelo=modelo)
+    return Carro(position=position, vel=velocidad, direction=direction, modelo=modelo, movimientos=movimientos)
+
 
 
 """Genera un nuevo carro solo en los lados derecho (x+) e inferior (z-) en posiciones fijas"""
@@ -238,10 +241,10 @@ def Init():
     """
     
     semaforos = [
-        Semaforo(-160, 0, -50, 5.0, 0, [0, 0, 1]),
-        Semaforo(140, 0, -50, 5.0, 1, [0, 0, 1]),
-        Semaforo(-140, 0, 50, 5.0, 0, [0, 0, -1]),
-        Semaforo(160, 0, 50, 5.0, 1, [0, 0, -1])
+        Semaforo(-160, 0, -40, 5.0, 0, [0, 0, 1]),
+        Semaforo(140, 0, -40, 5.0, 1, [0, 0, 1]),
+        Semaforo(-140, 0, 40, 5.0, 0, [0, 0, -1]),
+        Semaforo(160, 0, 40, 5.0, 1, [0, 0, -1])
     ]
     
     for semaforo in semaforos:
