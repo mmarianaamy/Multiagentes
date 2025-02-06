@@ -251,7 +251,7 @@ def Init():
     edificios[0].generate()
     casas.append(OBJ("Avance Reto\Modelos\casita pro\casa_pro2.obj", swapyz=True))
     casas[0].generate()
-    edificios.append(OBJ("Avance Reto\\Modelos\\building,.obj", swapyz=True))
+    edificios.append(OBJ("Avance Reto\Modelos\casa_buena.obj", swapyz=True))
     edificios[1].generate()
     #casas.append(OBJ("Avance Reto/Modelos/building_05.obj", swapyz=True))
     #casas[3].generate()
@@ -475,18 +475,62 @@ def draw_background():
     Dibuja una imagen de fondo como skybox.
     """
     glEnable(GL_TEXTURE_2D)
+    glDisable(GL_DEPTH_TEST)  # Deshabilitar la profundidad para que siempre esté al fondo
+
     glBindTexture(GL_TEXTURE_2D, textures[1])
     
+    size = 300
     glPushMatrix()
-    glLoadIdentity()
+    #glLoadIdentity()
     #gluLookAt(0, 0, 0, 0, 0, -1, 0, 1, 0)  # Fija la vista
     glColor3f(1.0, 1.0, 1.0)
     glBegin(GL_QUADS)
-    glTexCoord2f(0, 0); glVertex3f(-600, -200, -1000)
-    glTexCoord2f(1, 0); glVertex3f(600, -200, -1000)
-    glTexCoord2f(1, 1); glVertex3f(600, 400, -1000)
-    glTexCoord2f(0, 1); glVertex3f(-600, 400, -1000)
+    #glTexCoord2f(0, 0); glVertex3f(-600, -200, -1000)
+    #glTexCoord2f(1, 0); glVertex3f(600, -200, -1000)
+    #glTexCoord2f(1, 1); glVertex3f(600, 400, -1000)
+    #glTexCoord2f(0, 1); glVertex3f(-600, 400, -1000)
+    
+    # Cara frontal
+    glTexCoord2f(0, 0); glVertex3f(-size, -size, -size)
+    glTexCoord2f(1, 0); glVertex3f(size, -size, -size)
+    glTexCoord2f(1, 1); glVertex3f(size, size, -size)
+    glTexCoord2f(0, 1); glVertex3f(-size, size, -size)
+
+    # Cara trasera
+    glTexCoord2f(0, 0); glVertex3f(size, -size, size)
+    glTexCoord2f(1, 0); glVertex3f(-size, -size, size)
+    glTexCoord2f(1, 1); glVertex3f(-size, size, size)
+    glTexCoord2f(0, 1); glVertex3f(size, size, size)
+
+    # Lateral izquierdo
+    glTexCoord2f(0, 0); glVertex3f(-size, -size, size)
+    glTexCoord2f(1, 0); glVertex3f(-size, -size, -size)
+    glTexCoord2f(1, 1); glVertex3f(-size, size, -size)
+    glTexCoord2f(0, 1); glVertex3f(-size, size, size)
+
+    # Lateral derecho
+    glTexCoord2f(0, 0); glVertex3f(size, -size, -size)
+    glTexCoord2f(1, 0); glVertex3f(size, -size, size)
+    glTexCoord2f(1, 1); glVertex3f(size, size, size)
+    glTexCoord2f(0, 1); glVertex3f(size, size, -size)
+    
+    
+    # Cara superior (cielo)
+    glTexCoord2f(0, 0); glVertex3f(-size, size, -size)
+    glTexCoord2f(1, 0); glVertex3f(size, size, -size)
+    glTexCoord2f(1, 1); glVertex3f(size, size, size)
+    glTexCoord2f(0, 1); glVertex3f(-size, size, size)
+
+    # Cara inferior (suelo)
+    glTexCoord2f(0, 0); glVertex3f(-size, -size, size)
+    glTexCoord2f(1, 0); glVertex3f(size, -size, size)
+    glTexCoord2f(1, 1); glVertex3f(size, -size, -size)
+    glTexCoord2f(0, 1); glVertex3f(-size, -size, -size)
+    
     glEnd()
+    
+    glEnable(GL_DEPTH_TEST)  # Volver a habilitar la prueba de profundidad
+
 
     glPopMatrix()
     glDisable(GL_TEXTURE_2D)
@@ -500,7 +544,7 @@ def draw_cars():
 def display():
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     draw_background()
-    Axis()
+    #Axis()
     PlanoTexturizado()
 
     draw_road()
@@ -527,7 +571,7 @@ def display():
     displayobj_edificio(20, 0.0, 150, 5.0, 5.0, 5.0, 0)
     displayobj_edificio(70, 0.0, 150, 5.0, 5.0, 5.0, 0)
     
-    displayobj_edificio(-230.0, 0.0, -160.0, 10.0, 10.0, 1.0, 1)
+    displayobj_edificio(-270.0, 0.0, -150.0, 5.0, 5.0, 5.0, 1)
 
 
     # Dibujar casas
@@ -536,24 +580,99 @@ def display():
     displayobj_casa(240.0, 0.0, -160.0, 3.0, 3.0, 3.0, 0)
     displayobj_casa(240.0, 0.0, -80.0, 3.0, 3.0, 3.0, 0)
     #"""
-    # Dibujar arboles
-    displayobj_arboles(-90, 0.0, -80, 20.0, 20.0, 20.0, 0)
-    displayobj_arboles(0, 0.0, -80, 20.0, 20.0, 20.0, 1)
-    displayobj_arboles(90, 0.0, -80, 20.0, 20.0, 20.0, 0)
-
-    displayobj_arboles(-90, 0.0, 80, 20.0, 20.0, 20.0, 0)
-    displayobj_arboles(0, 0.0, 80, 20.0, 20.0, 20.0, 1)
-    displayobj_arboles(90, 0.0, 80, 20.0, 20.0, 20.0, 0)
     
-    #displayobj_arboles(-230.0, 0.0, 160.0, 20.0, 20.0, 20.0, 2)
-    #displayobj_arboles(-230.0, 0.0, 180.0, 20.0, 20.0, 20.0, 2)
-    displayobj_arboles(-200.0, 0.0, 100.0, 20.0, 20.0, 20.0, 2)
+    # Dibujar arboles principal
+    displayobj_arboles(-80, 0.0, -80, 20.0, 20.0, 20.0, 0)
+    displayobj_arboles(-30, 0.0, -80, 20.0, 20.0, 20.0, 0)
+    displayobj_arboles(0, 0.0, -80, 20.0, 20.0, 20.0, 1)
+    displayobj_arboles(70, 0.0, -80, 20.0, 20.0, 20.0, 0)
+    displayobj_arboles(130, 0.0, -80, 20.0, 20.0, 20.0, 0)
+
+    displayobj_arboles(-80, 0.0, 80, 20.0, 20.0, 20.0, 0)
+    displayobj_arboles(-30, 0.0, 80, 20.0, 20.0, 20.0, 0)
+    displayobj_arboles(0, 0.0, 80, 20.0, 20.0, 20.0, 1)
+    displayobj_arboles(70, 0.0, 80, 20.0, 20.0, 20.0, 0)
+    displayobj_arboles(130, 0.0, 80, 20.0, 20.0, 20.0, 0)
+    
+    
+    # Dibujar arboles casas
+    displayobj_arboles(225.0, 0.0, 170.0, 20.0, 20.0, 20.0, 0)
+    displayobj_arboles(225.0, 0.0, 130.0, 20.0, 20.0, 20.0, 0)
+    displayobj_arboles(225.0, 0.0, 80.0, 20.0, 20.0, 20.0, 0)
+    displayobj_arboles(225.0, 0.0, 40.0, 20.0, 20.0, 20.0, 0)
+    displayobj_arboles(225.0, 0.0, -40.0, 20.0, 20.0, 20.0, 0)
+    displayobj_arboles(225.0, 0.0, -80.0, 20.0, 20.0, 20.0, 0)
+    displayobj_arboles(225.0, 0.0, -130.0, 20.0, 20.0, 20.0, 0)
+    displayobj_arboles(225.0, 0.0, -170.0, 20.0, 20.0, 20.0, 0)
+    
+    
+    displayobj_arboles(295.0, 0.0, 170.0, 20.0, 20.0, 20.0, 0)
+    displayobj_arboles(295.0, 0.0, 130.0, 20.0, 20.0, 20.0, 0)
+    displayobj_arboles(295.0, 0.0, 80.0, 20.0, 20.0, 20.0, 0)
+    displayobj_arboles(295.0, 0.0, 40.0, 20.0, 20.0, 20.0, 0)
+    displayobj_arboles(295.0, 0.0, -40.0, 20.0, 20.0, 20.0, 0)
+    displayobj_arboles(295.0, 0.0, -80.0, 20.0, 20.0, 20.0, 0)
+    displayobj_arboles(295.0, 0.0, -130.0, 20.0, 20.0, 20.0, 0)
+    displayobj_arboles(295.0, 0.0, -170.0, 20.0, 20.0, 20.0, 0)
+    
+    # Bosque
+    displayobj_arboles(-200.0, 0.0, 180.0, 20.0, 20.0, 20.0, 2)
+    displayobj_arboles(-200.0, 0.0, 150.0, 20.0, 20.0, 20.0, 2)
+    displayobj_arboles(-200.0, 0.0, 120.0, 20.0, 20.0, 20.0, 2)
+    displayobj_arboles(-200.0, 0.0, 90.0, 20.0, 20.0, 20.0, 2)
+    displayobj_arboles(-200.0, 0.0, 50.0, 20.0, 20.0, 20.0, 2)
+    
+    displayobj_arboles(-120.0, 0.0, 180.0, 20.0, 20.0, 20.0, 2)
+    displayobj_arboles(-120.0, 0.0, 150.0, 20.0, 20.0, 20.0, 2)
+    displayobj_arboles(-120.0, 0.0, 120.0, 20.0, 20.0, 20.0, 2)
+    displayobj_arboles(-120.0, 0.0, 90.0, 20.0, 20.0, 20.0, 2)
+    displayobj_arboles(-120.0, 0.0, 50.0, 20.0, 20.0, 20.0, 2)
+    
+    #displayobj_arboles(-120.0, 0.0, 50.0, 20.0, 20.0, 20.0, 2)
+    displayobj_arboles(-145.0, 0.0, 50.0, 20.0, 20.0, 20.0, 2)
+    displayobj_arboles(-175.0, 0.0, 50.0, 20.0, 20.0, 20.0, 2)
+    #displayobj_arboles(-120.0, 0.0, 50.0, 20.0, 20.0, 20.0, 2)
+    #displayobj_arboles(-200.0, 0.0, 50.0, 20.0, 20.0, 20.0, 2)
+    
+    #displayobj_arboles(-120.0, 0.0, 180.0, 20.0, 20.0, 20.0, 2)
+    displayobj_arboles(-145.0, 0.0, 180.0, 20.0, 20.0, 20.0, 2)
+    displayobj_arboles(-175.0, 0.0, 180.0, 20.0, 20.0, 20.0, 2)
+    #displayobj_arboles(-180.0, 0.0, 180.0, 20.0, 20.0, 20.0, 2)
+    #displayobj_arboles(-200.0, 0.0, 180.0, 20.0, 20.0, 20.0, 2)
+    
     displayobj_arboles(-180.0, 0.0, 120.0, 20.0, 20.0, 20.0, 2)
     displayobj_arboles(-160.0, 0.0, 140.0, 20.0, 20.0, 20.0, 2)
     displayobj_arboles(-140.0, 0.0, 160.0, 20.0, 20.0, 20.0, 2)
     displayobj_arboles(-120.0, 0.0, 180.0, 20.0, 20.0, 20.0, 2)
-    #displayobj_arboles(-100.0, 0.0, 100.0, 20.0, 20.0, 20.0, 2)
-    #displayobj_arboles(0, 0.0, 0, 5.0, 5.0, 5.0, 1)
+    displayobj_arboles(-200.0, 0.0, 180.0, 20.0, 20.0, 20.0, 2)
+    displayobj_arboles(-120.0, 0.0, 180.0, 20.0, 20.0, 20.0, 2)
+
+
+    # Bosque 2
+    displayobj_arboles(-280.0, 0.0, -180.0, 20.0, 20.0, 20.0, 1)
+    displayobj_arboles(-280.0, 0.0, -150.0, 20.0, 20.0, 20.0, 1)
+    displayobj_arboles(-280.0, 0.0, -120.0, 20.0, 20.0, 20.0, 1)
+    displayobj_arboles(-280.0, 0.0, -90.0, 20.0, 20.0, 20.0, 1)
+    displayobj_arboles(-280.0, 0.0, -50.0, 20.0, 20.0, 20.0, 1)
+    
+    displayobj_arboles(-190.0, 0.0, -180.0, 20.0, 20.0, 20.0, 1)
+    displayobj_arboles(-190.0, 0.0, -150.0, 20.0, 20.0, 20.0, 1)
+    displayobj_arboles(-190.0, 0.0, -120.0, 20.0, 20.0, 20.0, 1)
+    displayobj_arboles(-190.0, 0.0, -90.0, 20.0, 20.0, 20.0, 1)
+    displayobj_arboles(-190.0, 0.0, -50.0, 20.0, 20.0, 20.0, 1)
+    
+    #displayobj_arboles(-120.0, 0.0, 50.0, 20.0, 20.0, 20.0, 2)
+    displayobj_arboles(-235.0, 0.0, -50.0, 20.0, 20.0, 20.0, 1)
+    displayobj_arboles(-255.0, 0.0, -50.0, 20.0, 20.0, 20.0, 1)
+    #displayobj_arboles(-120.0, 0.0, 50.0, 20.0, 20.0, 20.0, 2)
+    #displayobj_arboles(-200.0, 0.0, 50.0, 20.0, 20.0, 20.0, 2)
+    
+    #displayobj_arboles(-120.0, 0.0, 180.0, 20.0, 20.0, 20.0, 2)
+    displayobj_arboles(-225.0, 0.0, -180.0, 20.0, 20.0, 20.0, 1)
+    displayobj_arboles(-255.0, 0.0, -180.0, 20.0, 20.0, 20.0, 1)
+    #displayobj_arboles(-180.0, 0.0, 180.0, 20.0, 20.0, 20.0, 2)
+    #displayobj_arboles(-200.0, 0.0, 180.0, 20.0, 20.0, 20.0, 2)
+    
 
     #"""
     # Dibuja bancas
