@@ -37,7 +37,7 @@ class Semaforo:
         for msg in Message.environment_buffer:
             if msg.receiver == self.id:
                 if msg.performative == "activar":
-                    self.estado == "VERDE"
+                    self.estado = "VERDE"
                 if msg.performative=="askstate":
                     self.returnState()
 
