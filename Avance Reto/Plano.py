@@ -82,6 +82,7 @@ radius = 300
 textures = []
 image1 = "Avance Reto/Modelos/grass.jpg"
 image2 = "Avance Reto/Modelos/background.jpg"
+image3 = "Avance Reto/Modelos/pavimento.jpg"
 
 # Dimensiones de las intersecciones
 intersection_width = 50
@@ -208,17 +209,15 @@ def Init():
     glEnable(GL_DEPTH_TEST)
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
     
-    # Carga la textura usando la función loadTexture de la clase OBJ
-    # y la agrega a la lista de texturas
+    # Carga la textura usando la función loadTexture de la clase OBJ y la agrega a la lista de texturas
     texture_id = OBJ.loadTexture(image1)
     textures.append(texture_id)
     
     background_texture = OBJ.loadTexture(image2)
     textures.append(background_texture)
-
-    # Cargar la nueva textura para las intersecciones
-    #intersection_texture_id = OBJ.loadTexture("Avance Reto/Modelos/Calle2.jpg")
-    #textures.append(intersection_texture_id)
+    
+    pavimento_texture = OBJ.loadTexture(image3)
+    textures.append(pavimento_texture)
     
     semaforos = [
         Semaforo(-160, 0, -40, 5.0, 0, [0, 0, 1]),
@@ -234,8 +233,8 @@ def Init():
     
     for semaforo in semaforos:
         semaforo.otros_semaforos = [s for s in semaforos if s != semaforo]
+        
     cubos = []
-
 
     # Configuramos iluminación
     glLightfv(GL_LIGHT0, GL_POSITION, (0.0, 200.0, 0.0, 0.0))
@@ -253,15 +252,10 @@ def Init():
     casas[0].generate()
     edificios.append(OBJ("Avance Reto\Modelos\casa_buena.obj", swapyz=True))
     edificios[1].generate()
-    #casas.append(OBJ("Avance Reto/Modelos/building_05.obj", swapyz=True))
-    #casas[3].generate()
-    
     
     # Cargamos los modelos de los semaforos
     traffic_light.append(OBJ("Avance Reto\\Modelos\\traffic_light.obj", swapyz = True))
     traffic_light[0].generate()
-    print(f"Modelo del semáforo cargado: {traffic_light}")  # Verifica si se cargó
-
 
     # Cargamos los modelos de los objetos
     arboles.append(OBJ("Avance Reto\\Modelos\\tree_pack\\arbol3.obj", swapyz=True))
@@ -273,8 +267,6 @@ def Init():
     bancas.append(OBJ("Avance Reto\Modelos\Bench\white_bench.obj", swapyz=True))
     bancas[0].generate()
 
-
-
 def lookat():
     """
     Mueve la cámara en círculo alrededor del centro, altura fija EYE_Y.
@@ -284,7 +276,6 @@ def lookat():
     EYE_Z = radius * (-math.sin(math.radians(theta)) + math.cos(math.radians(theta)))
     glLoadIdentity()
     gluLookAt(EYE_X, EYE_Y, EYE_Z, CENTER_X, CENTER_Y, CENTER_Z, UP_X, UP_Y, UP_Z)
-
 
 def draw_road():
     texture_id = OBJ.loadTexture("Avance Reto/Modelos/Calle.jpg")  # Cambia por el camino a tu imagen
@@ -342,7 +333,6 @@ def draw_road():
 
     glPopMatrix()
 
-
 def draw_intersection(x, z, width, height):
     texture_id = OBJ.loadTexture("Avance Reto/Modelos/Calle2.jpg")  # Cambia por el camino a tu imagen
     glEnable(GL_TEXTURE_2D)
@@ -363,18 +353,14 @@ def draw_intersection(x, z, width, height):
     glDisable(GL_TEXTURE_2D)
     glPopMatrix()
     
-
 def displayobj_arboles(x, y, z, a, b, c, i):
     """
-    Dibuja los arboles y bancas en el plano.
+    Dibuja los arboles en el plano.
     Ajusta la rotación/traslación/escala según tu OBJ.
     """
     glColor3f(1.0, 1.0, 1.0)
     glPushMatrix()
     glTranslatef(x, y, z)
-    #if arboles[1] and z > 0:
-        #glRotatef(180, 0, 1, 0)
-    #glRotatef(90.0, 0.0, 1.0, 0.0)
     glRotatef(-90.0, 1.0, 0.0, 0.0)  # si tu modelo sale "acostado", ajusta
     glScale(a, b, c)
     arboles[i].render()
@@ -382,7 +368,7 @@ def displayobj_arboles(x, y, z, a, b, c, i):
     
 def displayobj_bancas(x, y, z, a, b, c, i):
     """
-    Dibuja los arboles y bancas en el plano.
+    Dibuja las bancas en el plano.
     Ajusta la rotación/traslación/escala según tu OBJ.
     """
     glColor3f(1.0, 1.0, 1.0)
@@ -390,7 +376,6 @@ def displayobj_bancas(x, y, z, a, b, c, i):
     glTranslatef(x, y, z)
     if z < 0:
         glRotatef(180, 0, 1, 0)
-    #glRotatef(90.0, 0.0, 1.0, 0.0)
     glRotatef(-90.0, 1.0, 0.0, 0.0)  # si tu modelo sale "acostado", ajusta
     glScale(a, b, c)
     bancas[i].render()
@@ -413,19 +398,16 @@ def displayobj_casa(x, y, z, a, b, c, i):
     
 def displayobj_edificio(x, y, z, a, b, c, i):
     """
-    Dibuja las casas en el plano.
+    Dibuja los edificios en el plano.
     Ajusta la rotación/traslación/escala según tu OBJ.
     """
     glColor3f(1.0, 1.0, 1.0)
     glPushMatrix()
     glTranslatef(x, y, z)
-    #if casas[1]:
-        #glRotatef(90, 0, 1, 0)
     glRotatef(-90.0, 1.0, 0.0, 0.0)  # si tu modelo sale "acostado", ajusta
     glScale(a, b, c)
     edificios[i].render()
     glPopMatrix()
-
 
 def displayobj_semaforo(x, y, z, a, b, c, i):
     """
@@ -440,7 +422,6 @@ def displayobj_semaforo(x, y, z, a, b, c, i):
     glScale(a, b, c)
     traffic_light[i].render()
     glPopMatrix()
-
 
 def Plano():
     # Plano gris (suelo)
@@ -470,68 +451,65 @@ def PlanoTexturizado():
     glEnd()              
     glDisable(GL_TEXTURE_2D)
     
-def draw_background():
-    """
-    Dibuja una imagen de fondo como skybox.
-    """
+
+def draw_sky():
+    size_x = 700
+    size_y = 300
+    size_z = 800  # Profundidad
+
     glEnable(GL_TEXTURE_2D)
-    glDisable(GL_DEPTH_TEST)  # Deshabilitar la profundidad para que siempre esté al fondo
+    glDisable(GL_DEPTH_TEST)  
 
     glBindTexture(GL_TEXTURE_2D, textures[1])
-    
-    size = 300
+
     glPushMatrix()
-    #glLoadIdentity()
-    #gluLookAt(0, 0, 0, 0, 0, -1, 0, 1, 0)  # Fija la vista
     glColor3f(1.0, 1.0, 1.0)
     glBegin(GL_QUADS)
-    #glTexCoord2f(0, 0); glVertex3f(-600, -200, -1000)
-    #glTexCoord2f(1, 0); glVertex3f(600, -200, -1000)
-    #glTexCoord2f(1, 1); glVertex3f(600, 400, -1000)
-    #glTexCoord2f(0, 1); glVertex3f(-600, 400, -1000)
-    
+
     # Cara frontal
-    glTexCoord2f(0, 0); glVertex3f(-size, -size, -size)
-    glTexCoord2f(1, 0); glVertex3f(size, -size, -size)
-    glTexCoord2f(1, 1); glVertex3f(size, size, -size)
-    glTexCoord2f(0, 1); glVertex3f(-size, size, -size)
+    glTexCoord2f(0, 0); glVertex3f(-size_x/2, 0, -size_z/2)
+    glTexCoord2f(1, 0); glVertex3f(size_x/2, 0, -size_z/2)
+    glTexCoord2f(1, 1); glVertex3f(size_x/2, size_y, -size_z/2)
+    glTexCoord2f(0, 1); glVertex3f(-size_x/2, size_y, -size_z/2)
 
     # Cara trasera
-    glTexCoord2f(0, 0); glVertex3f(size, -size, size)
-    glTexCoord2f(1, 0); glVertex3f(-size, -size, size)
-    glTexCoord2f(1, 1); glVertex3f(-size, size, size)
-    glTexCoord2f(0, 1); glVertex3f(size, size, size)
+    glTexCoord2f(0, 0); glVertex3f(size_x/2, 0, size_z/2)
+    glTexCoord2f(1, 0); glVertex3f(-size_x/2, 0, size_z/2)
+    glTexCoord2f(1, 1); glVertex3f(-size_x/2, size_y, size_z/2)
+    glTexCoord2f(0, 1); glVertex3f(size_x/2, size_y, size_z/2)
 
     # Lateral izquierdo
-    glTexCoord2f(0, 0); glVertex3f(-size, -size, size)
-    glTexCoord2f(1, 0); glVertex3f(-size, -size, -size)
-    glTexCoord2f(1, 1); glVertex3f(-size, size, -size)
-    glTexCoord2f(0, 1); glVertex3f(-size, size, size)
+    glTexCoord2f(0, 0); glVertex3f(-size_x/2, 0, size_z/2)
+    glTexCoord2f(1, 0); glVertex3f(-size_x/2, 0, -size_z/2)
+    glTexCoord2f(1, 1); glVertex3f(-size_x/2, size_y, -size_z/2)
+    glTexCoord2f(0, 1); glVertex3f(-size_x/2, size_y, size_z/2)
 
     # Lateral derecho
-    glTexCoord2f(0, 0); glVertex3f(size, -size, -size)
-    glTexCoord2f(1, 0); glVertex3f(size, -size, size)
-    glTexCoord2f(1, 1); glVertex3f(size, size, size)
-    glTexCoord2f(0, 1); glVertex3f(size, size, -size)
-    
-    
-    # Cara superior (cielo)
-    glTexCoord2f(0, 0); glVertex3f(-size, size, -size)
-    glTexCoord2f(1, 0); glVertex3f(size, size, -size)
-    glTexCoord2f(1, 1); glVertex3f(size, size, size)
-    glTexCoord2f(0, 1); glVertex3f(-size, size, size)
+    glTexCoord2f(0, 0); glVertex3f(size_x/2, 0, -size_z/2)
+    glTexCoord2f(1, 0); glVertex3f(size_x/2, 0, size_z/2)
+    glTexCoord2f(1, 1); glVertex3f(size_x/2, size_y, size_z/2)
+    glTexCoord2f(0, 1); glVertex3f(size_x/2, size_y, -size_z/2)
 
-    # Cara inferior (suelo)
-    glTexCoord2f(0, 0); glVertex3f(-size, -size, size)
-    glTexCoord2f(1, 0); glVertex3f(size, -size, size)
-    glTexCoord2f(1, 1); glVertex3f(size, -size, -size)
-    glTexCoord2f(0, 1); glVertex3f(-size, -size, -size)
+    # Cara superior (techo o cielo)
+    glTexCoord2f(0, 0); glVertex3f(-size_x/2, size_y, -size_z/2)
+    glTexCoord2f(1, 0); glVertex3f(size_x/2, size_y, -size_z/2)
+    glTexCoord2f(1, 1); glVertex3f(size_x/2, size_y, size_z/2)
+    glTexCoord2f(0, 1); glVertex3f(-size_x/2, size_y, size_z/2)
     
     glEnd()
-    
-    glEnable(GL_DEPTH_TEST)  # Volver a habilitar la prueba de profundidad
 
+    glBindTexture(GL_TEXTURE_2D, textures[2])  # Cambiamos a la textura del suelo
 
+    glBegin(GL_QUADS)
+    # Cara inferior (suelo)
+    glTexCoord2f(0, 0); glVertex3f(-size_x/2, 0, size_z/2)
+    glTexCoord2f(1, 0); glVertex3f(size_x/2, 0, size_z/2)
+    glTexCoord2f(1, 1); glVertex3f(size_x/2, 0, -size_z/2)
+    glTexCoord2f(0, 1); glVertex3f(-size_x/2, 0, -size_z/2)
+
+    glEnd()
+
+    glEnable(GL_DEPTH_TEST)
     glPopMatrix()
     glDisable(GL_TEXTURE_2D)
 
@@ -543,7 +521,7 @@ def draw_cars():
         
 def display():
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-    draw_background()
+    draw_sky()
     #Axis()
     PlanoTexturizado()
 
@@ -628,17 +606,11 @@ def display():
     displayobj_arboles(-120.0, 0.0, 90.0, 20.0, 20.0, 20.0, 2)
     displayobj_arboles(-120.0, 0.0, 50.0, 20.0, 20.0, 20.0, 2)
     
-    #displayobj_arboles(-120.0, 0.0, 50.0, 20.0, 20.0, 20.0, 2)
     displayobj_arboles(-145.0, 0.0, 50.0, 20.0, 20.0, 20.0, 2)
     displayobj_arboles(-175.0, 0.0, 50.0, 20.0, 20.0, 20.0, 2)
-    #displayobj_arboles(-120.0, 0.0, 50.0, 20.0, 20.0, 20.0, 2)
-    #displayobj_arboles(-200.0, 0.0, 50.0, 20.0, 20.0, 20.0, 2)
     
-    #displayobj_arboles(-120.0, 0.0, 180.0, 20.0, 20.0, 20.0, 2)
     displayobj_arboles(-145.0, 0.0, 180.0, 20.0, 20.0, 20.0, 2)
     displayobj_arboles(-175.0, 0.0, 180.0, 20.0, 20.0, 20.0, 2)
-    #displayobj_arboles(-180.0, 0.0, 180.0, 20.0, 20.0, 20.0, 2)
-    #displayobj_arboles(-200.0, 0.0, 180.0, 20.0, 20.0, 20.0, 2)
     
     displayobj_arboles(-180.0, 0.0, 120.0, 20.0, 20.0, 20.0, 2)
     displayobj_arboles(-160.0, 0.0, 140.0, 20.0, 20.0, 20.0, 2)
@@ -661,20 +633,13 @@ def display():
     displayobj_arboles(-190.0, 0.0, -90.0, 20.0, 20.0, 20.0, 1)
     displayobj_arboles(-190.0, 0.0, -50.0, 20.0, 20.0, 20.0, 1)
     
-    #displayobj_arboles(-120.0, 0.0, 50.0, 20.0, 20.0, 20.0, 2)
+    
     displayobj_arboles(-235.0, 0.0, -50.0, 20.0, 20.0, 20.0, 1)
     displayobj_arboles(-255.0, 0.0, -50.0, 20.0, 20.0, 20.0, 1)
-    #displayobj_arboles(-120.0, 0.0, 50.0, 20.0, 20.0, 20.0, 2)
-    #displayobj_arboles(-200.0, 0.0, 50.0, 20.0, 20.0, 20.0, 2)
-    
-    #displayobj_arboles(-120.0, 0.0, 180.0, 20.0, 20.0, 20.0, 2)
+
     displayobj_arboles(-225.0, 0.0, -180.0, 20.0, 20.0, 20.0, 1)
     displayobj_arboles(-255.0, 0.0, -180.0, 20.0, 20.0, 20.0, 1)
-    #displayobj_arboles(-180.0, 0.0, 180.0, 20.0, 20.0, 20.0, 2)
-    #displayobj_arboles(-200.0, 0.0, 180.0, 20.0, 20.0, 20.0, 2)
     
-
-    #"""
     # Dibuja bancas
     displayobj_bancas(-80, 0.0, -50, 3.0, 3.0, 3.0, 0) 
     displayobj_bancas(0, 0.0, -50, 3.0, 3.0, 3.0, 0) 
